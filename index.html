@@ -175,13 +175,33 @@ class="mt-2 flex flex-col items-center justify-center rounded-xl border border-d
 <div class="grid grid-cols-2 gap-3 text-xs">
 <div>
 <label class="block text-slate-300 mb-1">Commodity</label>
-<input id="commodity" type="text" placeholder="ICUMSA 45"
-class="w-full rounded-lg border border-slate-700 bg-slate-900/80 px-2.5 py-1.5 text-xs text-slate-100 placeholder:text-slate-500" />
+<select id="commodity"
+class="w-full rounded-lg border border-slate-700 bg-slate-900/80 px-2.5 py-1.5 text-xs text-slate-100 cursor-pointer">
+<option value="">Select commodity...</option>
+<option value="ICUMSA 45 Sugar">ICUMSA 45 Sugar</option>
+<option value="Soybean Oil">Soybean Oil</option>
+<option value="Crude Oil">Crude Oil</option>
+<option value="Wheat">Wheat</option>
+<option value="Corn">Corn</option>
+<option value="Rice">Rice</option>
+<option value="Gold">Gold</option>
+<option value="Copper">Copper</option>
+<option value="Iron Ore">Iron Ore</option>
+<option value="Coal">Coal</option>
+<option value="Natural Gas">Natural Gas</option>
+<option value="Other">Other</option>
+</select>
 </div>
 <div>
 <label class="block text-slate-300 mb-1">Volume</label>
-<input id="volume" type="text" placeholder="1000 MT"
-class="w-full rounded-lg border border-slate-700 bg-slate-900/80 px-2.5 py-1.5 text-xs text-slate-100 placeholder:text-slate-500" />
+<select id="volume"
+class="w-full rounded-lg border border-slate-700 bg-slate-900/80 px-2.5 py-1.5 text-xs text-slate-100 cursor-pointer">
+<option value="">Select volume range...</option>
+<option value="0-1000 MT">0 - 1,000 MT</option>
+<option value="1000-10000 MT">1,000 - 10,000 MT</option>
+<option value="10000-50000 MT">10,000 - 50,000 MT</option>
+<option value="Over 50000 MT">Over 50,000 MT</option>
+</select>
 </div>
 </div>
 

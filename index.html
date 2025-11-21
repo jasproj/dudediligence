@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Dude Diligence – AI verify buyers and sellers before you waste another call</title>
+  <title>Dude Diligence – AI verify Buyers and Sellers before you waste another call</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -19,9 +19,22 @@
     <header class="border-b border-slate-800/80 bg-black/60 backdrop-blur">
       <div class="mx-auto max-w-6xl px-4 py-4 flex items-center justify-between">
         <div class="flex items-center gap-2">
-          <div class="h-9 w-9 rounded-xl bg-cyan-500/20 border border-cyan-400/40 flex items-center justify-center">
-            <span class="text-cyan-300 font-semibold text-lg">DD</span>
+          <!-- Robot Monitor Face Logo -->
+          <div class="h-9 w-9 rounded-2xl bg-slate-900 border border-cyan-400/60 flex items-center justify-center shadow-sm shadow-cyan-500/30">
+            <svg viewBox="0 0 40 40" class="h-7 w-7 text-cyan-300">
+              <!-- Outer monitor -->
+              <rect x="7" y="8" width="26" height="20" rx="4" ry="4"
+                    fill="none" stroke="currentColor" stroke-width="2" />
+              <!-- Eyes -->
+              <circle cx="15" cy="18" r="2" fill="currentColor" />
+              <circle cx="25" cy="18" r="2" fill="currentColor" />
+              <!-- Mouth -->
+              <rect x="15" y="22" width="10" height="1.5" rx="0.75" fill="currentColor" />
+              <!-- Stand -->
+              <rect x="17" y="28" width="6" height="2" rx="1" fill="currentColor" />
+            </svg>
           </div>
+
           <div>
             <div class="flex items-center gap-2">
               <span class="font-semibold text-slate-50 tracking-tight">Dude Diligence</span>
@@ -42,10 +55,10 @@
       <section class="mx-auto max-w-6xl px-4 py-10 md:py-14">
         <div class="grid gap-10 lg:grid-cols-[1.3fr,minmax(0,1fr)] items-start">
 
-          <!-- LEFT -->
+          <!-- LEFT SIDE -->
           <div>
             <h1 class="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-slate-50">
-              AI verify buyers and sellers before you waste another call.
+              AI verify Buyers and Sellers before you waste another call.
             </h1>
 
             <p class="mt-4 text-sm md:text-base text-slate-300 max-w-xl">
@@ -69,10 +82,10 @@
             </ul>
           </div>
 
-          <!-- RIGHT -->
+          <!-- RIGHT SIDE -->
           <div class="space-y-4">
 
-            <!-- Upload Box -->
+            <!-- UPLOAD AREA -->
             <div class="rounded-2xl border border-slate-800 bg-slate-950/70 backdrop-blur shadow-lg shadow-cyan-500/10">
               <div class="px-5 py-4 border-b border-slate-800 flex items-center justify-between">
                 <div>
@@ -85,15 +98,14 @@
               </div>
 
               <div class="px-5 pt-4 pb-5 space-y-4">
-
-                <!-- Dropzone -->
+                <!-- DROPZONE -->
                 <label class="block">
                   <span class="text-xs font-medium text-slate-300">Document</span>
                   <div id="dropzone"
                     class="mt-2 flex flex-col items-center justify-center rounded-xl border border-dashed border-slate-700 bg-slate-900/60 px-4 py-6 text-center text-xs text-slate-400 cursor-pointer hover:border-cyan-400/70 hover:bg-slate-900 transition">
                     <span class="mb-2 text-slate-200 font-medium">Click to upload</span>
-                    <input id="fileInput" type="file" accept="application/pdf"
-                      class="hidden" />
+                    <span class="text-[11px] text-slate-500">PDF, max 10 MB. LOI, ICPO, KYC, or combined pack.</span>
+                    <input id="fileInput" type="file" accept="application/pdf" class="hidden" />
                   </div>
                 </label>
 
@@ -101,12 +113,12 @@
                   <div>
                     <label class="block text-slate-300 mb-1">Commodity</label>
                     <input id="commodity" type="text" placeholder="ICUMSA 45"
-                      class="w-full rounded-lg border border-slate-700 bg-slate-900/80 px-2.5 py-1.5 text-xs text-slate-100" />
+                      class="w-full rounded-lg border border-slate-700 bg-slate-900/80 px-2.5 py-1.5 text-xs text-slate-100 placeholder:text-slate-500" />
                   </div>
                   <div>
                     <label class="block text-slate-300 mb-1">Volume</label>
                     <input id="volume" type="text" placeholder="1000 MT"
-                      class="w-full rounded-lg border border-slate-700 bg-slate-900/80 px-2.5 py-1.5 text-xs text-slate-100" />
+                      class="w-full rounded-lg border border-slate-700 bg-slate-900/80 px-2.5 py-1.5 text-xs text-slate-100 placeholder:text-slate-500" />
                   </div>
                 </div>
 
@@ -117,11 +129,10 @@
                 </button>
 
                 <p id="statusMessage" class="text-[11px] text-slate-500 h-4"></p>
-
               </div>
             </div>
 
-            <!-- Results -->
+            <!-- RESULTS PANEL -->
             <div class="rounded-2xl border border-slate-800 bg-slate-950/80 backdrop-blur shadow-lg shadow-cyan-500/5">
               <div class="px-5 py-4 border-b border-slate-800 flex items-center justify-between">
                 <h2 class="text-sm font-semibold text-slate-100">Risk assessment</h2>
@@ -151,7 +162,6 @@
                       <li class="text-slate-500">None yet.</li>
                     </ul>
                   </div>
-
                   <div>
                     <span class="block text-[11px] text-slate-500 mb-1">Next steps</span>
                     <ul id="nextStepsList" class="space-y-1 text-[11px] text-emerald-300">
@@ -187,28 +197,45 @@
       <!-- PRICING -->
       <section id="pricing" class="border-t border-slate-800 bg-slate-950/80">
         <div class="mx-auto max-w-6xl px-4 py-8 md:py-10">
+
           <h2 class="text-sm font-semibold text-slate-100 mb-4">Pricing (configure plans inside Chutes)</h2>
+
           <div class="grid gap-4 md:grid-cols-3 text-xs">
+
+            <!-- BASIC -->
             <div class="rounded-xl border border-slate-800 bg-slate-900/60 p-4">
               <div class="text-slate-200 font-semibold mb-1">Basic</div>
-              <div class="text-lg font-semibold text-slate-50">$49<span class="text-xs text-slate-400">/month</span></div>
+              <div class="text-lg font-semibold text-slate-50">
+                $49<span class="text-xs text-slate-400">/month</span>
+              </div>
               <p class="mt-2 text-slate-400">Up to 30 checks per month. Good for small desks and single brokers.</p>
             </div>
+
+            <!-- PRO -->
             <div class="rounded-xl border border-cyan-500/60 bg-cyan-500/5 p-4">
               <div class="text-slate-200 font-semibold mb-1">Pro</div>
-              <div class="text-lg font-semibold text-slate-50">$199<span class="text-xs text-slate-400">/month</span></div>
+              <div class="text-lg font-semibold text-slate-50">
+                $199<span class="text-xs text-slate-400">/month</span>
+              </div>
               <p class="mt-2 text-slate-400">Up to 150 checks per month. For desks actively screening global deals.</p>
             </div>
+
+            <!-- ENTERPRISE -->
             <div class="rounded-xl border border-slate-800 bg-slate-900/60 p-4">
               <div class="text-slate-200 font-semibold mb-1">Enterprise</div>
-              <div class="text-lg font-semibold text-slate-50">$1499<span class="text-xs text-slate-400">/month</span></div>
-              <p class="mt-2 text-slate-400">Unlimited checks, API access, and private blacklist sharing for trade houses.</p>
+              <div class="text-lg font-semibold text-slate-50">
+                $1499<span class="text-xs text-slate-400">/year</span>
+              </div>
+              <p class="mt-2 text-slate-400">
+                Unlimited checks, API access, and private blacklist sharing for trade houses.
+              </p>
             </div>
+
           </div>
         </div>
       </section>
-    </main>
 
+    </main>
   </div>
 
   <!-- FLOATING UPSELL BUTTON + MODAL -->
@@ -232,12 +259,11 @@
       </p>
 
       <ul class="text-slate-200 space-y-1.5 sm:space-y-2 mb-5 sm:mb-6 text-xs sm:text-sm">
-        <li>• Unlimited LOI / ICPO document analysis</li>
+        <li>• Unlimited LOI / ICPO analysis</li>
         <li>• Corporate registry & blacklist scanning</li>
         <li>• Bank SWIFT & branch match verification</li>
-        <li>• Passport & ID authenticity scoring</li>
+        <li>• Passport authenticity scoring</li>
         <li>• Buyer capacity estimation</li>
-        <li>• Seller legitimacy scoring</li>
         <li>• Scam-pattern detection & fraud alerts</li>
       </ul>
 
@@ -247,17 +273,10 @@
       </div>
 
       <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-        <a
-          href="#"
-          class="px-5 py-2.5 rounded-xl font-semibold text-black bg-yellow-400 hover:bg-yellow-300 transition shadow-lg shadow-yellow-500/30 text-sm"
-        >
+        <a href="#" class="px-5 py-2.5 rounded-xl font-semibold text-black bg-yellow-400 hover:bg-yellow-300 transition text-sm">
           Upgrade Now
         </a>
-        <button
-          type="button"
-          onclick="closeUpsell()"
-          class="text-xs text-slate-400 hover:text-slate-200 underline"
-        >
+        <button onclick="closeUpsell()" class="text-xs text-slate-400 hover:text-slate-200 underline">
           Maybe later
         </button>
       </div>
@@ -271,6 +290,12 @@
 
   <!-- SCRIPT -->
   <script>
+    const dropzone = document.getElementById("dropzone");
+    const fileInput = document.getElementById("fileInput");
+    if (dropzone && fileInput) {
+      dropzone.addEventListener("click", () => fileInput.click());
+    }
+
     function openUpsell() {
       const m = document.getElementById('upsellModal');
       m.classList.remove('hidden');
@@ -283,7 +308,6 @@
       m.classList.remove('flex');
     }
 
-    // Demo logic — replace with Chutes/Gravity later
     function runDiligence() {
       document.getElementById("riskBadge").textContent = "Processing...";
       document.getElementById("score").textContent = "72 / 100";
@@ -292,7 +316,7 @@
       document.getElementById("flagsList").innerHTML =
         "<li>• Free email domain</li><li>• Volume unrealistic</li>";
       document.getElementById("nextStepsList").innerHTML =
-        "<li>• Ask for performance proof</li><li>• Request KYC pack</li>";
+        "<li>• Ask for performance proof</li><li>• Request full KYC pack</li>";
       document.getElementById("statusMessage").textContent = "Complete.";
     }
   </script>

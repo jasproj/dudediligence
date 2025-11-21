@@ -30,7 +30,7 @@
               </span>
             </div>
             <p class="text-xs text-slate-400">
-              AI verify buyers and sellers before you waste another call.
+              Instant due diligence reports for commodities brokers
             </p>
           </div>
         </div>
@@ -79,6 +79,9 @@
                   <h2 class="text-sm font-semibold text-slate-100">Run Dude Diligence</h2>
                   <p class="text-xs text-slate-400">Upload LOI, ICPO, or combined PDFs.</p>
                 </div>
+                <span class="rounded-full bg-slate-900 px-3 py-1 text-[11px] text-slate-300 border border-slate-700">
+                  1 credit per check
+                </span>
               </div>
 
               <div class="px-5 pt-4 pb-5 space-y-4">
@@ -162,6 +165,48 @@
           </div>
         </div>
       </section>
+
+      <!-- HOW IT WORKS -->
+      <section id="how-it-works" class="border-t border-slate-800/80 bg-black/60">
+        <div class="mx-auto max-w-6xl px-4 py-8 md:py-10 grid gap-8 md:grid-cols-3 text-xs text-slate-300">
+          <div>
+            <h3 class="text-sm font-semibold text-slate-100 mb-2">1. Upload the documents</h3>
+            <p>LOI, ICPO, KYC, or a combined PDF. Dude Diligence extracts the key details automatically.</p>
+          </div>
+          <div>
+            <h3 class="text-sm font-semibold text-slate-100 mb-2">2. Rules, fingerprints, and signals</h3>
+            <p>We check company footprint, email type, domain age, volume realism, document integrity, and known patterns.</p>
+          </div>
+          <div>
+            <h3 class="text-sm font-semibold text-slate-100 mb-2">3. Clear risk score and next moves</h3>
+            <p>Get a simple score, risk color, red flags, and a short list of what to ask for next before you commit.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- PRICING -->
+      <section id="pricing" class="border-t border-slate-800 bg-slate-950/80">
+        <div class="mx-auto max-w-6xl px-4 py-8 md:py-10">
+          <h2 class="text-sm font-semibold text-slate-100 mb-4">Pricing (configure plans inside Chutes)</h2>
+          <div class="grid gap-4 md:grid-cols-3 text-xs">
+            <div class="rounded-xl border border-slate-800 bg-slate-900/60 p-4">
+              <div class="text-slate-200 font-semibold mb-1">Basic</div>
+              <div class="text-lg font-semibold text-slate-50">$49<span class="text-xs text-slate-400">/month</span></div>
+              <p class="mt-2 text-slate-400">Up to 30 checks per month. Good for small desks and single brokers.</p>
+            </div>
+            <div class="rounded-xl border border-cyan-500/60 bg-cyan-500/5 p-4">
+              <div class="text-slate-200 font-semibold mb-1">Pro</div>
+              <div class="text-lg font-semibold text-slate-50">$199<span class="text-xs text-slate-400">/month</span></div>
+              <p class="mt-2 text-slate-400">Up to 150 checks per month. For desks actively screening global deals.</p>
+            </div>
+            <div class="rounded-xl border border-slate-800 bg-slate-900/60 p-4">
+              <div class="text-slate-200 font-semibold mb-1">Enterprise</div>
+              <div class="text-lg font-semibold text-slate-50">$1499<span class="text-xs text-slate-400">/month</span></div>
+              <p class="mt-2 text-slate-400">Unlimited checks, API access, and private blacklist sharing for trade houses.</p>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
   </div>
@@ -181,24 +226,40 @@
         Unlock Full Dude Diligence Access
       </h2>
 
-      <ul class="text-slate-200 space-y-1.5 sm:space-y-2 mb-6 text-xs sm:text-sm">
-        <li>• Unlimited LOI / ICPO analysis</li>
-        <li>• Corporate registry lookups</li>
-        <li>• Email + domain trust scoring</li>
-        <li>• Blacklist + scam-pattern scan</li>
-        <li>• Volume realism checks</li>
-        <li>• Passport formatting verification</li>
+      <p class="text-slate-300 text-center mb-5 sm:mb-6 text-xs sm:text-sm">
+        Run unlimited buyer/seller verifications, blacklist checks, passport validation,
+        scam-pattern scanning, and real-time corporate intelligence.
+      </p>
+
+      <ul class="text-slate-200 space-y-1.5 sm:space-y-2 mb-5 sm:mb-6 text-xs sm:text-sm">
+        <li>• Unlimited LOI / ICPO document analysis</li>
+        <li>• Corporate registry & blacklist scanning</li>
+        <li>• Bank SWIFT & branch match verification</li>
+        <li>• Passport & ID authenticity scoring</li>
+        <li>• Buyer capacity estimation</li>
+        <li>• Seller legitimacy scoring</li>
+        <li>• Scam-pattern detection & fraud alerts</li>
       </ul>
 
-      <div class="text-center mb-6">
-        <span class="text-3xl font-bold text-yellow-400">$49/mo</span>
-        <p class="text-slate-400 text-sm">Cancel anytime</p>
+      <div class="text-center mb-5 sm:mb-6">
+        <span class="text-2xl sm:text-3xl font-bold text-yellow-400">$49/mo</span>
+        <p class="text-slate-400 text-xs sm:text-sm">Cancel anytime</p>
       </div>
 
-      <div class="flex justify-center">
-        <a href="#" class="px-6 py-3 rounded-xl font-semibold text-black bg-yellow-400 hover:bg-yellow-300 transition">
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+        <a
+          href="#"
+          class="px-5 py-2.5 rounded-xl font-semibold text-black bg-yellow-400 hover:bg-yellow-300 transition shadow-lg shadow-yellow-500/30 text-sm"
+        >
           Upgrade Now
         </a>
+        <button
+          type="button"
+          onclick="closeUpsell()"
+          class="text-xs text-slate-400 hover:text-slate-200 underline"
+        >
+          Maybe later
+        </button>
       </div>
 
       <button onclick="closeUpsell()" class="absolute top-3 right-4 text-slate-400 text-xl hover:text-white">
@@ -228,8 +289,10 @@
       document.getElementById("score").textContent = "72 / 100";
       document.getElementById("summary").textContent =
         "Document looks partially valid. Several caution flags detected. Recommend enhanced KYC.";
-      document.getElementById("flagsList").innerHTML = "<li>• Free email domain</li><li>• Volume unrealistic</li>";
-      document.getElementById("nextStepsList").innerHTML = "<li>• Ask for performance proof</li><li>• Request KYC pack</li>";
+      document.getElementById("flagsList").innerHTML =
+        "<li>• Free email domain</li><li>• Volume unrealistic</li>";
+      document.getElementById("nextStepsList").innerHTML =
+        "<li>• Ask for performance proof</li><li>• Request KYC pack</li>";
       document.getElementById("statusMessage").textContent = "Complete.";
     }
   </script>

@@ -18,26 +18,11 @@
     <!-- HEADER -->
     <header class="border-b border-slate-800/80 bg-black/60 backdrop-blur">
       <div class="mx-auto max-w-6xl px-4 py-4 flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <!-- Small header robot logo -->
-          <div class="h-10 w-10 rounded-2xl bg-slate-900 border-2 border-cyan-400 flex items-center justify-center shadow-md shadow-cyan-500/40">
-            <svg viewBox="0 0 40 40" class="h-7 w-7 text-cyan-300">
-              <!-- Antenna -->
-              <line x1="20" y1="5" x2="20" y2="9" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-              <circle cx="20" cy="4" r="1.5" fill="currentColor" />
-              <!-- Outer monitor -->
-              <rect x="7" y="8" width="26" height="20" rx="4" ry="4"
-                    fill="none" stroke="currentColor" stroke-width="2" />
-              <!-- Eyes -->
-              <circle cx="15" cy="18" r="2.2" fill="currentColor" />
-              <circle cx="25" cy="18" r="2.2" fill="currentColor" />
-              <!-- Mouth -->
-              <rect x="15" y="22" width="10" height="2" rx="1" fill="currentColor" />
-              <!-- Stand -->
-              <rect x="17" y="29" width="6" height="2.2" rx="1.1" fill="currentColor" />
-            </svg>
+        <div class="flex items-center gap-2">
+          <!-- DD block logo -->
+          <div class="h-9 w-9 rounded-xl bg-cyan-500/20 border border-cyan-400/40 flex items-center justify-center">
+            <span class="text-cyan-300 font-semibold text-lg">DD</span>
           </div>
-
           <div>
             <div class="flex items-center gap-2">
               <span class="font-semibold text-slate-50 tracking-tight">Dude Diligence</span>
@@ -101,7 +86,7 @@
                   <polyline
                     points="70,80 78,76 86,82 94,72 102,78 110,70 118,74 126,66 134,72 142,60 150,66 154,62"
                     fill="none" stroke="#ffffff" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" />
-                  <!-- A couple of candlestick bars -->
+                  <!-- Candlestick bars -->
                   <line x1="86" y1="82" x2="86" y2="70" stroke="#ffffff" stroke-width="2" />
                   <rect x="83" y="72" width="6" height="8" fill="#ffffff" />
                   <line x1="118" y1="74" x2="118" y2="62" stroke="#ffffff" stroke-width="2" />
@@ -274,8 +259,7 @@
     </main>
   </div>
 
-  <!-- FLOATING UPS
-ELL BUTTON + MODAL -->
+  <!-- FLOATING UPSELL BUTTON + MODAL -->
   <button
     onclick="openUpsell()"
     class="fixed bottom-5 right-5 z-40 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full font-semibold text-black bg-yellow-400 hover:bg-yellow-300 shadow-xl shadow-yellow-500/30 text-xs sm:text-sm">

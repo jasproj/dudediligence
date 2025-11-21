@@ -1,97 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Upsell Me Button -->
+<div class="mt-8 flex justify-center">
+  <button
+    onclick="openUpsell()"
+    class="px-6 py-3 rounded-xl font-semibold text-black bg-yellow-400 hover:bg-yellow-300 transition shadow-lg shadow-yellow-500/30"
+  >
+    Upsell Me
+  </button>
+</div>
 
-  <title>Dude Diligence – AI Verifies Buyers & Sellers in Seconds</title>
-
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <style>
-    body {
-      background: radial-gradient(circle at top, #0f172a 0%, #020617 60%, #000 100%);
-    }
-  </style>
-</head>
-
-<body class="min-h-screen text-slate-100">
-
-  <!-- HEADER -->
-  <header class="text-center pt-12 pb-8">
-    <h1 class="text-5xl font-extrabold tracking-tight mb-4">
-      Dude <span class="text-indigo-400">Diligence</span>
-    </h1>
-    <p class="text-lg text-slate-300 max-w-2xl mx-auto">
-      Upload an LOI, ICPO, KYC, Passport scan, or any buyer/seller document.
-      We will detect red flags, fraud signals, mismatches, scam patterns, and confidence scores in seconds.
-    </p>
-  </header>
-
-  <!-- MAIN CARD -->
-  <section class="max-w-xl mx-auto bg-slate-900/60 border border-slate-700 rounded-2xl p-8 shadow-xl">
-
-    <h2 class="text-2xl font-semibold mb-4 text-indigo-300">
-      Verify a Buyer or Seller
+<!-- Upsell Modal -->
+<div id="upsellModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center z-50">
+  <div class="bg-slate-800 p-8 rounded-2xl w-[90%] max-w-lg shadow-xl border border-slate-700 relative">
+    
+    <h2 class="text-2xl font-bold text-white mb-4 text-center">
+      Unlock Full Dude Diligence Access
     </h2>
 
-    <!-- Upload UI -->
-    <label class="block mb-4">
-      <span class="text-slate-300">Upload document (PDF / JPG / PNG)</span>
-      <input type="file" id="fileInput" class="mt-2 block w-full text-slate-200 bg-slate-800 border border-slate-600 rounded-lg p-2">
-    </label>
+    <p class="text-slate-300 text-center mb-6">
+      Run unlimited buyer/seller verifications, blacklist checks, passport validation, 
+      scam-pattern scanning, and real-time corporate intelligence.
+    </p>
 
-    <label class="block mb-4">
-      <span class="text-slate-300">Commodity (optional)</span>
-      <input type="text" id="commodity" placeholder="ICUMSA 45, EN590, Jet A1, etc."
-             class="mt-2 block w-full text-slate-200 bg-slate-800 border border-slate-600 rounded-lg p-2">
-    </label>
+    <ul class="text-slate-200 space-y-2 mb-6">
+      <li>• Unlimited LOI / ICPO document analysis</li>
+      <li>• Corporate registry & blacklist scanning</li>
+      <li>• Bank SWIFT & branch match verification</li>
+      <li>• Passport & ID authenticity scoring</li>
+      <li>• Buyer capacity estimation</li>
+      <li>• Seller legitimacy scoring</li>
+      <li>• Scam-pattern detection & fraud alerts</li>
+    </ul>
 
-    <label class="block mb-6">
-      <span class="text-slate-300">Claimed Volume (optional)</span>
-      <input type="text" id="volume" placeholder="1000 MT, 12M bbl, etc."
-             class="mt-2 block w-full text-slate-200 bg-slate-800 border border-slate-600 rounded-lg p-2">
-    </label>
-
-    <!-- BUTTON -->
-    <button id="runCheck"
-            class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 rounded-lg font-semibold text-lg shadow-md transition">
-      Run Dude Diligence
-    </button>
-
-    <!-- RESULT -->
-    <div id="result" class="mt-8 hidden">
-      <h3 class="text-xl font-bold text-indigo-300 mb-2">Results</h3>
-      <div id="score" class="text-3xl font-extrabold"></div>
-      <div id="notes" class="mt-4 text-slate-300"></div>
+    <div class="text-center mb-6">
+      <span class="text-3xl font-bold text-yellow-400">$49/mo</span>
+      <p class="text-slate-400 text-sm">Cancel anytime</p>
     </div>
 
-  </section>
+    <div class="flex justify-center">
+      <a
+        href="#"
+        class="px-6 py-3 rounded-xl font-semibold text-black bg-yellow-400 hover:bg-yellow-300 transition shadow-lg shadow-yellow-500/30"
+      >
+        Upgrade Now
+      </a>
+    </div>
 
-  <!-- FOOTER -->
-  <footer class="text-center text-slate-500 text-sm mt-16 pb-8">
-    © 2025 Dude Diligence. All rights reserved.
-  </footer>
+    <!-- Close Button -->
+    <button onclick="closeUpsell()" class="absolute top-3 right-4 text-slate-400 text-xl hover:text-white">
+      &times;
+    </button>
 
-  <!-- TEMPORARY JS (CLIENT-SIDE MOCK) -->
-  <script>
-    document.getElementById("runCheck").onclick = function () {
+  </div>
+</div>
 
-      const file = document.getElementById("fileInput").files[0];
-      if (!file) {
-        alert("Please upload a document.");
-        return;
-      }
-
-      document.getElementById("result").classList.remove("hidden");
-      document.getElementById("score").textContent = "Analysis Pending…";
-      document.getElementById("notes").textContent =
-        "Your document has been uploaded. The verification engine will be connected soon.";
-
-      // Later this will call your Chutes agent endpoint:
-      // fetch("YOUR_CHUTES_ENDPOINT", { method: "POST", body: formData })
-    };
-  </script>
-
-</body>
-</html>
+<script>
+function openUpsell() {
+  document.getElementById('upsellModal').classList.remove('hidden');
+  document.getElementById('upsellModal').classList.add('flex');
+}
+function closeUpsell() {
+  document.getElementById('upsellModal').classList.add('hidden');
+}
+</script>

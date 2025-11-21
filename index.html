@@ -82,43 +82,9 @@ Pay in Crypto
 
 <!-- LEFT SIDE -->
 <div>
-<!-- AI Bot Head + Title -->
-<div class="flex items-start gap-4 mb-4">
-<!-- AI Bot Head SVG -->
-<svg class="w-24 h-24 flex-shrink-0" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
-<!-- Hardhat -->
-<ellipse cx="50" cy="25" rx="35" ry="8" fill="#fff" opacity="0.9"/>
-<path d="M 15 25 Q 15 15 50 15 Q 85 15 85 25 L 85 35 Q 85 40 50 40 Q 15 40 15 35 Z" fill="#fff" opacity="0.95"/>
-<rect x="35" y="18" width="30" height="3" fill="#000" opacity="0.3"/>
-
-<!-- Head/Body -->
-<rect x="20" y="40" width="60" height="55" rx="15" fill="#fff" stroke="#000" stroke-width="2"/>
-
-<!-- Cyclops Eye Window -->
-<rect x="30" y="55" width="40" height="18" rx="4" fill="#000" stroke="#fff" stroke-width="1.5"/>
-<circle class="bot-eye-glow" cx="50" cy="64" r="6" fill="#00ffff" opacity="0.8"/>
-<circle cx="50" cy="64" r="3" fill="#fff"/>
-
-<!-- Antenna -->
-<line x1="50" y1="15" x2="50" y2="8" stroke="#fff" stroke-width="2"/>
-<circle cx="50" cy="6" r="3" fill="#00ffff" stroke="#fff" stroke-width="1"/>
-
-<!-- Mouth/Vent -->
-<line x1="35" y1="82" x2="42" y2="82" stroke="#000" stroke-width="1.5"/>
-<line x1="58" y1="82" x2="65" y2="82" stroke="#000" stroke-width="1.5"/>
-<path d="M 42 82 Q 50 88 58 82" stroke="#000" stroke-width="1.5" fill="none"/>
-
-<!-- Side Details -->
-<circle cx="28" cy="64" r="2" fill="#000" opacity="0.3"/>
-<circle cx="72" cy="64" r="2" fill="#000" opacity="0.3"/>
-</svg>
-
-<div class="flex-1">
-<h1 class="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-slate-50">
+<h1 class="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-slate-50 mb-4">
 AI verify Buyers and Sellers before you waste another call.
 </h1>
-</div>
-</div>
 
 <p class="mt-4 text-sm md:text-base text-slate-300 max-w-xl">
 Upload an LOI, ICPO, KYC pack, or mandate letter. Dude Diligence reads it, checks the company,
@@ -339,7 +305,7 @@ Upsell Me
 <!-- CRYPTO PAYMENT MODAL -->
 <div id="cryptoModal"
 class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center z-50">
-<div class="bg-slate-800 p-8 rounded-2xl w-[94%] max-w-lg shadow-xl border border-slate-700 relative">
+<div class="bg-slate-800 p-8 rounded-2xl w-[94%] max-w-lg shadow-xl border border-slate-700 relative max-h-[90vh] overflow-y-auto">
 
 <h2 class="text-2xl font-bold text-white mb-4 text-center">
 💰 Pay with Cryptocurrency
@@ -400,6 +366,59 @@ Fast, secure, and private. We accept multiple cryptocurrencies for subscription 
 </div>
 </div>
 </div>
+
+<div class="bg-slate-900/60 p-4 rounded-lg border border-slate-700 hover:border-cyan-500 transition cursor-pointer">
+<div class="flex items-center gap-3">
+<svg class="w-8 h-8 text-cyan-500" fill="currentColor" viewBox="0 0 24 24">
+<circle cx="12" cy="12" r="10" fill="#375BD2"/>
+<path d="M12 6l-1.5 4.5H6l3.75 2.7L8.25 18 12 15.3l3.75 2.7-1.5-4.8L18 10.5h-4.5L12 6z" fill="white"/>
+</svg>
+<div class="flex-1">
+<p class="font-semibold text-white">Chainlink (LINK)</p>
+<p class="text-xs text-slate-400">Network: Ethereum, Multiple chains</p>
+</div>
+</div>
+</div>
+
+<div class="bg-slate-900/60 p-4 rounded-lg border border-slate-700 hover:border-pink-500 transition cursor-pointer">
+<div class="flex items-center gap-3">
+<svg class="w-8 h-8 text-pink-500" fill="currentColor" viewBox="0 0 24 24">
+<circle cx="12" cy="12" r="11" fill="#ED1E79"/>
+<path d="M7 12h10M12 7v10" stroke="white" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<div class="flex-1">
+<p class="font-semibold text-white">Internet Computer (ICP)</p>
+<p class="text-xs text-slate-400">Network: Internet Computer</p>
+</div>
+</div>
+</div>
+
+<div class="bg-slate-900/60 p-4 rounded-lg border border-slate-700 hover:border-red-500 transition cursor-pointer">
+<div class="flex items-center gap-3">
+<svg class="w-8 h-8 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+<circle cx="12" cy="12" r="11" fill="#DC2626"/>
+<path d="M8 9l4 3 4-3M8 15l4-3 4 3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+<div class="flex-1">
+<p class="font-semibold text-white">Bittensor (TAO)</p>
+<p class="text-xs text-slate-400">Network: Bittensor</p>
+</div>
+</div>
+</div>
+
+<div class="bg-slate-900/60 p-4 rounded-lg border border-slate-700 hover:border-amber-500 transition cursor-pointer">
+<div class="flex items-center gap-3">
+<svg class="w-8 h-8 text-amber-500" fill="currentColor" viewBox="0 0 24 24">
+<circle cx="12" cy="12" r="11" fill="#F59E0B"/>
+<path d="M12 6v12M6 12h12" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="12" cy="12" r="3" fill="white"/>
+</svg>
+<div class="flex-1">
+<p class="font-semibold text-white">World Liberty Financial (WLFI)</p>
+<p class="text-xs text-slate-400">Network: Ethereum</p>
+</div>
+</div>
+</div>
 </div>
 
 <div class="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-4 mb-6">
@@ -452,11 +471,11 @@ Unlimited verifications, blacklist checks, passport validation, fraud scanning, 
 </div>
 
 <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-<a href="#" class="px-6 py-3 rounded-xl font-semibold text-black bg-yellow-400 hover:bg-yellow-300 transition text-sm">
-Upgrade Now
-</a>
+<button onclick="handleStripePayment()" class="px-6 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transition text-sm shadow-lg">
+💳 Pay with Card (Stripe)
+</button>
 <button onclick="openCryptoModal(); closeUpsell();" class="px-6 py-3 rounded-xl font-semibold text-slate-900 bg-gradient-to-r from-orange-400 to-yellow-400 hover:from-orange-500 hover:to-yellow-500 transition text-sm">
-Pay with Crypto
+₿ Pay with Crypto
 </button>
 </div>
 
@@ -909,6 +928,26 @@ function closeUpsell() {
     const m = document.getElementById('upsellModal');
     m.classList.add('hidden');
     m.classList.remove('flex');
+}
+
+// Stripe payment handler
+function handleStripePayment() {
+    // TODO: Replace these with your actual Stripe Payment Links
+    const STRIPE_PAYMENT_LINKS = {
+        basic: 'https://buy.stripe.com/test_YOUR_BASIC_LINK',
+        pro: 'https://buy.stripe.com/test_YOUR_PRO_LINK',
+        enterprise: 'https://buy.stripe.com/test_YOUR_ENTERPRISE_LINK'
+    };
+    
+    // For now, redirect to Stripe payment link for Basic plan ($49/mo)
+    // You'll replace this URL with your actual Stripe Payment Link
+    const stripeLink = STRIPE_PAYMENT_LINKS.basic;
+    
+    // Show instructions for now
+    alert('Stripe Integration Instructions:\n\n1. Go to stripe.com and create an account\n2. Create a Payment Link for $49/month\n3. Replace the URL in the handleStripePayment() function\n4. Test the payment flow\n\nFor now, this is a placeholder. Click OK to see where your Stripe link would go.');
+    
+    // Uncomment this line when you have your Stripe Payment Link:
+    // window.location.href = stripeLink;
 }
 </script>
 

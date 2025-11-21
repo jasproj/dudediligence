@@ -26,6 +26,16 @@
 body {
 background: radial-gradient(circle at top, #0f172a 0%, #020617 60%, #000 100%);
 }
+
+/* Animated scanning effect for bot eye */
+@keyframes scan {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+.bot-eye-glow {
+  animation: scan 2s ease-in-out infinite;
+}
 </style>
 </head>
 
@@ -54,6 +64,14 @@ Instant due diligence reports for commodities brokers
 </p>
 </div>
 </div>
+
+<!-- Pay in Crypto Button -->
+<button onclick="openCryptoModal()" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-orange-500 to-yellow-500 text-slate-900 font-semibold text-sm hover:from-orange-600 hover:to-yellow-600 transition shadow-lg">
+<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+<path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 14.813h-2.094v2.094h-2.093v-2.094H9.562v-2.094h3.813V9.188H9.562V7.093h3.813V5h2.093v2.093h2.094v2.094h-2.094v3.532h2.094v2.094z"/>
+</svg>
+Pay in Crypto
+</button>
 </div>
 </header>
 
@@ -64,9 +82,43 @@ Instant due diligence reports for commodities brokers
 
 <!-- LEFT SIDE -->
 <div>
+<!-- AI Bot Head + Title -->
+<div class="flex items-start gap-4 mb-4">
+<!-- AI Bot Head SVG -->
+<svg class="w-24 h-24 flex-shrink-0" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+<!-- Hardhat -->
+<ellipse cx="50" cy="25" rx="35" ry="8" fill="#fff" opacity="0.9"/>
+<path d="M 15 25 Q 15 15 50 15 Q 85 15 85 25 L 85 35 Q 85 40 50 40 Q 15 40 15 35 Z" fill="#fff" opacity="0.95"/>
+<rect x="35" y="18" width="30" height="3" fill="#000" opacity="0.3"/>
+
+<!-- Head/Body -->
+<rect x="20" y="40" width="60" height="55" rx="15" fill="#fff" stroke="#000" stroke-width="2"/>
+
+<!-- Cyclops Eye Window -->
+<rect x="30" y="55" width="40" height="18" rx="4" fill="#000" stroke="#fff" stroke-width="1.5"/>
+<circle class="bot-eye-glow" cx="50" cy="64" r="6" fill="#00ffff" opacity="0.8"/>
+<circle cx="50" cy="64" r="3" fill="#fff"/>
+
+<!-- Antenna -->
+<line x1="50" y1="15" x2="50" y2="8" stroke="#fff" stroke-width="2"/>
+<circle cx="50" cy="6" r="3" fill="#00ffff" stroke="#fff" stroke-width="1"/>
+
+<!-- Mouth/Vent -->
+<line x1="35" y1="82" x2="42" y2="82" stroke="#000" stroke-width="1.5"/>
+<line x1="58" y1="82" x2="65" y2="82" stroke="#000" stroke-width="1.5"/>
+<path d="M 42 82 Q 50 88 58 82" stroke="#000" stroke-width="1.5" fill="none"/>
+
+<!-- Side Details -->
+<circle cx="28" cy="64" r="2" fill="#000" opacity="0.3"/>
+<circle cx="72" cy="64" r="2" fill="#000" opacity="0.3"/>
+</svg>
+
+<div class="flex-1">
 <h1 class="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-slate-50">
 AI verify Buyers and Sellers before you waste another call.
 </h1>
+</div>
+</div>
 
 <p class="mt-4 text-sm md:text-base text-slate-300 max-w-xl">
 Upload an LOI, ICPO, KYC pack, or mandate letter. Dude Diligence reads it, checks the company,
@@ -85,6 +137,10 @@ email, volume, document patterns, and public risk signals, then gives you a clea
 <li class="flex items-start gap-2">
 <span class="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
 <span>Quiet internal blacklist + document fingerprint tracking.</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
+<span>💰 Pay with Bitcoin, Ethereum, USDT, or other crypto.</span>
 </li>
 </ul>
 </div>
@@ -119,13 +175,33 @@ class="mt-2 flex flex-col items-center justify-center rounded-xl border border-d
 <div class="grid grid-cols-2 gap-3 text-xs">
 <div>
 <label class="block text-slate-300 mb-1">Commodity</label>
-<input id="commodity" type="text" placeholder="ICUMSA 45"
-class="w-full rounded-lg border border-slate-700 bg-slate-900/80 px-2.5 py-1.5 text-xs text-slate-100 placeholder:text-slate-500" />
+<select id="commodity"
+class="w-full rounded-lg border border-slate-700 bg-slate-900/80 px-2.5 py-1.5 text-xs text-slate-100 cursor-pointer">
+<option value="">Select commodity...</option>
+<option value="ICUMSA 45 Sugar">ICUMSA 45 Sugar</option>
+<option value="Soybean Oil">Soybean Oil</option>
+<option value="Crude Oil">Crude Oil</option>
+<option value="Wheat">Wheat</option>
+<option value="Corn">Corn</option>
+<option value="Rice">Rice</option>
+<option value="Gold">Gold</option>
+<option value="Copper">Copper</option>
+<option value="Iron Ore">Iron Ore</option>
+<option value="Coal">Coal</option>
+<option value="Natural Gas">Natural Gas</option>
+<option value="Other">Other</option>
+</select>
 </div>
 <div>
 <label class="block text-slate-300 mb-1">Volume</label>
-<input id="volume" type="text" placeholder="1000 MT"
-class="w-full rounded-lg border border-slate-700 bg-slate-900/80 px-2.5 py-1.5 text-xs text-slate-100 placeholder:text-slate-500" />
+<select id="volume"
+class="w-full rounded-lg border border-slate-700 bg-slate-900/80 px-2.5 py-1.5 text-xs text-slate-100 cursor-pointer">
+<option value="">Select volume range...</option>
+<option value="0-1000 MT">0 - 1,000 MT</option>
+<option value="1000-10000 MT">1,000 - 10,000 MT</option>
+<option value="10000-50000 MT">10,000 - 50,000 MT</option>
+<option value="Over 50000 MT">Over 50,000 MT</option>
+</select>
 </div>
 </div>
 
@@ -221,18 +297,30 @@ Waiting...
 <div class="text-slate-200 font-semibold">Basic</div>
 <div class="text-lg font-semibold text-slate-50">$49<span class="text-xs text-slate-400">/month</span></div>
 <p class="mt-2 text-slate-400">30 checks/month.</p>
+<div class="mt-3 flex items-center gap-1 text-[10px] text-slate-500">
+<svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 14.813h-2.094v2.094h-2.093v-2.094H9.562v-2.094h3.813V9.188H9.562V7.093h3.813V5h2.093v2.093h2.094v2.094h-2.094v3.532h2.094v2.094z"/></svg>
+Crypto accepted
+</div>
 </div>
 
 <div class="rounded-xl border border-cyan-500/60 bg-cyan-500/5 p-4">
 <div class="text-slate-200 font-semibold">Pro</div>
 <div class="text-lg font-semibold text-slate-50">$199<span class="text-xs text-slate-400">/month</span></div>
 <p class="mt-2 text-slate-400">150 checks/month.</p>
+<div class="mt-3 flex items-center gap-1 text-[10px] text-cyan-400">
+<svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 14.813h-2.094v2.094h-2.093v-2.094H9.562v-2.094h3.813V9.188H9.562V7.093h3.813V5h2.093v2.093h2.094v2.094h-2.094v3.532h2.094v2.094z"/></svg>
+Crypto accepted
+</div>
 </div>
 
 <div class="rounded-xl border border-slate-800 bg-slate-900/60 p-4">
 <div class="text-slate-200 font-semibold">Enterprise</div>
 <div class="text-lg font-semibold text-slate-50">$1499<span class="text-xs text-slate-400">/year</span></div>
 <p class="mt-2 text-slate-400">Unlimited checks, API access.</p>
+<div class="mt-3 flex items-center gap-1 text-[10px] text-slate-500">
+<svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 14.813h-2.094v2.094h-2.093v-2.094H9.562v-2.094h3.813V9.188H9.562V7.093h3.813V5h2.093v2.093h2.094v2.094h-2.094v3.532h2.094v2.094z"/></svg>
+Crypto accepted
+</div>
 </div>
 
 </div>
@@ -242,12 +330,101 @@ Waiting...
 </main>
 </div>
 
-<!-- UPSELL -->
+<!-- UPSELL FLOATING BUTTON -->
 <button onclick="openUpsell()"
 class="fixed bottom-5 right-5 z-40 px-5 py-3 rounded-full font-semibold text-black bg-yellow-400 hover:bg-yellow-300 shadow-xl shadow-yellow-500/30 text-sm">
 Upsell Me
 </button>
 
+<!-- CRYPTO PAYMENT MODAL -->
+<div id="cryptoModal"
+class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center z-50">
+<div class="bg-slate-800 p-8 rounded-2xl w-[94%] max-w-lg shadow-xl border border-slate-700 relative">
+
+<h2 class="text-2xl font-bold text-white mb-4 text-center">
+💰 Pay with Cryptocurrency
+</h2>
+
+<p class="text-slate-300 text-center mb-6 text-sm">
+Fast, secure, and private. We accept multiple cryptocurrencies for subscription payments.
+</p>
+
+<div class="space-y-3 mb-6">
+<div class="bg-slate-900/60 p-4 rounded-lg border border-slate-700 hover:border-orange-500 transition cursor-pointer">
+<div class="flex items-center gap-3">
+<svg class="w-8 h-8 text-orange-500" fill="currentColor" viewBox="0 0 24 24">
+<path d="M23.638 14.904c-1.602 6.43-8.113 10.34-14.542 8.736C2.67 22.05-1.244 15.525.362 9.105 1.962 2.67 8.475-1.243 14.9.358c6.43 1.605 10.342 8.115 8.738 14.548v-.002zm-6.35-4.613c.24-1.59-.974-2.45-2.64-3.03l.54-2.153-1.315-.33-.525 2.107c-.345-.087-.705-.167-1.064-.25l.526-2.127-1.32-.33-.54 2.165c-.285-.067-.565-.132-.84-.2l-1.815-.45-.35 1.407s.975.225.955.236c.535.136.63.486.615.766l-1.477 5.92c-.075.166-.24.406-.614.314.015.02-.96-.24-.96-.24l-.66 1.51 1.71.426.93.242-.54 2.19 1.32.327.54-2.17c.36.1.705.19 1.05.273l-.51 2.154 1.32.33.545-2.19c2.24.427 3.93.257 4.64-1.774.57-1.637-.03-2.58-1.217-3.196.854-.193 1.5-.76 1.68-1.93h.01zm-3.01 4.22c-.404 1.64-3.157.75-4.05.53l.72-2.9c.896.23 3.757.67 3.33 2.37zm.41-4.24c-.37 1.49-2.662.735-3.405.55l.654-2.64c.744.18 3.137.524 2.75 2.084v.006z"/>
+</svg>
+<div class="flex-1">
+<p class="font-semibold text-white">Bitcoin (BTC)</p>
+<p class="text-xs text-slate-400">Network: Bitcoin Mainnet</p>
+</div>
+</div>
+</div>
+
+<div class="bg-slate-900/60 p-4 rounded-lg border border-slate-700 hover:border-purple-500 transition cursor-pointer">
+<div class="flex items-center gap-3">
+<svg class="w-8 h-8 text-purple-500" fill="currentColor" viewBox="0 0 24 24">
+<path d="M11.944 17.97L4.58 13.62 11.943 24l7.37-10.38-7.372 4.35h.003zM12.056 0L4.69 12.223l7.365 4.354 7.365-4.35L12.056 0z"/>
+</svg>
+<div class="flex-1">
+<p class="font-semibold text-white">Ethereum (ETH)</p>
+<p class="text-xs text-slate-400">Network: Ethereum Mainnet</p>
+</div>
+</div>
+</div>
+
+<div class="bg-slate-900/60 p-4 rounded-lg border border-slate-700 hover:border-green-500 transition cursor-pointer">
+<div class="flex items-center gap-3">
+<svg class="w-8 h-8 text-green-500" fill="currentColor" viewBox="0 0 24 24">
+<circle cx="12" cy="12" r="12" fill="#26A17B"/>
+<path d="M16.2 9.8c-.1-.6-.6-1-1.2-1H9c-.6 0-1 .4-1 1v4.4c0 .6.4 1 1 1h6c.6 0 1-.4 1-1v-4.4zm-1 4h-6v-4h6v4z" fill="white"/>
+</svg>
+<div class="flex-1">
+<p class="font-semibold text-white">USDT (Tether)</p>
+<p class="text-xs text-slate-400">Network: ERC-20, TRC-20</p>
+</div>
+</div>
+</div>
+
+<div class="bg-slate-900/60 p-4 rounded-lg border border-slate-700 hover:border-blue-500 transition cursor-pointer">
+<div class="flex items-center gap-3">
+<svg class="w-8 h-8 text-blue-500" fill="currentColor" viewBox="0 0 24 24">
+<circle cx="12" cy="12" r="12" fill="#2775CA"/>
+<path d="M12 4C7.6 4 4 7.6 4 12s3.6 8 8 8 8-3.6 8-8-3.6-8-8-8zm0 13c-2.8 0-5-2.2-5-5s2.2-5 5-5 5 2.2 5 5-2.2 5-5 5z" fill="white"/>
+<circle cx="12" cy="12" r="3" fill="white"/>
+</svg>
+<div class="flex-1">
+<p class="font-semibold text-white">USDC (USD Coin)</p>
+<p class="text-xs text-slate-400">Network: Multiple chains</p>
+</div>
+</div>
+</div>
+</div>
+
+<div class="bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-4 mb-6">
+<p class="text-xs text-cyan-300 text-center">
+💡 <strong>How it works:</strong> Select your cryptocurrency, complete payment, and receive instant access to your subscription. No credit card required.
+</p>
+</div>
+
+<div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+<button onclick="alert('Crypto payment integration would connect to payment processor here')" class="px-6 py-3 rounded-xl font-semibold text-black bg-gradient-to-r from-orange-400 to-yellow-400 hover:from-orange-500 hover:to-yellow-500 transition text-sm">
+Continue with Crypto
+</button>
+<button onclick="closeCryptoModal()" class="text-sm text-slate-400 hover:text-slate-200 underline">
+Cancel
+</button>
+</div>
+
+<button onclick="closeCryptoModal()" class="absolute top-3 right-4 text-slate-400 text-2xl hover:text-white">
+&times;
+</button>
+
+</div>
+</div>
+
+<!-- UPSELL MODAL -->
 <div id="upsellModal"
 class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center z-50">
 <div class="bg-slate-800 p-8 rounded-2xl w-[94%] max-w-lg shadow-xl border border-slate-700 relative">
@@ -271,14 +448,15 @@ Unlimited verifications, blacklist checks, passport validation, fraud scanning, 
 
 <div class="text-center mb-6">
 <span class="text-3xl font-bold text-yellow-400">$49/mo</span>
+<p class="text-xs text-slate-400 mt-2">💰 Pay with crypto or card</p>
 </div>
 
 <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
 <a href="#" class="px-6 py-3 rounded-xl font-semibold text-black bg-yellow-400 hover:bg-yellow-300 transition text-sm">
 Upgrade Now
 </a>
-<button onclick="closeUpsell()" class="text-sm text-slate-400 hover:text-slate-200 underline">
-Maybe later
+<button onclick="openCryptoModal(); closeUpsell();" class="px-6 py-3 rounded-xl font-semibold text-slate-900 bg-gradient-to-r from-orange-400 to-yellow-400 hover:from-orange-500 hover:to-yellow-500 transition text-sm">
+Pay with Crypto
 </button>
 </div>
 
@@ -708,7 +886,19 @@ function exportReport() {
     URL.revokeObjectURL(url);
 }
 
-// Upsell modal functions
+// Modal functions
+function openCryptoModal() {
+    const m = document.getElementById('cryptoModal');
+    m.classList.remove('hidden');
+    m.classList.add('flex');
+}
+
+function closeCryptoModal() {
+    const m = document.getElementById('cryptoModal');
+    m.classList.add('hidden');
+    m.classList.remove('flex');
+}
+
 function openUpsell() {
     const m = document.getElementById('upsellModal');
     m.classList.remove('hidden');

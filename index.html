@@ -1,64 +1,238 @@
-<!-- Upsell Me Button -->
-<div class="mt-8 flex justify-center">
-  <button
-    onclick="openUpsell()"
-    class="px-6 py-3 rounded-xl font-semibold text-black bg-yellow-400 hover:bg-yellow-300 transition shadow-lg shadow-yellow-500/30"
-  >
-    Upsell Me
-  </button>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dude Diligence – AI verify buyers and sellers before you waste another call</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: radial-gradient(circle at top, #0f172a 0%, #020617 60%, #000 100%);
+    }
+  </style>
+</head>
 
-<!-- Upsell Modal -->
-<div id="upsellModal" class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center z-50">
-  <div class="bg-slate-800 p-8 rounded-2xl w-[90%] max-w-lg shadow-xl border border-slate-700 relative">
-    
-    <h2 class="text-2xl font-bold text-white mb-4 text-center">
-      Unlock Full Dude Diligence Access
-    </h2>
+<body class="min-h-screen text-slate-100 antialiased">
+  <div class="min-h-screen flex flex-col">
 
-    <p class="text-slate-300 text-center mb-6">
-      Run unlimited buyer/seller verifications, blacklist checks, passport validation, 
-      scam-pattern scanning, and real-time corporate intelligence.
-    </p>
+    <!-- HEADER -->
+    <header class="border-b border-slate-800/80 bg-black/60 backdrop-blur">
+      <div class="mx-auto max-w-6xl px-4 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <div class="h-9 w-9 rounded-xl bg-cyan-500/20 border border-cyan-400/40 flex items-center justify-center">
+            <span class="text-cyan-300 font-semibold text-lg">DD</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-semibold text-slate-50 tracking-tight">Dude Diligence</span>
+              <span class="text-[10px] uppercase tracking-[0.18em] text-slate-500 border border-slate-700/80 rounded px-1.5 py-[2px]">
+                AI Verify
+              </span>
+            </div>
+            <p class="text-xs text-slate-400">
+              AI verify buyers and sellers before you waste another call.
+            </p>
+          </div>
+        </div>
+      </div>
+    </header>
 
-    <ul class="text-slate-200 space-y-2 mb-6">
-      <li>• Unlimited LOI / ICPO document analysis</li>
-      <li>• Corporate registry & blacklist scanning</li>
-      <li>• Bank SWIFT & branch match verification</li>
-      <li>• Passport & ID authenticity scoring</li>
-      <li>• Buyer capacity estimation</li>
-      <li>• Seller legitimacy scoring</li>
-      <li>• Scam-pattern detection & fraud alerts</li>
-    </ul>
+    <!-- MAIN -->
+    <main class="flex-1">
+      <section class="mx-auto max-w-6xl px-4 py-10 md:py-14">
+        <div class="grid gap-10 lg:grid-cols-[1.3fr,minmax(0,1fr)] items-start">
 
-    <div class="text-center mb-6">
-      <span class="text-3xl font-bold text-yellow-400">$49/mo</span>
-      <p class="text-slate-400 text-sm">Cancel anytime</p>
-    </div>
+          <!-- LEFT -->
+          <div>
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-slate-50">
+              AI verify buyers and sellers before you waste another call.
+            </h1>
 
-    <div class="flex justify-center">
-      <a
-        href="#"
-        class="px-6 py-3 rounded-xl font-semibold text-black bg-yellow-400 hover:bg-yellow-300 transition shadow-lg shadow-yellow-500/30"
-      >
-        Upgrade Now
-      </a>
-    </div>
+            <p class="mt-4 text-sm md:text-base text-slate-300 max-w-xl">
+              Upload an LOI, ICPO, KYC pack, or mandate letter. Dude Diligence reads it, checks the company,
+              email, volume, document patterns, and public risk signals, then gives you a clear risk score and next steps.
+            </p>
 
-    <!-- Close Button -->
-    <button onclick="closeUpsell()" class="absolute top-3 right-4 text-slate-400 text-xl hover:text-white">
-      &times;
-    </button>
+            <ul class="mt-6 space-y-2 text-sm text-slate-300">
+              <li class="flex items-start gap-2">
+                <span class="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
+                <span>Score from 0–100 with Green / Yellow / Red / Black risk levels.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
+                <span>Flags free emails, new domains, unrealistic volumes, and recycled LOIs.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
+                <span>Quiet internal blacklist + document fingerprint tracking.</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- RIGHT -->
+          <div class="space-y-4">
+
+            <!-- Upload Box -->
+            <div class="rounded-2xl border border-slate-800 bg-slate-950/70 backdrop-blur shadow-lg shadow-cyan-500/10">
+              <div class="px-5 py-4 border-b border-slate-800 flex items-center justify-between">
+                <div>
+                  <h2 class="text-sm font-semibold text-slate-100">Run Dude Diligence</h2>
+                  <p class="text-xs text-slate-400">Upload LOI, ICPO, or combined PDFs.</p>
+                </div>
+              </div>
+
+              <div class="px-5 pt-4 pb-5 space-y-4">
+
+                <!-- Dropzone -->
+                <label class="block">
+                  <span class="text-xs font-medium text-slate-300">Document</span>
+                  <div id="dropzone"
+                    class="mt-2 flex flex-col items-center justify-center rounded-xl border border-dashed border-slate-700 bg-slate-900/60 px-4 py-6 text-center text-xs text-slate-400 cursor-pointer hover:border-cyan-400/70 hover:bg-slate-900 transition">
+                    <span class="mb-2 text-slate-200 font-medium">Click to upload</span>
+                    <input id="fileInput" type="file" accept="application/pdf"
+                      class="hidden" />
+                  </div>
+                </label>
+
+                <div class="grid grid-cols-2 gap-3 text-xs">
+                  <div>
+                    <label class="block text-slate-300 mb-1">Commodity</label>
+                    <input id="commodity" type="text" placeholder="ICUMSA 45"
+                      class="w-full rounded-lg border border-slate-700 bg-slate-900/80 px-2.5 py-1.5 text-xs text-slate-100" />
+                  </div>
+                  <div>
+                    <label class="block text-slate-300 mb-1">Volume</label>
+                    <input id="volume" type="text" placeholder="1000 MT"
+                      class="w-full rounded-lg border border-slate-700 bg-slate-900/80 px-2.5 py-1.5 text-xs text-slate-100" />
+                  </div>
+                </div>
+
+                <button id="runButton"
+                  onclick="runDiligence()"
+                  class="w-full mt-2 inline-flex items-center justify-center rounded-xl bg-cyan-500 px-3 py-2 text-xs font-semibold text-slate-900 hover:bg-cyan-400 disabled:opacity-60 transition">
+                  Run Dude Diligence
+                </button>
+
+                <p id="statusMessage" class="text-[11px] text-slate-500 h-4"></p>
+
+              </div>
+            </div>
+
+            <!-- Results -->
+            <div class="rounded-2xl border border-slate-800 bg-slate-950/80 backdrop-blur shadow-lg shadow-cyan-500/5">
+              <div class="px-5 py-4 border-b border-slate-800 flex items-center justify-between">
+                <h2 class="text-sm font-semibold text-slate-100">Risk assessment</h2>
+                <span id="riskBadge"
+                  class="rounded-full border border-slate-700 bg-slate-900 px-3 py-1 text-[11px] text-slate-300">
+                  Waiting…
+                </span>
+              </div>
+
+              <div class="px-5 py-4 space-y-3 text-xs text-slate-300">
+                <div class="flex items-baseline gap-2">
+                  <span class="text-[11px] text-slate-500">Score</span>
+                  <span id="score" class="text-lg font-semibold text-slate-50">– / 100</span>
+                </div>
+
+                <div>
+                  <span class="block text-[11px] text-slate-500 mb-1">Summary</span>
+                  <p id="summary" class="text-xs text-slate-200">
+                    Upload a document to begin.
+                  </p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <span class="block text-[11px] text-slate-500 mb-1">Red flags</span>
+                    <ul id="flagsList" class="space-y-1 text-[11px] text-rose-300">
+                      <li class="text-slate-500">None yet.</li>
+                    </ul>
+                  </div>
+
+                  <div>
+                    <span class="block text-[11px] text-slate-500 mb-1">Next steps</span>
+                    <ul id="nextStepsList" class="space-y-1 text-[11px] text-emerald-300">
+                      <li class="text-slate-500">None yet.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </main>
 
   </div>
-</div>
 
-<script>
-function openUpsell() {
-  document.getElementById('upsellModal').classList.remove('hidden');
-  document.getElementById('upsellModal').classList.add('flex');
-}
-function closeUpsell() {
-  document.getElementById('upsellModal').classList.add('hidden');
-}
-</script>
+  <!-- FLOATING UPSELL BUTTON + MODAL -->
+  <button
+    onclick="openUpsell()"
+    class="fixed bottom-5 right-5 z-40 px-4 sm:px-5 py-2.5 sm:py-3 rounded-full font-semibold text-black bg-yellow-400 hover:bg-yellow-300 shadow-xl shadow-yellow-500/30 text-xs sm:text-sm">
+    Upsell Me
+  </button>
+
+  <div id="upsellModal"
+    class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center z-50">
+    <div class="bg-slate-800 p-6 sm:p-8 rounded-2xl w-[94%] max-w-lg shadow-xl border border-slate-700 relative">
+
+      <h2 class="text-xl sm:text-2xl font-bold text-white mb-4 text-center">
+        Unlock Full Dude Diligence Access
+      </h2>
+
+      <ul class="text-slate-200 space-y-1.5 sm:space-y-2 mb-6 text-xs sm:text-sm">
+        <li>• Unlimited LOI / ICPO analysis</li>
+        <li>• Corporate registry lookups</li>
+        <li>• Email + domain trust scoring</li>
+        <li>• Blacklist + scam-pattern scan</li>
+        <li>• Volume realism checks</li>
+        <li>• Passport formatting verification</li>
+      </ul>
+
+      <div class="text-center mb-6">
+        <span class="text-3xl font-bold text-yellow-400">$49/mo</span>
+        <p class="text-slate-400 text-sm">Cancel anytime</p>
+      </div>
+
+      <div class="flex justify-center">
+        <a href="#" class="px-6 py-3 rounded-xl font-semibold text-black bg-yellow-400 hover:bg-yellow-300 transition">
+          Upgrade Now
+        </a>
+      </div>
+
+      <button onclick="closeUpsell()" class="absolute top-3 right-4 text-slate-400 text-xl hover:text-white">
+        &times;
+      </button>
+
+    </div>
+  </div>
+
+  <!-- SCRIPT -->
+  <script>
+    function openUpsell() {
+      const m = document.getElementById('upsellModal');
+      m.classList.remove('hidden');
+      m.classList.add('flex');
+    }
+
+    function closeUpsell() {
+      const m = document.getElementById('upsellModal');
+      m.classList.add('hidden');
+      m.classList.remove('flex');
+    }
+
+    // Demo logic — replace with Chutes/Gravity later
+    function runDiligence() {
+      document.getElementById("riskBadge").textContent = "Processing...";
+      document.getElementById("score").textContent = "72 / 100";
+      document.getElementById("summary").textContent =
+        "Document looks partially valid. Several caution flags detected. Recommend enhanced KYC.";
+      document.getElementById("flagsList").innerHTML = "<li>• Free email domain</li><li>• Volume unrealistic</li>";
+      document.getElementById("nextStepsList").innerHTML = "<li>• Ask for performance proof</li><li>• Request KYC pack</li>";
+      document.getElementById("statusMessage").textContent = "Complete.";
+    }
+  </script>
+
+</body>
+</html>

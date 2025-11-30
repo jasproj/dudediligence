@@ -305,7 +305,7 @@ Upsell Me
 <!-- CRYPTO PAYMENT MODAL -->
 <div id="cryptoModal"
 class="fixed inset-0 bg-black/70 backdrop-blur-sm hidden items-center justify-center z-50">
-<div class="bg-slate-800 p-8 rounded-2xl w-[94%] max-w-lg shadow-xl border border-slate-700 relative max-h-[90vh] overflow-y-auto">
+<div class="bg-slate-800 p-8 rounded-2xl w-[94%] max-w-lg shadow-xl border border-slate-700 relative">
 
 <h2 class="text-2xl font-bold text-white mb-4 text-center">
 💰 Pay with Cryptocurrency
@@ -733,57 +733,12 @@ async function runDiligence() {
         let fileContent = '';
         if (currentFile.type === 'text/plain') {
             fileContent = await currentFile.text();
-        } else {
+        } else if (currentFile.type === 'application/pdf') {
             fileContent = `PDF Document: ${currentFile.name}`;
         }
 
-        // Call Claude API to extract data
-        const response = await fetch("https://api.anthropic.com/v1/messages", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                model: "claude-sonnet-4-20250514",
-                max_tokens: 2000,
-                messages: [
-                    {
-                        role: "user",
-                        content: `Extract commodity trading information from this document (${currentFile.name}):
-
-${fileContent}
-
-Return ONLY valid JSON with this exact structure (no other text):
-
-{
-  "documentType": "LOI/ICPO/SCO/KYC/Other",
-  "commodity": "commodity name or Not specified",
-  "quantity": "quantity with units or Not specified",
-  "price": "price per unit or Not specified",
-  "buyer": {
-    "name": "company name or Not specified",
-    "country": "country or Not specified",
-    "representative": "name or Not specified",
-    "email": "email or Not specified"
-  },
-  "seller": {
-    "name": "company name or Not specified",
-    "country": "country or Not specified",
-    "representative": "name or Not specified",
-    "email": "email or Not specified"
-  },
-  "paymentTerms": "terms or Not specified",
-  "deliveryTerms": "FOB/CIF/etc or Not specified",
-  "port": "port name or Not specified"
-}`
-                    }
-                ]
-            })
-        });
-
-        const data = await response.json();
-        let responseText = data.content[0].text.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
-        const extracted = JSON.parse(responseText);
+        // DEMO MODE: Extract data from document text
+        const extracted = extractDataFromText(fileContent);
 
         // Run due diligence analysis
         const scoring = calculateRuleBasedScore(extracted);
@@ -838,6 +793,81 @@ Return ONLY valid JSON with this exact structure (no other text):
         document.getElementById('statusMessage').textContent = `❌ Error: ${err.message}`;
         document.getElementById('riskBadge').textContent = 'Error';
     }
+}
+
+// DEMO MODE: Simple text extraction function
+function extractDataFromText(text) {
+    const data = {
+        documentType: "LOI",
+        commodity: "Not specified",
+        quantity: "Not specified",
+        price: "Not specified",
+        buyer: {
+            name: "Not specified",
+            country: "Not specified",
+            representative: "Not specified",
+            email: "Not specified"
+        },
+        seller: {
+            name: "Not specified",
+            country: "Not specified",
+            representative: "Not specified",
+            email: "Not specified"
+        },
+        paymentTerms: "Not specified",
+        deliveryTerms: "Not specified",
+        port: "Not specified"
+    };
+
+    const textLower = text.toLowerCase();
+
+    // Extract buyer info
+    const buyerMatch = text.match(/buyer[:\s]+([^\n]+)/i);
+    if (buyerMatch) data.buyer.name = buyerMatch[1].trim();
+
+    // Extract seller info
+    const sellerMatch = text.match(/seller[:\s]+([^\n]+)/i);
+    if (sellerMatch) data.seller.name = sellerMatch[1].trim();
+
+    // Extract emails
+    const emailRegex = /[\w.-]+@[\w.-]+\.\w+/g;
+    const emails = text.match(emailRegex);
+    if (emails && emails.length > 0) {
+        data.buyer.email = emails[0];
+        if (emails.length > 1) data.seller.email = emails[1];
+    }
+
+    // Extract commodity
+    const commodities = ['sugar', 'icumsa', 'soybean', 'oil', 'wheat', 'corn', 'rice', 'gold', 'copper', 'coal', 'crude'];
+    for (const commodity of commodities) {
+        if (textLower.includes(commodity)) {
+            const commodityMatch = text.match(new RegExp(`(${commodity}[^\\n]{0,30})`, 'i'));
+            if (commodityMatch) data.commodity = commodityMatch[1].trim();
+            break;
+        }
+    }
+
+    // Extract quantity
+    const quantityMatch = text.match(/quantity[:\s]+([^\n]+)/i) || text.match(/(\d+[\s,]*(?:MT|metric ton|tons?))/i);
+    if (quantityMatch) data.quantity = quantityMatch[1].trim();
+
+    // Extract price
+    const priceMatch = text.match(/price[:\s]+([^\n]+)/i) || text.match(/(\$[\d,]+(?:\.\d{2})?[\s]*(?:per|\/)?[\s]*(?:MT|ton)?)/i);
+    if (priceMatch) data.price = priceMatch[1].trim();
+
+    // Extract payment terms
+    const paymentMatch = text.match(/payment[:\s]+([^\n]+)/i);
+    if (paymentMatch) data.paymentTerms = paymentMatch[1].trim();
+
+    // Extract delivery terms
+    const deliveryMatch = text.match(/delivery[:\s]+([^\n]+)/i) || text.match(/(FOB|CIF|CFR|FAS)[^\n]*/i);
+    if (deliveryMatch) data.deliveryTerms = deliveryMatch[1].trim();
+
+    // Extract port
+    const portMatch = text.match(/port[:\s]+([^\n]+)/i);
+    if (portMatch) data.port = portMatch[1].trim();
+
+    return data;
 }
 
 // Update results UI

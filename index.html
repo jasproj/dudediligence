@@ -526,7 +526,11 @@ const SANCTIONS_LIST = [
 const fileInput = document.getElementById('fileInput');
 const dropzone = document.getElementById('dropzone');
 
-dropzone.addEventListener('click', () => fileInput.click());
+dropzone.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    fileInput.click();
+});
 
 fileInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
@@ -569,22 +573,106 @@ function calculateRuleBasedScore(data) {
     const redFlags = [];
     const positiveSignals = [];
 
-    // Company Reality Checks
-    if (!data.buyer?.name || data.buyer.name === "Not specified") {
-        score -= 15;
-        redFlags.push("Buyer company name missing");
+    // KYC Document Scoring (different rules)
+    if (data.documentType === "KYC") {
+        // KYC-specific checks
+        if (!data.buyer?.name || data.buyer.name === "Not specified") {
+            score -= 20;
+            redFlags.push("Company name missing from KYC");
+        } else {
+            positiveSignals.push("Company identified: " + data.buyer.name);
+        }
+
+        if (!data.buyer?.representative || data.buyer.representative === "Not specified") {
+            score -= 15;
+            redFlags.push("Representative name missing");
+        } else {
+            positiveSignals.push("Representative identified");
+        }
+
+        if (!data.buyer?.country || data.buyer.country === "Not specified") {
+            score -= 10;
+            redFlags.push("Country not specified");
+        } else {
+            positiveSignals.push("Country: " + data.buyer.country);
+        }
+
+        if (data.paymentTerms === "Not specified") {
+            score -= 15;
+            redFlags.push("Bank information missing");
+        } else {
+            positiveSignals.push("Banking details provided");
+        }
+
+        if (data.deliveryTerms === "Not specified") {
+            score -= 10;
+            redFlags.push("Source of funds not declared");
+        } else {
+            positiveSignals.push("Source of funds declared");
+        }
+
+        // For KYC, we don't penalize missing commodity/price/quantity
+        // Those aren't expected in KYC documents
+        
     } else {
-        positiveSignals.push("Buyer company name provided");
+        // LOI/ICPO Document Scoring (original rules)
+        
+        // Company Reality Checks
+        if (!data.buyer?.name || data.buyer.name === "Not specified") {
+            score -= 15;
+            redFlags.push("Buyer company name missing");
+        } else {
+            positiveSignals.push("Buyer company name provided");
+        }
+
+        if (!data.seller?.name || data.seller.name === "Not specified") {
+            score -= 15;
+            redFlags.push("Seller company name missing");
+        } else {
+            positiveSignals.push("Seller company name provided");
+        }
+
+        // Deal Reality Checks (only for LOI/ICPO)
+        if (!data.quantity || data.quantity === "Not specified") {
+            score -= 10;
+            redFlags.push("Quantity not specified");
+        } else {
+            positiveSignals.push("Quantity specified");
+        }
+
+        if (!data.price || data.price === "Not specified") {
+            score -= 10;
+            redFlags.push("Price not specified");
+        } else {
+            positiveSignals.push("Price specified");
+        }
+
+        if (!data.paymentTerms || data.paymentTerms === "Not specified") {
+            score -= 8;
+            redFlags.push("Payment terms missing");
+        } else {
+            const paymentLower = data.paymentTerms.toLowerCase();
+            if (paymentLower.includes('upfront') || paymentLower.includes('advance') || paymentLower.includes('100%')) {
+                score -= 15;
+                redFlags.push("⚠️ 100% upfront payment - HIGH FRAUD RISK");
+            } else {
+                positiveSignals.push("Payment terms specified");
+            }
+        }
+
+        // Document Integrity Checks
+        if (!data.deliveryTerms || data.deliveryTerms === "Not specified") {
+            score -= 7;
+            redFlags.push("Delivery terms missing");
+        }
+
+        if (!data.port || data.port === "Not specified") {
+            score -= 7;
+            redFlags.push("Port not specified");
+        }
     }
 
-    if (!data.seller?.name || data.seller.name === "Not specified") {
-        score -= 15;
-        redFlags.push("Seller company name missing");
-    } else {
-        positiveSignals.push("Seller company name provided");
-    }
-
-    // Email/Identity Checks
+    // Email/Identity Checks (applies to both KYC and LOI)
     const freeEmailDomains = ['gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'aol.com'];
     
     if (data.buyer?.email && data.buyer.email !== "Not specified") {
@@ -608,48 +696,10 @@ function calculateRuleBasedScore(data) {
         } else {
             positiveSignals.push("Seller using corporate email");
         }
-    } else {
+    } else if (data.documentType !== "KYC") {
+        // Only penalize missing seller email for LOI/ICPO, not KYC
         score -= 8;
         redFlags.push("Seller email not provided");
-    }
-
-    // Deal Reality Checks
-    if (!data.quantity || data.quantity === "Not specified") {
-        score -= 10;
-        redFlags.push("Quantity not specified");
-    } else {
-        positiveSignals.push("Quantity specified");
-    }
-
-    if (!data.price || data.price === "Not specified") {
-        score -= 10;
-        redFlags.push("Price not specified");
-    } else {
-        positiveSignals.push("Price specified");
-    }
-
-    if (!data.paymentTerms || data.paymentTerms === "Not specified") {
-        score -= 8;
-        redFlags.push("Payment terms missing");
-    } else {
-        const paymentLower = data.paymentTerms.toLowerCase();
-        if (paymentLower.includes('upfront') || paymentLower.includes('advance') || paymentLower.includes('100%')) {
-            score -= 15;
-            redFlags.push("⚠️ 100% upfront payment - HIGH FRAUD RISK");
-        } else {
-            positiveSignals.push("Payment terms specified");
-        }
-    }
-
-    // Document Integrity Checks
-    if (!data.deliveryTerms || data.deliveryTerms === "Not specified") {
-        score -= 7;
-        redFlags.push("Delivery terms missing");
-    }
-
-    if (!data.port || data.port === "Not specified") {
-        score -= 7;
-        redFlags.push("Port not specified");
     }
 
     return {
@@ -811,10 +861,10 @@ async function runDiligence() {
     }
 }
 
-// DEMO MODE: Simple text extraction function
+// DEMO MODE: Enhanced text extraction function for KYC and LOI documents
 function extractDataFromText(text) {
     const data = {
-        documentType: "LOI",
+        documentType: "Unknown",
         commodity: "Not specified",
         quantity: "Not specified",
         price: "Not specified",
@@ -837,51 +887,165 @@ function extractDataFromText(text) {
 
     const textLower = text.toLowerCase();
 
-    // Extract buyer info
-    const buyerMatch = text.match(/buyer[:\s]+([^\n]+)/i);
-    if (buyerMatch) data.buyer.name = buyerMatch[1].trim();
-
-    // Extract seller info
-    const sellerMatch = text.match(/seller[:\s]+([^\n]+)/i);
-    if (sellerMatch) data.seller.name = sellerMatch[1].trim();
-
-    // Extract emails
-    const emailRegex = /[\w.-]+@[\w.-]+\.\w+/g;
-    const emails = text.match(emailRegex);
-    if (emails && emails.length > 0) {
-        data.buyer.email = emails[0];
-        if (emails.length > 1) data.seller.email = emails[1];
+    // Detect document type
+    if (textLower.includes('kyc') || textLower.includes('compliance package') || textLower.includes('affidavit')) {
+        data.documentType = "KYC";
+    } else if (textLower.includes('letter of intent') || textLower.includes('loi')) {
+        data.documentType = "LOI";
+    } else if (textLower.includes('icpo') || textLower.includes('purchase order')) {
+        data.documentType = "ICPO";
+    } else if (textLower.includes('sco') || textLower.includes('soft corporate offer')) {
+        data.documentType = "SCO";
     }
 
-    // Extract commodity
-    const commodities = ['sugar', 'icumsa', 'soybean', 'oil', 'wheat', 'corn', 'rice', 'gold', 'copper', 'coal', 'crude'];
-    for (const commodity of commodities) {
-        if (textLower.includes(commodity)) {
-            const commodityMatch = text.match(new RegExp(`(${commodity}[^\\n]{0,30})`, 'i'));
-            if (commodityMatch) data.commodity = commodityMatch[1].trim();
-            break;
+    // KYC-specific extraction
+    if (data.documentType === "KYC") {
+        // Extract company name - multiple patterns
+        const companyPatterns = [
+            /(?:full name of corporation|company name|corporation)[:\s]+([^\n]+)/i,
+            /(?:on behalf of|for and on behalf of)[:\s]+([A-Z\s]+(?:LTD|LTDA|LLC|INC|CORP|LIMITED|AG|GMBH)[A-Z\s.]*)/i,
+            /([A-Z\s]+(?:LTD|LTDA|LLC|INC|CORP|LIMITED|AG|GMBH)[A-Z\s.]*)/
+        ];
+        
+        for (const pattern of companyPatterns) {
+            const match = text.match(pattern);
+            if (match) {
+                data.buyer.name = match[1].trim();
+                break;
+            }
         }
+
+        // Extract representative name
+        const namePatterns = [
+            /I,\s+([A-Z\s]+),\s+(?:the undersigned|bearing|hereby)/i,
+            /Name[:/\s]+([A-Z\s]+)/i,
+            /First name[:\s]+(\w+)[\s\S]{0,100}Last name[:\s]+(\w+)/i
+        ];
+        
+        for (const pattern of namePatterns) {
+            const match = text.match(pattern);
+            if (match) {
+                if (pattern.source.includes('First name')) {
+                    data.buyer.representative = `${match[1]} ${match[2]}`.trim();
+                } else {
+                    data.buyer.representative = match[1].trim();
+                }
+                break;
+            }
+        }
+
+        // Extract passport number
+        const passportMatch = text.match(/Passport\s+(?:Number|No\.?)[:\s]+([A-Z0-9]+)/i);
+        if (passportMatch) {
+            data.buyer.representative += ` (Passport: ${passportMatch[1]})`;
+        }
+
+        // Extract country
+        const countryPatterns = [
+            /Country[:\s]+([^\n]+)/i,
+            /Country of (?:Citizenship|Issuance)[:\s]+([^\n]+)/i
+        ];
+        
+        for (const pattern of countryPatterns) {
+            const match = text.match(pattern);
+            if (match) {
+                data.buyer.country = match[1].trim();
+                break;
+            }
+        }
+
+        // Extract ALL emails (multiple)
+        const emailRegex = /[\w.-]+@[\w.-]+\.\w+/g;
+        const emails = text.match(emailRegex);
+        if (emails && emails.length > 0) {
+            // Primary email
+            data.buyer.email = emails[0];
+            // If there are multiple emails, note them
+            if (emails.length > 1) {
+                data.buyer.email += ` (${emails.length} emails found)`;
+            }
+        }
+
+        // Extract bank information
+        const bankNameMatch = text.match(/Bank\s+(?:Name|CLIENTS NAME)[:\s]+([^\n]+)/i);
+        if (bankNameMatch) {
+            data.paymentTerms = `Bank: ${bankNameMatch[1].trim()}`;
+        }
+
+        const accountMatch = text.match(/Account\s+(?:Number|No)[:\s]+([^\n]+)/i);
+        if (accountMatch) {
+            data.paymentTerms += ` | Account: ${accountMatch[1].trim()}`;
+        }
+
+        // Extract source of funds
+        const fundsMatch = text.match(/Origin of funds[:\s]+([^\n]+)/i);
+        if (fundsMatch) {
+            data.deliveryTerms = `Source of Funds: ${fundsMatch[1].trim()}`;
+        }
+
+        // Extract fund amount if present
+        const amountPatterns = [
+            /sum of[:\s]+([A-Z\s]+MILLION[^\n]+)/i,
+            /\$[€]?[\d,]+(?:\.\d{2})?/g
+        ];
+        
+        for (const pattern of amountPatterns) {
+            const match = text.match(pattern);
+            if (match) {
+                data.quantity = Array.isArray(match) ? match[0] : match[1];
+                break;
+            }
+        }
+    } 
+    
+    // LOI/ICPO extraction (existing logic)
+    else {
+        // Extract buyer info
+        const buyerMatch = text.match(/buyer[:\s]+([^\n]+)/i);
+        if (buyerMatch) data.buyer.name = buyerMatch[1].trim();
+
+        // Extract seller info
+        const sellerMatch = text.match(/seller[:\s]+([^\n]+)/i);
+        if (sellerMatch) data.seller.name = sellerMatch[1].trim();
+
+        // Extract emails
+        const emailRegex = /[\w.-]+@[\w.-]+\.\w+/g;
+        const emails = text.match(emailRegex);
+        if (emails && emails.length > 0) {
+            data.buyer.email = emails[0];
+            if (emails.length > 1) data.seller.email = emails[1];
+        }
+
+        // Extract commodity
+        const commodities = ['sugar', 'icumsa', 'soybean', 'oil', 'wheat', 'corn', 'rice', 'gold', 'copper', 'coal', 'crude'];
+        for (const commodity of commodities) {
+            if (textLower.includes(commodity)) {
+                const commodityMatch = text.match(new RegExp(`(${commodity}[^\\n]{0,30})`, 'i'));
+                if (commodityMatch) data.commodity = commodityMatch[1].trim();
+                break;
+            }
+        }
+
+        // Extract quantity
+        const quantityMatch = text.match(/quantity[:\s]+([^\n]+)/i) || text.match(/(\d+[\s,]*(?:MT|metric ton|tons?))/i);
+        if (quantityMatch) data.quantity = quantityMatch[1].trim();
+
+        // Extract price
+        const priceMatch = text.match(/price[:\s]+([^\n]+)/i) || text.match(/(\$[\d,]+(?:\.\d{2})?[\s]*(?:per|\/)?[\s]*(?:MT|ton)?)/i);
+        if (priceMatch) data.price = priceMatch[1].trim();
+
+        // Extract payment terms
+        const paymentMatch = text.match(/payment[:\s]+([^\n]+)/i);
+        if (paymentMatch) data.paymentTerms = paymentMatch[1].trim();
+
+        // Extract delivery terms
+        const deliveryMatch = text.match(/delivery[:\s]+([^\n]+)/i) || text.match(/(FOB|CIF|CFR|FAS)[^\n]*/i);
+        if (deliveryMatch) data.deliveryTerms = deliveryMatch[1].trim();
+
+        // Extract port
+        const portMatch = text.match(/port[:\s]+([^\n]+)/i);
+        if (portMatch) data.port = portMatch[1].trim();
     }
-
-    // Extract quantity
-    const quantityMatch = text.match(/quantity[:\s]+([^\n]+)/i) || text.match(/(\d+[\s,]*(?:MT|metric ton|tons?))/i);
-    if (quantityMatch) data.quantity = quantityMatch[1].trim();
-
-    // Extract price
-    const priceMatch = text.match(/price[:\s]+([^\n]+)/i) || text.match(/(\$[\d,]+(?:\.\d{2})?[\s]*(?:per|\/)?[\s]*(?:MT|ton)?)/i);
-    if (priceMatch) data.price = priceMatch[1].trim();
-
-    // Extract payment terms
-    const paymentMatch = text.match(/payment[:\s]+([^\n]+)/i);
-    if (paymentMatch) data.paymentTerms = paymentMatch[1].trim();
-
-    // Extract delivery terms
-    const deliveryMatch = text.match(/delivery[:\s]+([^\n]+)/i) || text.match(/(FOB|CIF|CFR|FAS)[^\n]*/i);
-    if (deliveryMatch) data.deliveryTerms = deliveryMatch[1].trim();
-
-    // Extract port
-    const portMatch = text.match(/port[:\s]+([^\n]+)/i);
-    if (portMatch) data.port = portMatch[1].trim();
 
     return data;
 }

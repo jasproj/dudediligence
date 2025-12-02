@@ -524,13 +524,6 @@ const SANCTIONS_LIST = [
 
 // File upload handling
 const fileInput = document.getElementById('fileInput');
-const dropzone = document.getElementById('dropzone');
-
-dropzone.addEventListener('click', (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    fileInput.click();
-});
 
 fileInput.addEventListener('change', (e) => {
     const file = e.target.files[0];

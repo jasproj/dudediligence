@@ -1496,7 +1496,7 @@ async function runDiligence() {
 
         // Call backend API via CORS proxy
         // Call backend API via custom domain (same domain = no CORS!)
-        const response = await fetch('https://api.dudediligence.pro/api/analyze', {
+        const response = await fetch('https://dude-diligence-backend-c2rt.vercel.app/api/analyze', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

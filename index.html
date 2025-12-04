@@ -201,6 +201,116 @@ Run Dude Diligence
 </div>
 </div>
 
+<!-- REVIEW FORM SECTION (appears after AI extraction) -->
+<div id="reviewFormSection" class="hidden rounded-2xl border border-cyan-500/60 bg-slate-950/80 backdrop-blur shadow-lg shadow-cyan-500/10 mt-6">
+<div class="px-5 py-4 border-b border-slate-800">
+<h2 class="text-sm font-semibold text-cyan-400">✏️ Review & Edit Extracted Data</h2>
+<p class="text-xs text-slate-400 mt-1">AI extracted the data below. Please review and add any missing information before finalizing.</p>
+</div>
+
+<div class="px-5 py-4 space-y-4">
+<!-- Company Information -->
+<div class="bg-slate-900/60 p-4 rounded-lg border border-slate-800">
+<h3 class="text-xs font-semibold text-slate-300 mb-3">🏢 Company Information</h3>
+<div class="grid gap-3">
+<div>
+<label class="block text-[11px] text-slate-500 mb-1">Company Name</label>
+<input type="text" id="edit_company_name" 
+class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-cyan-500 transition"
+placeholder="Not specified">
+<p class="text-[10px] text-slate-500 mt-1" id="status_company_name"></p>
+</div>
+<div>
+<label class="block text-[11px] text-slate-500 mb-1">Country</label>
+<input type="text" id="edit_country" 
+class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-cyan-500 transition"
+placeholder="Not specified">
+<p class="text-[10px] text-slate-500 mt-1" id="status_country"></p>
+</div>
+</div>
+</div>
+
+<!-- Representative Information -->
+<div class="bg-slate-900/60 p-4 rounded-lg border border-slate-800">
+<h3 class="text-xs font-semibold text-slate-300 mb-3">👤 Representative Information</h3>
+<div class="grid gap-3">
+<div>
+<label class="block text-[11px] text-slate-500 mb-1">Representative Name</label>
+<input type="text" id="edit_representative" 
+class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-cyan-500 transition"
+placeholder="Not specified">
+<p class="text-[10px] text-slate-500 mt-1" id="status_representative"></p>
+</div>
+<div>
+<label class="block text-[11px] text-slate-500 mb-1">Email Address</label>
+<input type="email" id="edit_email" 
+class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-cyan-500 transition"
+placeholder="Not specified">
+<p class="text-[10px] text-slate-500 mt-1" id="status_email"></p>
+</div>
+</div>
+</div>
+
+<!-- Banking Information -->
+<div class="bg-slate-900/60 p-4 rounded-lg border border-slate-800">
+<h3 class="text-xs font-semibold text-slate-300 mb-3">🏦 Banking Information</h3>
+<div class="grid gap-3">
+<div>
+<label class="block text-[11px] text-slate-500 mb-1">Bank Name</label>
+<input type="text" id="edit_bank_name" 
+class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-cyan-500 transition"
+placeholder="Not specified">
+<p class="text-[10px] text-slate-500 mt-1" id="status_bank_name"></p>
+</div>
+<div>
+<label class="block text-[11px] text-slate-500 mb-1">Source of Funds</label>
+<input type="text" id="edit_source_funds" 
+class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-cyan-500 transition"
+placeholder="Not specified">
+<p class="text-[10px] text-slate-500 mt-1" id="status_source_funds"></p>
+</div>
+</div>
+</div>
+
+<!-- Trading Information -->
+<div class="bg-slate-900/60 p-4 rounded-lg border border-slate-800">
+<h3 class="text-xs font-semibold text-slate-300 mb-3">📦 Trading Information</h3>
+<div class="grid gap-3">
+<div>
+<label class="block text-[11px] text-slate-500 mb-1">Commodity</label>
+<input type="text" id="edit_commodity" 
+class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-cyan-500 transition"
+placeholder="Not specified">
+</div>
+<div>
+<label class="block text-[11px] text-slate-500 mb-1">Quantity</label>
+<input type="text" id="edit_quantity" 
+class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-cyan-500 transition"
+placeholder="Not specified">
+</div>
+<div>
+<label class="block text-[11px] text-slate-500 mb-1">Price</label>
+<input type="text" id="edit_price" 
+class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-cyan-500 transition"
+placeholder="Not specified">
+</div>
+</div>
+</div>
+
+<!-- Action Buttons -->
+<div class="flex gap-3 pt-2">
+<button onclick="skipReview()" class="flex-1 px-4 py-3 rounded-lg bg-slate-800 text-slate-300 text-sm font-semibold hover:bg-slate-700 transition border border-slate-700">
+Skip & Use AI Data
+</button>
+<button onclick="finalizeReport()" class="flex-1 px-4 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-sm font-semibold hover:from-cyan-600 hover:to-blue-600 transition shadow-lg">
+✓ Finalize Report
+</button>
+</div>
+
+<p class="text-center text-[10px] text-slate-500 mt-3">💡 Complete data = more accurate risk score</p>
+</div>
+</div>
+
 <!-- RESULTS PANEL -->
 <div class="rounded-2xl border border-slate-800 bg-slate-950/80 backdrop-blur shadow-lg shadow-cyan-500/5">
 <div class="px-5 py-4 border-b border-slate-800 flex items-center justify-between">
@@ -872,59 +982,160 @@ async function runDiligence() {
 
         const extracted = result.data;
 
-        // Run due diligence analysis
-        const scoring = calculateRuleBasedScore(extracted);
-        const blacklistHits = checkBlacklist(extracted);
-        const sanctionsHits = checkSanctions(extracted);
-        const riskLevel = determineRiskLevel(scoring.score, blacklistHits, sanctionsHits, reuseCheck);
+        // Store extracted data globally for review form
+        window.aiExtractedData = extracted;
+        window.extractedFileHash = currentHash;
+        window.reuseCheckResult = reuseCheck;
 
-        // Generate next steps
-        const nextSteps = [];
-        if (riskLevel === 'BLACK') {
-            nextSteps.push("⛔ DO NOT PROCEED");
-            nextSteps.push("Report to compliance");
-        } else if (riskLevel === 'RED') {
-            nextSteps.push("Require full KYC pack");
-            nextSteps.push("Verify company registration");
-            nextSteps.push("Request bank reference");
-        } else if (riskLevel === 'YELLOW') {
-            nextSteps.push("Request business license");
-            nextSteps.push("Verify contact info");
-            nextSteps.push("Proceed with caution");
-        } else {
-            nextSteps.push("Standard due diligence");
-            nextSteps.push("Verify final docs");
-        }
+        // Show review form instead of going straight to results
+        showReviewForm(extracted);
+        
+        document.getElementById('statusMessage').textContent = '✏️ Please review the extracted data';
 
-        // Store result
-        currentResult = {
-            score: scoring.score,
-            riskLevel,
-            summary: `${riskLevel} risk with ${scoring.score}/100 score. ${blacklistHits.length > 0 ? 'BLACKLIST HITS. ' : ''}${sanctionsHits.length > 0 ? 'SANCTIONS HITS. ' : ''}${reuseCheck.isReused ? 'Document reused. ' : ''}${scoring.redFlags.length} red flags detected.`,
-            redFlags: scoring.redFlags,
-            positiveSignals: scoring.positiveSignals,
-            nextSteps,
-            documentFingerprint: {
-                hash: currentHash,
-                isReused: reuseCheck.isReused,
-                previousUse: reuseCheck.previousUse,
-                timesUsed: reuseCheck.timesUsed || 1
-            },
-            blacklistHits,
-            sanctionsHits,
-            extractedData: extracted,
-            timestamp: new Date().toISOString()
-        };
-
-        // Update UI
-        updateResultsUI(currentResult);
-        document.getElementById('statusMessage').textContent = '✓ Analysis complete.';
-
-    } catch (err) {
-        console.error(err);
-        document.getElementById('statusMessage').textContent = `❌ Error: ${err.message}`;
+    } catch (error) {
+        console.error(error);
+        document.getElementById('statusMessage').textContent = `❌ Error: ${error.message}`;
         document.getElementById('riskBadge').textContent = 'Error';
     }
+}
+
+// Show review form with AI-extracted data
+function showReviewForm(extracted) {
+    // Fill form fields with AI data
+    document.getElementById('edit_company_name').value = extracted.buyer?.name || '';
+    document.getElementById('edit_country').value = extracted.buyer?.country || '';
+    document.getElementById('edit_representative').value = extracted.buyer?.representative || '';
+    document.getElementById('edit_email').value = extracted.buyer?.email || '';
+    document.getElementById('edit_bank_name').value = extracted.paymentTerms || '';
+    document.getElementById('edit_source_funds').value = extracted.deliveryTerms || '';
+    document.getElementById('edit_commodity').value = extracted.commodity || '';
+    document.getElementById('edit_quantity').value = extracted.quantity || '';
+    document.getElementById('edit_price').value = extracted.price || '';
+    
+    // Update status indicators
+    updateFieldStatus('company_name', extracted.buyer?.name);
+    updateFieldStatus('country', extracted.buyer?.country);
+    updateFieldStatus('representative', extracted.buyer?.representative);
+    updateFieldStatus('email', extracted.buyer?.email);
+    updateFieldStatus('bank_name', extracted.paymentTerms);
+    updateFieldStatus('source_funds', extracted.deliveryTerms);
+    
+    // Show the review form
+    document.getElementById('reviewFormSection').classList.remove('hidden');
+    
+    // Scroll to review form
+    document.getElementById('reviewFormSection').scrollIntoView({ behavior: 'smooth' });
+}
+
+// Update field status indicator
+function updateFieldStatus(fieldName, value) {
+    const statusEl = document.getElementById(`status_${fieldName}`);
+    if (!statusEl) return;
+    
+    if (value && value !== 'Not specified') {
+        statusEl.textContent = '✓ AI extracted';
+        statusEl.className = 'text-[10px] text-emerald-400 mt-1';
+    } else {
+        statusEl.textContent = '⚠️ Missing - please add';
+        statusEl.className = 'text-[10px] text-amber-400 mt-1';
+    }
+}
+
+// Skip review and use AI data
+function skipReview() {
+    document.getElementById('reviewFormSection').classList.add('hidden');
+    processData(window.aiExtractedData);
+}
+
+// Finalize with user-verified data
+function finalizeReport() {
+    // Collect form values
+    const verifiedData = {
+        documentType: window.aiExtractedData.documentType,
+        commodity: document.getElementById('edit_commodity').value || 'Not specified',
+        quantity: document.getElementById('edit_quantity').value || 'Not specified',
+        price: document.getElementById('edit_price').value || 'Not specified',
+        buyer: {
+            name: document.getElementById('edit_company_name').value || 'Not specified',
+            country: document.getElementById('edit_country').value || 'Not specified',
+            representative: document.getElementById('edit_representative').value || 'Not specified',
+            email: document.getElementById('edit_email').value || 'Not specified'
+        },
+        seller: window.aiExtractedData.seller || {
+            name: 'Not specified',
+            country: 'Not specified',
+            email: 'Not specified'
+        },
+        paymentTerms: document.getElementById('edit_bank_name').value || 'Not specified',
+        deliveryTerms: document.getElementById('edit_source_funds').value || 'Not specified',
+        port: window.aiExtractedData.port || 'Not specified'
+    };
+    
+    // Mark as user-verified
+    verifiedData.userVerified = true;
+    
+    // Hide review form
+    document.getElementById('reviewFormSection').classList.add('hidden');
+    
+    // Process the verified data
+    processData(verifiedData);
+}
+
+// Process data and show results (extracted from runDiligence)
+function processData(extracted) {
+    const currentHash = window.extractedFileHash;
+    const reuseCheck = window.reuseCheckResult;
+    
+    document.getElementById('statusMessage').textContent = '🔍 Calculating risk score...';
+    
+    // Run due diligence analysis
+    const scoring = calculateRuleBasedScore(extracted);
+    const blacklistHits = checkBlacklist(extracted);
+    const sanctionsHits = checkSanctions(extracted);
+    const riskLevel = determineRiskLevel(scoring.score, blacklistHits, sanctionsHits, reuseCheck);
+    
+    // Generate next steps
+    const nextSteps = [];
+    if (riskLevel === 'BLACK') {
+        nextSteps.push("⛔ DO NOT PROCEED");
+        nextSteps.push("Report to compliance");
+    } else if (riskLevel === 'RED') {
+        nextSteps.push("Require full KYC pack");
+        nextSteps.push("Verify company registration");
+        nextSteps.push("Request bank reference");
+    } else if (riskLevel === 'YELLOW') {
+        nextSteps.push("Request business license");
+        nextSteps.push("Verify contact info");
+        nextSteps.push("Proceed with caution");
+    } else {
+        nextSteps.push("Standard due diligence");
+        nextSteps.push("Verify final docs");
+    }
+    
+    // Store result
+    currentResult = {
+        score: scoring.score,
+        riskLevel,
+        summary: `${riskLevel} risk with ${scoring.score}/100 score. ${extracted.userVerified ? 'USER-VERIFIED DATA. ' : ''}${blacklistHits.length > 0 ? 'BLACKLIST HITS. ' : ''}${sanctionsHits.length > 0 ? 'SANCTIONS HITS. ' : ''}${reuseCheck.isReused ? 'Document reused. ' : ''}${scoring.redFlags.length} red flags detected.`,
+        redFlags: scoring.redFlags,
+        positiveSignals: scoring.positiveSignals,
+        nextSteps,
+        documentFingerprint: {
+            hash: currentHash,
+            isReused: reuseCheck.isReused,
+            previousUse: reuseCheck.previousUse,
+            timesUsed: reuseCheck.timesUsed || 1
+        },
+        blacklistHits,
+        sanctionsHits,
+        extractedData: extracted,
+        timestamp: new Date().toISOString(),
+        userVerified: extracted.userVerified || false
+    };
+    
+    // Update UI
+    updateResultsUI(currentResult);
+    document.getElementById('statusMessage').textContent = extracted.userVerified ? '✓ Analysis complete (user-verified)' : '✓ Analysis complete.';
 }
 
 // DEMO MODE: Enhanced text extraction function for KYC and LOI documents

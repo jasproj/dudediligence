@@ -25,6 +25,44 @@
 <style>
 body {
 background: radial-gradient(circle at top, #0f172a 0%, #020617 60%, #000 100%);
+position: relative;
+overflow-x: hidden;
+}
+
+/* Animated gradient background */
+body::before {
+content: '';
+position: fixed;
+top: -50%;
+left: -50%;
+width: 200%;
+height: 200%;
+background: radial-gradient(circle, rgba(6,182,212,0.03) 0%, transparent 50%),
+            radial-gradient(circle, rgba(139,92,246,0.02) 0%, transparent 50%);
+animation: moveGradient 20s ease infinite;
+pointer-events: none;
+z-index: 0;
+}
+
+@keyframes moveGradient {
+  0%, 100% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(10%, 10%);
+  }
+  50% {
+    transform: translate(0%, 20%);
+  }
+  75% {
+    transform: translate(-10%, 10%);
+  }
+}
+
+/* Ensure content stays above animated background */
+body > div {
+position: relative;
+z-index: 1;
 }
 
 /* Animated scanning effect for bot eye */
@@ -454,7 +492,188 @@ Waiting...
 </div>
 </section>
 
-<!-- TRUST BADGES - ENHANCED WITH PHASE 1 DATABASES -->
+<!-- TRUST BADGES - AUTO-SCROLLING CAROUSEL -->
+<section class="border-t border-slate-800/80 bg-gradient-to-b from-slate-950/80 to-slate-900/40 py-12 overflow-hidden">
+<div class="mx-auto max-w-6xl px-4">
+<div class="text-center mb-8">
+<p class="text-xs uppercase tracking-wider text-cyan-400 font-semibold mb-2">🔒 15+ International Data Sources</p>
+<p class="text-[10px] text-slate-500">Real-time verification across sanctions, corporate registries, and enforcement databases</p>
+</div>
+
+<!-- Auto-scrolling badge carousel -->
+<div class="badge-carousel-container mb-6">
+<div class="badge-carousel">
+<!-- Sanctions Databases -->
+<div class="badge-item">
+<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-400/40 shadow-lg shadow-cyan-500/10 whitespace-nowrap">
+<svg class="w-5 h-5 text-cyan-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0L3 7v9c0 5.25 3.75 10.17 9 11.25 5.25-1.08 9-6 9-11.25V7L12 0zm-2 16l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"/></svg>
+<span class="text-[11px] font-bold text-cyan-300">OFAC SDN List</span>
+</div>
+</div>
+<div class="badge-item">
+<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-blue-400/40 shadow-lg shadow-blue-500/10 whitespace-nowrap">
+<svg class="w-5 h-5 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0L3 7v9c0 5.25 3.75 10.17 9 11.25 5.25-1.08 9-6 9-11.25V7L12 0zm-2 16l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"/></svg>
+<span class="text-[11px] font-bold text-blue-300">UN Consolidated</span>
+</div>
+</div>
+<div class="badge-item">
+<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-400/40 shadow-lg shadow-purple-500/10 whitespace-nowrap">
+<svg class="w-5 h-5 text-purple-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0L3 7v9c0 5.25 3.75 10.17 9 11.25 5.25-1.08 9-6 9-11.25V7L12 0zm-2 16l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"/></svg>
+<span class="text-[11px] font-bold text-purple-300">EU Sanctions</span>
+</div>
+</div>
+<div class="badge-item">
+<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-pink-500/20 to-rose-500/20 border border-pink-400/40 shadow-lg shadow-pink-500/10 whitespace-nowrap">
+<svg class="w-5 h-5 text-pink-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0L3 7v9c0 5.25 3.75 10.17 9 11.25 5.25-1.08 9-6 9-11.25V7L12 0zm-2 16l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"/></svg>
+<span class="text-[11px] font-bold text-pink-300">UK Sanctions</span>
+</div>
+</div>
+<div class="badge-item">
+<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-rose-500/20 to-orange-500/20 border border-rose-400/40 shadow-lg shadow-rose-500/10 whitespace-nowrap">
+<svg class="w-5 h-5 text-rose-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0L3 7v9c0 5.25 3.75 10.17 9 11.25 5.25-1.08 9-6 9-11.25V7L12 0zm-2 16l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"/></svg>
+<span class="text-[11px] font-bold text-rose-300">OpenSanctions</span>
+</div>
+</div>
+<div class="badge-item">
+<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-emerald-500/20 to-teal-500/20 border border-emerald-400/40 shadow-lg shadow-emerald-500/10 whitespace-nowrap">
+<svg class="w-5 h-5 text-emerald-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.20.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
+<span class="text-[11px] font-bold text-emerald-300">UK Companies House</span>
+</div>
+</div>
+<div class="badge-item">
+<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-teal-500/20 to-cyan-500/20 border border-teal-400/40 shadow-lg shadow-teal-500/10 whitespace-nowrap">
+<svg class="w-5 h-5 text-teal-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+<span class="text-[11px] font-bold text-teal-300">OpenCorporates</span>
+</div>
+</div>
+<div class="badge-item">
+<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-400/40 shadow-lg shadow-cyan-500/10 whitespace-nowrap">
+<svg class="w-5 h-5 text-cyan-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.20.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
+<span class="text-[11px] font-bold text-cyan-300">Singapore ACRA</span>
+</div>
+</div>
+<div class="badge-item">
+<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-red-500/20 to-rose-500/20 border border-red-400/40 shadow-lg shadow-red-500/10 whitespace-nowrap">
+<svg class="w-5 h-5 text-red-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0L3 7v9c0 5.25 3.75 10.17 9 11.25 5.25-1.08 9-6 9-11.25V7L12 0zm-2 16l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"/></svg>
+<span class="text-[11px] font-bold text-red-300">FBI Most Wanted</span>
+</div>
+</div>
+<div class="badge-item">
+<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-indigo-500/20 to-purple-500/20 border border-indigo-400/40 shadow-lg shadow-indigo-500/10 whitespace-nowrap">
+<svg class="w-5 h-5 text-indigo-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+<span class="text-[11px] font-bold text-indigo-300">Interpol Red Notices</span>
+</div>
+</div>
+<div class="badge-item">
+<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-400/40 shadow-lg shadow-blue-500/10 whitespace-nowrap">
+<svg class="w-5 h-5 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
+<span class="text-[11px] font-bold text-blue-300">UK FCA Warnings</span>
+</div>
+</div>
+<div class="badge-item">
+<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-amber-500/20 to-orange-500/20 border border-amber-400/40 shadow-lg shadow-amber-500/10 whitespace-nowrap">
+<svg class="w-5 h-5 text-amber-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
+<span class="text-[11px] font-bold text-amber-300">Swiss FINMA</span>
+</div>
+</div>
+<div class="badge-item">
+<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-orange-500/20 to-red-500/20 border border-orange-400/40 shadow-lg shadow-orange-500/10 whitespace-nowrap">
+<svg class="w-5 h-5 text-orange-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
+<span class="text-[11px] font-bold text-orange-300">SEC Enforcement</span>
+</div>
+</div>
+<!-- Duplicate set for seamless loop -->
+<div class="badge-item">
+<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-400/40 shadow-lg shadow-cyan-500/10 whitespace-nowrap">
+<svg class="w-5 h-5 text-cyan-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0L3 7v9c0 5.25 3.75 10.17 9 11.25 5.25-1.08 9-6 9-11.25V7L12 0zm-2 16l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"/></svg>
+<span class="text-[11px] font-bold text-cyan-300">OFAC SDN List</span>
+</div>
+</div>
+<div class="badge-item">
+<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-blue-400/40 shadow-lg shadow-blue-500/10 whitespace-nowrap">
+<svg class="w-5 h-5 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0L3 7v9c0 5.25 3.75 10.17 9 11.25 5.25-1.08 9-6 9-11.25V7L12 0zm-2 16l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"/></svg>
+<span class="text-[11px] font-bold text-blue-300">UN Consolidated</span>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Summary Stats -->
+<div class="mt-8 grid grid-cols-3 gap-4 max-w-2xl mx-auto">
+<div class="text-center bg-slate-900/40 rounded-lg p-3 border border-slate-800">
+<div class="text-2xl font-bold text-cyan-400">15+</div>
+<div class="text-[10px] text-slate-400 mt-1">Data Sources</div>
+</div>
+<div class="text-center bg-slate-900/40 rounded-lg p-3 border border-slate-800">
+<div class="text-2xl font-bold text-emerald-400">650M+</div>
+<div class="text-[10px] text-slate-400 mt-1">Records Checked</div>
+</div>
+<div class="text-center bg-slate-900/40 rounded-lg p-3 border border-slate-800">
+<div class="text-2xl font-bold text-purple-400">140+</div>
+<div class="text-[10px] text-slate-400 mt-1">Countries Covered</div>
+</div>
+</div>
+
+<p class="text-center text-[10px] text-slate-500 mt-6 max-w-2xl mx-auto">
+Cross-references publicly available sanctions lists, corporate registries, and enforcement databases. We are not affiliated with government agencies.
+</p>
+</div>
+
+<style>
+/* Auto-scrolling badge carousel */
+.badge-carousel-container {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.badge-carousel {
+  display: flex;
+  gap: 1rem;
+  animation: scroll 40s linear infinite;
+  will-change: transform;
+}
+
+.badge-carousel:hover {
+  animation-play-state: paused;
+}
+
+.badge-item {
+  flex-shrink: 0;
+}
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Fade edges for smooth appearance */
+.badge-carousel-container::before,
+.badge-carousel-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.badge-carousel-container::before {
+  left: 0;
+  background: linear-gradient(to right, rgb(15 23 42 / 0.8), transparent);
+}
+
+.badge-carousel-container::after {
+  right: 0;
+  background: linear-gradient(to left, rgb(15 23 42 / 0.8), transparent);
+}
+</style>
+</section>
 <section class="border-t border-slate-800/80 bg-gradient-to-b from-slate-950/80 to-slate-900/40 py-12">
 <div class="mx-auto max-w-6xl px-4">
 <div class="text-center mb-8">
@@ -578,8 +797,20 @@ Cross-references publicly available sanctions lists, corporate registries, and e
 <!-- PRICING -->
 <section class="border-t border-slate-800 bg-slate-950/80">
 <div class="mx-auto max-w-6xl px-4 py-10">
-<h2 class="text-sm font-semibold text-slate-100 mb-4">Pricing</h2>
-<div class="grid md:grid-cols-4 gap-4 text-xs">
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-sm font-semibold text-slate-100">Pricing</h2>
+<div class="flex items-center gap-2">
+<button onclick="togglePricingPeriod('monthly')" id="monthlyBtn" class="px-3 py-1 rounded-lg text-xs font-semibold bg-cyan-500 text-white">
+Monthly
+</button>
+<button onclick="togglePricingPeriod('annual')" id="annualBtn" class="px-3 py-1 rounded-lg text-xs font-semibold text-slate-400 hover:text-slate-200">
+Annual <span class="text-[10px] text-emerald-400">Save 20%</span>
+</button>
+</div>
+</div>
+
+<!-- MONTHLY PRICING -->
+<div id="monthlyPricing" class="grid md:grid-cols-4 gap-4 text-xs">
 
 <div class="rounded-xl border border-emerald-500/40 bg-emerald-500/5 p-4">
 <div class="text-emerald-300 font-semibold">💵 Pay-As-You-Go</div>
@@ -622,6 +853,55 @@ Crypto accepted
 </div>
 
 </div>
+
+<!-- ANNUAL PRICING (hidden by default) -->
+<div id="annualPricing" class="hidden grid md:grid-cols-4 gap-4 text-xs">
+
+<div class="rounded-xl border border-emerald-500/40 bg-emerald-500/5 p-4">
+<div class="text-emerald-300 font-semibold">💵 Pay-As-You-Go</div>
+<div class="text-lg font-semibold text-slate-50">$9<span class="text-xs text-slate-400">/check</span></div>
+<p class="mt-2 text-slate-400">No subscription needed.</p>
+<div class="mt-3 flex items-center gap-1 text-[10px] text-emerald-400">
+<svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 14.813h-2.094v2.094h-2.093v-2.094H9.562v-2.094h3.813V9.188H9.562V7.093h3.813V5h2.093v2.093h2.094v2.094h-2.094v3.532h2.094v2.094z"/></svg>
+Crypto accepted
+</div>
+</div>
+
+<div class="rounded-xl border border-slate-800 bg-slate-900/60 p-4 relative">
+<div class="absolute -top-2 -right-2 bg-emerald-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full">SAVE $238</div>
+<div class="text-slate-200 font-semibold">📊 Essential</div>
+<div class="text-lg font-semibold text-slate-50">$950<span class="text-xs text-slate-400">/year</span></div>
+<p class="mt-2 text-slate-400 text-[11px]"><span class="line-through text-slate-600">$1,188</span> → $950/year<br/>25 checks/month<br/>$5/check overage</p>
+<div class="mt-3 flex items-center gap-1 text-[10px] text-emerald-400">
+<svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+20% savings
+</div>
+</div>
+
+<div class="rounded-xl border border-cyan-500/60 bg-cyan-500/5 p-4 relative">
+<div class="absolute -top-2 -right-2 bg-emerald-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full">SAVE $718</div>
+<div class="text-cyan-300 font-semibold">⚡ Professional</div>
+<div class="text-lg font-semibold text-slate-50">$2,870<span class="text-xs text-slate-400">/year</span></div>
+<p class="mt-2 text-slate-400 text-[11px]"><span class="line-through text-slate-600">$3,588</span> → $2,870/year<br/>150 checks/month<br/>$3/check overage<br/>Priority support</p>
+<div class="mt-3 flex items-center gap-1 text-[10px] text-cyan-400">
+<svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+20% savings
+</div>
+</div>
+
+<div class="rounded-xl border border-purple-500/60 bg-purple-500/5 p-4 relative">
+<div class="absolute -top-2 -right-2 bg-emerald-500 text-white text-[9px] font-bold px-2 py-0.5 rounded-full">SAVE $958</div>
+<div class="text-purple-300 font-semibold">🏢 Enterprise</div>
+<div class="text-lg font-semibold text-slate-50">$3,830<span class="text-xs text-slate-400">/year</span></div>
+<p class="mt-2 text-slate-400 text-[11px]"><span class="line-through text-slate-600">$4,788</span> → $3,830/year<br/>Unlimited checks<br/>API access<br/>Team seats</p>
+<div class="mt-3 flex items-center gap-1 text-[10px] text-purple-400">
+<svg class="w-3 h-3" fill="currentColor" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+20% savings
+</div>
+</div>
+
+</div>
+
 </div>
 </section>
 
@@ -1872,6 +2152,30 @@ function closeUpsell() {
     const m = document.getElementById('upsellModal');
     m.classList.add('hidden');
     m.classList.remove('flex');
+}
+
+// Toggle pricing period (monthly/annual)
+function togglePricingPeriod(period) {
+    const monthlyPricing = document.getElementById('monthlyPricing');
+    const annualPricing = document.getElementById('annualPricing');
+    const monthlyBtn = document.getElementById('monthlyBtn');
+    const annualBtn = document.getElementById('annualBtn');
+    
+    if (period === 'monthly') {
+        monthlyPricing.classList.remove('hidden');
+        annualPricing.classList.add('hidden');
+        monthlyBtn.classList.add('bg-cyan-500', 'text-white');
+        monthlyBtn.classList.remove('text-slate-400');
+        annualBtn.classList.remove('bg-cyan-500', 'text-white');
+        annualBtn.classList.add('text-slate-400');
+    } else {
+        monthlyPricing.classList.add('hidden');
+        annualPricing.classList.remove('hidden');
+        annualBtn.classList.add('bg-cyan-500', 'text-white');
+        annualBtn.classList.remove('text-slate-400');
+        monthlyBtn.classList.remove('bg-cyan-500', 'text-white');
+        monthlyBtn.classList.add('text-slate-400');
+    }
 }
 
 // Stripe payment handler

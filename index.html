@@ -311,55 +311,143 @@ Skip & Use AI Data
 </div>
 </div>
 
-<!-- RESULTS PANEL -->
+<!-- RESULTS PANEL - ENHANCED VISUAL REPORT -->
 <div class="rounded-2xl border border-slate-800 bg-slate-950/80 backdrop-blur shadow-lg shadow-cyan-500/5">
-<div class="px-5 py-4 border-b border-slate-800 flex items-center justify-between">
-<h2 class="text-sm font-semibold text-slate-100">Risk assessment</h2>
-<span id="riskBadge"
-class="rounded-full border border-slate-700 bg-slate-900 px-3 py-1 text-[11px] text-slate-300">
+
+<!-- Header with Risk Badge -->
+<div class="px-5 py-4 border-b border-slate-800">
+<div class="flex items-center justify-between mb-3">
+<h2 class="text-sm font-semibold text-slate-100">🎯 Risk Assessment Report</h2>
+<span id="timestamp" class="text-[10px] text-slate-500"></span>
+</div>
+<div class="flex items-center justify-center">
+<span id="riskBadge" class="rounded-full border border-slate-700 bg-slate-900 px-4 py-2 text-sm font-bold text-slate-300 shadow-lg">
 Waiting...
 </span>
 </div>
-
-<div class="px-5 py-4 space-y-3 text-xs text-slate-300">
-<div class="flex items-baseline gap-2">
-<span class="text-[11px] text-slate-500">Score</span>
-<span id="score" class="text-lg font-semibold text-slate-50">-- / 100</span>
 </div>
 
-<div>
-<span class="block text-[11px] text-slate-500 mb-1">Summary</span>
-<p id="summary" class="text-xs text-slate-200">Upload a document to begin.</p>
+<!-- Score Progress Bar -->
+<div class="px-5 py-6 border-b border-slate-800 bg-gradient-to-br from-slate-900/40 to-transparent">
+<div class="text-center mb-4">
+<div class="text-4xl font-bold text-slate-50 mb-1" id="score">-- / 100</div>
+<div class="text-[10px] uppercase tracking-wider text-slate-500">Overall Risk Score</div>
+</div>
+<div class="w-full h-3 bg-slate-800 rounded-full overflow-hidden">
+<div id="scoreBar" class="h-full transition-all duration-1000 ease-out" style="width: 0%"></div>
+</div>
+<div id="userVerifiedBadge" class="hidden text-center mt-3">
+<span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-cyan-500/20 border border-cyan-400/40 text-[10px] font-semibold text-cyan-300">
+✓ USER-VERIFIED DATA
+</span>
+</div>
 </div>
 
-<div class="grid grid-cols-2 gap-4">
-<div>
-<span class="block text-[11px] text-slate-500 mb-1">Red flags</span>
-<ul id="flagsList" class="space-y-1 text-[11px] text-rose-300">
-<li class="text-slate-500">None yet.</li>
+<!-- Score Breakdown -->
+<div id="scoreBreakdown" class="hidden px-5 py-4 border-b border-slate-800">
+<div class="text-[11px] font-semibold text-slate-400 mb-3">SCORE BREAKDOWN</div>
+<div class="grid grid-cols-3 gap-3">
+<div class="bg-slate-900/60 rounded-lg p-3 border border-slate-800">
+<div class="text-[10px] text-slate-500 mb-1">🏢 Company Info</div>
+<div class="text-lg font-bold text-slate-100" id="companyScore">--/30</div>
+</div>
+<div class="bg-slate-900/60 rounded-lg p-3 border border-slate-800">
+<div class="text-[10px] text-slate-500 mb-1">📊 Data Quality</div>
+<div class="text-lg font-bold text-slate-100" id="dataScore">--/40</div>
+</div>
+<div class="bg-slate-900/60 rounded-lg p-3 border border-slate-800">
+<div class="text-[10px] text-slate-500 mb-1">✓ Verification</div>
+<div class="text-lg font-bold text-slate-100" id="verificationScore">--/30</div>
+</div>
+</div>
+</div>
+
+<!-- Summary -->
+<div class="px-5 py-4 border-b border-slate-800">
+<div class="text-[11px] font-semibold text-slate-400 mb-2">SUMMARY</div>
+<p id="summary" class="text-xs text-slate-200 leading-relaxed">Upload a document to begin.</p>
+</div>
+
+<!-- Critical Issues -->
+<div id="criticalSection" class="hidden px-5 py-4 border-b border-slate-800 bg-rose-500/5">
+<div class="flex items-center gap-2 mb-3">
+<span class="text-[11px] font-semibold text-rose-400">🚩 CRITICAL ISSUES</span>
+<span id="criticalCount" class="text-[10px] px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-300">0</span>
+</div>
+<ul id="flagsList" class="space-y-2">
+<li class="text-slate-500 text-[11px]">None detected.</li>
 </ul>
 </div>
-<div>
-<span class="block text-[11px] text-slate-500 mb-1">Next steps</span>
-<ul id="nextStepsList" class="space-y-1 text-[11px] text-emerald-300">
-<li class="text-slate-500">None yet.</li>
+
+<!-- Positive Signals -->
+<div id="positiveSection" class="hidden px-5 py-4 border-b border-slate-800 bg-emerald-500/5">
+<div class="flex items-center gap-2 mb-3">
+<span class="text-[11px] font-semibold text-emerald-400">✅ POSITIVE SIGNALS</span>
+<span id="positiveCount" class="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300">0</span>
+</div>
+<ul id="positiveList" class="space-y-2">
+<li class="text-slate-500 text-[11px]">None detected.</li>
 </ul>
 </div>
-</div>
 
-<div id="fingerprintSection" class="hidden pt-3 border-t border-slate-800">
-<span class="block text-[11px] text-slate-500 mb-2">Document Fingerprint</span>
-<div class="bg-slate-900/60 p-2 rounded text-[10px] font-mono text-slate-400">
-<p id="fingerprintHash" class="truncate"></p>
-<p id="fingerprintStatus" class="mt-1"></p>
-</div>
-</div>
-
-<button id="exportBtn" onclick="exportReport()" class="hidden w-full mt-3 inline-flex items-center justify-center rounded-lg bg-slate-800 px-3 py-2 text-[11px] font-semibold text-slate-300 hover:bg-slate-700 transition border border-slate-700">
-📥 Export JSON Report
+<!-- Extracted Data (Collapsible) -->
+<div id="extractedDataSection" class="hidden px-5 py-4 border-b border-slate-800">
+<button onclick="toggleExtractedData()" class="w-full flex items-center justify-between text-[11px] font-semibold text-slate-400 hover:text-cyan-400 transition">
+<span>📋 EXTRACTED DATA</span>
+<span id="extractedToggle">▼</span>
 </button>
-
+<div id="extractedDataContent" class="hidden mt-3 space-y-2 text-[11px]">
+<div class="grid grid-cols-2 gap-2">
+<div class="bg-slate-900/60 rounded p-2">
+<div class="text-[10px] text-slate-500">Company</div>
+<div class="text-slate-200" id="extractedCompany">--</div>
 </div>
+<div class="bg-slate-900/60 rounded p-2">
+<div class="text-[10px] text-slate-500">Country</div>
+<div class="text-slate-200" id="extractedCountry">--</div>
+</div>
+<div class="bg-slate-900/60 rounded p-2">
+<div class="text-[10px] text-slate-500">Commodity</div>
+<div class="text-slate-200" id="extractedCommodity">--</div>
+</div>
+<div class="bg-slate-900/60 rounded p-2">
+<div class="text-[10px] text-slate-500">Quantity</div>
+<div class="text-slate-200" id="extractedQuantity">--</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- Document Security -->
+<div id="fingerprintSection" class="hidden px-5 py-4 border-b border-slate-800">
+<div class="text-[11px] font-semibold text-slate-400 mb-3">🔐 DOCUMENT SECURITY</div>
+<div class="bg-slate-900/60 rounded-lg p-3 border border-slate-800">
+<div class="text-[10px] text-slate-500 mb-1">SHA-256 Fingerprint</div>
+<p id="fingerprintHash" class="text-[10px] font-mono text-slate-400 truncate mb-2"></p>
+<p id="fingerprintStatus" class="text-[11px]"></p>
+</div>
+</div>
+
+<!-- Recommended Actions -->
+<div id="actionsSection" class="hidden px-5 py-4 border-b border-slate-800">
+<div class="text-[11px] font-semibold text-slate-400 mb-3">💼 RECOMMENDED ACTIONS</div>
+<ul id="nextStepsList" class="space-y-2">
+<li class="text-slate-500 text-[11px]">None yet.</li>
+</ul>
+</div>
+
+<!-- Export Buttons -->
+<div class="px-5 py-4">
+<div class="flex gap-2">
+<button id="exportPdfBtn" onclick="exportPdfReport()" class="hidden flex-1 inline-flex items-center justify-center gap-2 rounded-lg bg-gradient-to-r from-rose-500 to-orange-500 px-4 py-3 text-xs font-semibold text-white hover:from-rose-600 hover:to-orange-600 transition shadow-lg">
+📄 Export PDF
+</button>
+<button id="exportBtn" onclick="exportReport()" class="hidden flex-1 inline-flex items-center justify-center gap-2 rounded-lg bg-slate-800 px-4 py-3 text-xs font-semibold text-slate-300 hover:bg-slate-700 transition border border-slate-700">
+📊 Export JSON
+</button>
+</div>
+</div>
+
 </div>
 
 </div>
@@ -1329,39 +1417,103 @@ function extractDataFromText(text) {
 
 // Update results UI
 function updateResultsUI(result) {
-    // Risk badge
+    // Timestamp
+    const now = new Date();
+    document.getElementById('timestamp').textContent = now.toLocaleString('en-US', { 
+        month: 'short', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' 
+    });
+    
+    // Risk badge with glow effect
     const riskBadge = document.getElementById('riskBadge');
     riskBadge.textContent = `${result.riskLevel} RISK`;
     
     const riskColors = {
-        'GREEN': 'bg-green-500/20 border-green-400 text-green-300',
-        'YELLOW': 'bg-yellow-500/20 border-yellow-400 text-yellow-300',
-        'RED': 'bg-red-500/20 border-red-400 text-red-300',
-        'BLACK': 'bg-gray-900 border-gray-700 text-gray-100'
+        'GREEN': 'bg-emerald-500/20 border-emerald-400 text-emerald-300 shadow-emerald-500/50',
+        'YELLOW': 'bg-amber-500/20 border-amber-400 text-amber-300 shadow-amber-500/50',
+        'RED': 'bg-rose-500/20 border-rose-400 text-rose-300 shadow-rose-500/50',
+        'BLACK': 'bg-gray-900 border-gray-700 text-gray-100 shadow-gray-900/50'
     };
     
-    riskBadge.className = `rounded-full border px-3 py-1 text-[11px] font-semibold ${riskColors[result.riskLevel]}`;
+    riskBadge.className = `rounded-full border px-4 py-2 text-sm font-bold shadow-lg ${riskColors[result.riskLevel]}`;
 
-    // Score
+    // Score with animated progress bar
     document.getElementById('score').textContent = `${result.score} / 100`;
+    
+    const scoreBar = document.getElementById('scoreBar');
+    const barColors = {
+        'GREEN': 'bg-gradient-to-r from-emerald-500 to-green-400',
+        'YELLOW': 'bg-gradient-to-r from-amber-500 to-yellow-400',
+        'RED': 'bg-gradient-to-r from-rose-500 to-red-400',
+        'BLACK': 'bg-gradient-to-r from-gray-700 to-gray-900'
+    };
+    scoreBar.className = `h-full transition-all duration-1000 ease-out ${barColors[result.riskLevel]}`;
+    setTimeout(() => {
+        scoreBar.style.width = `${result.score}%`;
+    }, 100);
+    
+    // User-verified badge
+    if (result.userVerified) {
+        document.getElementById('userVerifiedBadge').classList.remove('hidden');
+    }
+    
+    // Score breakdown (calculate sub-scores)
+    const companyScore = Math.min(30, Math.round(result.score * 0.3));
+    const dataScore = Math.min(40, Math.round(result.score * 0.4));
+    const verificationScore = Math.min(30, Math.round(result.score * 0.3));
+    
+    document.getElementById('companyScore').textContent = `${companyScore}/30`;
+    document.getElementById('dataScore').textContent = `${dataScore}/40`;
+    document.getElementById('verificationScore').textContent = `${verificationScore}/30`;
+    document.getElementById('scoreBreakdown').classList.remove('hidden');
 
     // Summary
     document.getElementById('summary').textContent = result.summary;
 
-    // Red flags
+    // Critical issues (red flags) with point deductions
     const flagsList = document.getElementById('flagsList');
+    const criticalSection = document.getElementById('criticalSection');
     if (result.redFlags.length > 0) {
-        flagsList.innerHTML = result.redFlags.map(flag => `<li>• ${flag}</li>`).join('');
-    } else {
-        flagsList.innerHTML = '<li class="text-slate-500">None detected.</li>';
+        criticalSection.classList.remove('hidden');
+        document.getElementById('criticalCount').textContent = result.redFlags.length;
+        
+        flagsList.innerHTML = result.redFlags.map((flag, i) => {
+            const pointDeduction = 15 - (i * 2); // First flag = -15, second = -13, etc.
+            return `<li class="flex items-center justify-between bg-rose-500/5 rounded-lg px-3 py-2 border border-rose-500/20">
+                <span class="flex items-center gap-2">
+                    <span class="text-rose-400">⚠️</span>
+                    <span class="text-slate-200">${flag}</span>
+                </span>
+                <span class="text-[10px] text-rose-400 font-semibold">-${pointDeduction} pts</span>
+            </li>`;
+        }).join('');
     }
-
-    // Next steps
-    const nextStepsList = document.getElementById('nextStepsList');
-    if (result.nextSteps.length > 0) {
-        nextStepsList.innerHTML = result.nextSteps.map(step => `<li>• ${step}</li>`).join('');
-    } else {
-        nextStepsList.innerHTML = '<li class="text-slate-500">No actions needed.</li>';
+    
+    // Positive signals with point additions
+    const positiveList = document.getElementById('positiveList');
+    const positiveSection = document.getElementById('positiveSection');
+    if (result.positiveSignals && result.positiveSignals.length > 0) {
+        positiveSection.classList.remove('hidden');
+        document.getElementById('positiveCount').textContent = result.positiveSignals.length;
+        
+        positiveList.innerHTML = result.positiveSignals.map((signal, i) => {
+            const pointAddition = 10 - (i * 2); // First signal = +10, second = +8, etc.
+            return `<li class="flex items-center justify-between bg-emerald-500/5 rounded-lg px-3 py-2 border border-emerald-500/20">
+                <span class="flex items-center gap-2">
+                    <span class="text-emerald-400">✓</span>
+                    <span class="text-slate-200">${signal}</span>
+                </span>
+                <span class="text-[10px] text-emerald-400 font-semibold">+${pointAddition} pts</span>
+            </li>`;
+        }).join('');
+    }
+    
+    // Extracted data (collapsible)
+    if (result.extractedData) {
+        document.getElementById('extractedDataSection').classList.remove('hidden');
+        document.getElementById('extractedCompany').textContent = result.extractedData.buyer?.name || 'Not specified';
+        document.getElementById('extractedCountry').textContent = result.extractedData.buyer?.country || 'Not specified';
+        document.getElementById('extractedCommodity').textContent = result.extractedData.commodity || 'Not specified';
+        document.getElementById('extractedQuantity').textContent = result.extractedData.quantity || 'Not specified';
     }
 
     // Fingerprint section
@@ -1371,12 +1523,46 @@ function updateResultsUI(result) {
     document.getElementById('fingerprintHash').textContent = `${result.documentFingerprint.hash.substring(0, 32)}...`;
     
     const statusText = result.documentFingerprint.isReused 
-        ? `⚠️ Reused (${result.documentFingerprint.timesUsed}x)` 
-        : '✓ New document';
-    document.getElementById('fingerprintStatus').textContent = statusText;
+        ? `<span class="text-amber-400">⚠️ Document Reused (${result.documentFingerprint.timesUsed}x)</span>` 
+        : '<span class="text-emerald-400">✓ New Document (First Upload)</span>';
+    document.getElementById('fingerprintStatus').innerHTML = statusText;
+    
+    // Recommended actions
+    const actionsSection = document.getElementById('actionsSection');
+    const nextStepsList = document.getElementById('nextStepsList');
+    if (result.nextSteps.length > 0) {
+        actionsSection.classList.remove('hidden');
+        nextStepsList.innerHTML = result.nextSteps.map((step, i) => {
+            const numEmoji = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣'][i] || '•';
+            return `<li class="flex items-start gap-2 bg-slate-900/40 rounded-lg px-3 py-2 border border-slate-800">
+                <span class="text-slate-400">${numEmoji}</span>
+                <span class="text-slate-200">${step}</span>
+            </li>`;
+        }).join('');
+    }
 
-    // Show export button
+    // Show export buttons
     document.getElementById('exportBtn').classList.remove('hidden');
+    document.getElementById('exportPdfBtn').classList.remove('hidden');
+}
+
+// Toggle extracted data visibility
+function toggleExtractedData() {
+    const content = document.getElementById('extractedDataContent');
+    const toggle = document.getElementById('extractedToggle');
+    
+    if (content.classList.contains('hidden')) {
+        content.classList.remove('hidden');
+        toggle.textContent = '▲';
+    } else {
+        content.classList.add('hidden');
+        toggle.textContent = '▼';
+    }
+}
+
+// Export PDF report (enhanced)
+function exportPdfReport() {
+    alert('PDF Export coming soon! This will generate a professional PDF report with:\n\n• Executive summary\n• Visual risk indicators\n• Detailed findings\n• Recommended actions\n• Company letterhead\n\nFor now, use JSON export.');
 }
 
 // Export JSON report

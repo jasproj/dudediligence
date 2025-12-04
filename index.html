@@ -1546,30 +1546,79 @@ async function runDiligence() {
 
 // Show review form with AI-extracted data
 function showReviewForm(extracted) {
-    // Fill form fields with AI data
+    // Fill form fields with AI data (NOW USING CORRECT FIELDS!)
     document.getElementById('edit_company_name').value = extracted.buyer?.name || '';
     document.getElementById('edit_country').value = extracted.buyer?.country || '';
     document.getElementById('edit_representative').value = extracted.buyer?.representative || '';
     document.getElementById('edit_email').value = extracted.buyer?.email || '';
-    document.getElementById('edit_bank_name').value = extracted.paymentTerms || '';
-    document.getElementById('edit_source_funds').value = extracted.deliveryTerms || '';
+    document.getElementById('edit_bank_name').value = extracted.bankName || '';
+    document.getElementById('edit_source_funds').value = extracted.sourceOfFunds || '';
     document.getElementById('edit_commodity').value = extracted.commodity || '';
     document.getElementById('edit_quantity').value = extracted.quantity || '';
     document.getElementById('edit_price').value = extracted.price || '';
+    
+    // VALIDATION LAYER: Detect common AI extraction errors
+    validateAndWarn('bank_name', extracted.bankName);
+    validateAndWarn('source_funds', extracted.sourceOfFunds);
     
     // Update status indicators
     updateFieldStatus('company_name', extracted.buyer?.name);
     updateFieldStatus('country', extracted.buyer?.country);
     updateFieldStatus('representative', extracted.buyer?.representative);
     updateFieldStatus('email', extracted.buyer?.email);
-    updateFieldStatus('bank_name', extracted.paymentTerms);
-    updateFieldStatus('source_funds', extracted.deliveryTerms);
+    updateFieldStatus('bank_name', extracted.bankName);
+    updateFieldStatus('source_funds', extracted.sourceOfFunds);
     
     // Show the review form
     document.getElementById('reviewFormSection').classList.remove('hidden');
     
     // Scroll to review form
     document.getElementById('reviewFormSection').scrollIntoView({ behavior: 'smooth' });
+}
+
+// VALIDATION LAYER: Detect misclassified data
+function validateAndWarn(fieldName, value) {
+    const statusEl = document.getElementById(`status_${fieldName}`);
+    if (!statusEl || !value || value === 'Not specified') return;
+    
+    const valueLower = value.toLowerCase();
+    
+    // Bank Name validation - check for payment instruments
+    if (fieldName === 'bank_name') {
+        const paymentInstruments = ['sblc', 'mt103', 'mt760', 'mt799', 'bg', 'dlc', 'standby', 'letter of credit', 'l/c', 'documentary'];
+        const hasPaymentTerm = paymentInstruments.some(term => valueLower.includes(term));
+        
+        if (hasPaymentTerm) {
+            statusEl.innerHTML = '⚠️ <span class="text-rose-400 font-semibold">WARNING:</span> This looks like a payment instrument, not a bank name. Please correct.';
+            statusEl.className = 'text-[10px] text-rose-400 mt-1';
+            document.getElementById(`edit_${fieldName}`).classList.add('border-rose-500', 'bg-rose-500/10');
+            return;
+        }
+    }
+    
+    // Source of Funds validation - check for Incoterms
+    if (fieldName === 'source_funds') {
+        const incoterms = ['cif', 'fob', 'cfr', 'exw', 'dap', 'ddp', 'fas', 'fca', 'cpt', 'cip'];
+        const hasIncoterm = incoterms.some(term => valueLower === term || valueLower.startsWith(term + ' '));
+        
+        if (hasIncoterm) {
+            statusEl.innerHTML = '⚠️ <span class="text-rose-400 font-semibold">WARNING:</span> This is an Incoterm, not a source of funds. Please specify where the money comes from.';
+            statusEl.className = 'text-[10px] text-rose-400 mt-1';
+            document.getElementById(`edit_${fieldName}`).classList.add('border-rose-500', 'bg-rose-500/10');
+            return;
+        }
+        
+        // Check for payment instruments in source of funds
+        const paymentInstruments = ['sblc', 'mt103', 'mt760', 'lc', 'letter of credit'];
+        const hasPaymentTerm = paymentInstruments.some(term => valueLower.includes(term));
+        
+        if (hasPaymentTerm) {
+            statusEl.innerHTML = '⚠️ <span class="text-rose-400 font-semibold">WARNING:</span> This is a payment method, not a source of funds. Please specify where the money comes from (e.g., "Trading revenue", "Company capital").';
+            statusEl.className = 'text-[10px] text-rose-400 mt-1';
+            document.getElementById(`edit_${fieldName}`).classList.add('border-rose-500', 'bg-rose-500/10');
+            return;
+        }
+    }
 }
 
 // Update field status indicator
@@ -1594,7 +1643,7 @@ function skipReview() {
 
 // Finalize with user-verified data
 function finalizeReport() {
-    // Collect form values
+    // Collect form values (NOW WITH CORRECT FIELD MAPPING!)
     const verifiedData = {
         documentType: window.aiExtractedData.documentType,
         commodity: document.getElementById('edit_commodity').value || 'Not specified',
@@ -1611,8 +1660,10 @@ function finalizeReport() {
             country: 'Not specified',
             email: 'Not specified'
         },
-        paymentTerms: document.getElementById('edit_bank_name').value || 'Not specified',
-        deliveryTerms: document.getElementById('edit_source_funds').value || 'Not specified',
+        bankName: document.getElementById('edit_bank_name').value || 'Not specified',
+        sourceOfFunds: document.getElementById('edit_source_funds').value || 'Not specified',
+        paymentTerms: window.aiExtractedData.paymentTerms || 'Not specified',
+        deliveryTerms: window.aiExtractedData.deliveryTerms || 'Not specified',
         port: window.aiExtractedData.port || 'Not specified'
     };
     

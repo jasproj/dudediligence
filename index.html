@@ -78,6 +78,17 @@ z-index: 1;
 </head>
 
 <body class="min-h-screen text-slate-100 antialiased">
+
+<!-- Floating Pricing Badge (appears after scroll) -->
+<a href="#pricing" id="floatingPricingBadge" class="hidden fixed bottom-6 right-6 z-40 group">
+<div class="flex items-center gap-2 px-3 py-2 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-xs font-semibold shadow-lg hover:shadow-xl hover:scale-105 transition-all">
+<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+</svg>
+<span>Plans</span>
+</div>
+</a>
+
 <div class="min-h-screen flex flex-col">
 
 <!-- HEADER -->
@@ -104,10 +115,7 @@ Instant due diligence reports for commodities brokers
 </div>
 
 <!-- Pay with Crypto Button -->
-<div class="flex items-center gap-4">
-<a href="how-it-works.html" class="text-sm text-slate-400 hover:text-cyan-400 transition font-medium">
-How It Works
-</a>
+<div class="hidden md:flex items-center gap-4">
 <button onclick="openCryptoModal()" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-orange-500 to-yellow-500 text-slate-900 font-semibold text-sm hover:from-orange-600 hover:to-yellow-600 transition shadow-lg">
 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
 <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 14.813h-2.094v2.094h-2.093v-2.094H9.562v-2.094h3.813V9.188H9.562V7.093h3.813V5h2.093v2.093h2.094v2.094h-2.094v3.532h2.094v2.094z"/>
@@ -168,6 +176,24 @@ email, volume, document patterns, and public risk signals, then gives you a clea
 <span>💰 <strong>Crypto Payments:</strong> Pay with BTC, ETH, USDT, and more—no credit card needed.</span>
 </li>
 </ul>
+
+<!-- How It Works Button (Mobile & Desktop) -->
+<div class="mt-6 flex flex-col sm:flex-row gap-3">
+<a href="how-it-works.html" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg border-2 border-cyan-500/30 bg-cyan-500/10 text-cyan-300 font-semibold text-sm hover:bg-cyan-500/20 hover:border-cyan-500/50 transition">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+</svg>
+Learn How It Works
+</a>
+
+<!-- Mobile Crypto Button -->
+<button onclick="openCryptoModal()" class="md:hidden inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-orange-500 to-yellow-500 text-slate-900 font-semibold text-sm hover:from-orange-600 hover:to-yellow-600 transition shadow-lg">
+<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+<path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 14.813h-2.094v2.094h-2.093v-2.094H9.562v-2.094h3.813V9.188H9.562V7.093h3.813V5h2.093v2.093h2.094v2.094h-2.094v3.532h2.094v2.094z"/>
+</svg>
+Pay with Crypto
+</button>
+</div>
 </div>
 
 <!-- RIGHT SIDE -->
@@ -684,25 +710,33 @@ Cross-references publicly available sanctions lists, corporate registries, and e
 </section>
 
 <!-- HOW IT WORKS -->
-<section class="border-t border-slate-800/80 bg-black/60">
-<div class="mx-auto max-w-6xl px-4 py-10 grid md:grid-cols-3 gap-8 text-xs text-slate-300">
-<div>
-<h3 class="text-sm font-semibold text-slate-100 mb-2">1. Upload the documents</h3>
-<p>Upload LOI, ICPO, KYC, or a combined PDF.</p>
+<section class="border-t border-slate-800/80 bg-black/40">
+<div class="mx-auto max-w-6xl px-4 py-6">
+<div class="flex items-center justify-center gap-8 text-center">
+<div class="flex items-center gap-2">
+<span class="w-8 h-8 rounded-full bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-semibold text-xs">1</span>
+<span class="text-xs text-slate-300">Upload</span>
 </div>
-<div>
-<h3 class="text-sm font-semibold text-slate-100 mb-2">2. Rules & signals</h3>
-<p>We check emails, domains, volumes, patterns, registries, and fingerprints.</p>
+<svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+</svg>
+<div class="flex items-center gap-2">
+<span class="w-8 h-8 rounded-full bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-semibold text-xs">2</span>
+<span class="text-xs text-slate-300">AI Analysis</span>
 </div>
-<div>
-<h3 class="text-sm font-semibold text-slate-100 mb-2">3. Score & next steps</h3>
-<p>You receive a score, flags, and recommended actions.</p>
+<svg class="w-4 h-4 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+</svg>
+<div class="flex items-center gap-2">
+<span class="w-8 h-8 rounded-full bg-cyan-500/20 border border-cyan-500/40 flex items-center justify-center text-cyan-400 font-semibold text-xs">3</span>
+<span class="text-xs text-slate-300">Risk Report</span>
+</div>
 </div>
 </div>
 </section>
 
 <!-- PRICING -->
-<section class="border-t border-slate-800 bg-slate-950/80">
+<section id="pricing" class="border-t border-slate-800 bg-slate-950/80">
 <div class="mx-auto max-w-6xl px-4 py-10">
 <div class="flex items-center justify-between mb-6">
 <h2 class="text-sm font-semibold text-slate-100">Pricing</h2>
@@ -1007,6 +1041,19 @@ Unlimited verifications, blacklist checks, passport validation, fraud scanning, 
 
 <!-- SCRIPT -->
 <script>
+// Floating Pricing Badge - Show after scrolling past hero
+window.addEventListener('scroll', function() {
+    const floatingBadge = document.getElementById('floatingPricingBadge');
+    const scrollPosition = window.scrollY;
+    
+    // Show badge after scrolling 400px (past hero section)
+    if (scrollPosition > 400) {
+        floatingBadge.classList.remove('hidden');
+    } else {
+        floatingBadge.classList.add('hidden');
+    }
+});
+
 // Global state
 let currentFile = null;
 let currentHash = null;

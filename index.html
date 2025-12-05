@@ -115,7 +115,14 @@ Instant due diligence reports for commodities brokers
 </div>
 
 <!-- Pay with Crypto Button -->
-<div class="hidden md:flex items-center gap-4">
+<div class="hidden md:flex items-center gap-6">
+<!-- Navigation Menu -->
+<nav class="flex items-center gap-5 text-sm">
+<a href="#pricing" class="text-slate-400 hover:text-cyan-400 transition font-medium">Pricing</a>
+<a href="how-it-works.html" class="text-slate-400 hover:text-cyan-400 transition font-medium">How It Works</a>
+<a href="/partners" class="text-slate-400 hover:text-cyan-400 transition font-medium">Affiliates</a>
+</nav>
+<!-- Crypto Button -->
 <button onclick="openCryptoModal()" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-orange-500 to-yellow-500 text-slate-900 font-semibold text-sm hover:from-orange-600 hover:to-yellow-600 transition shadow-lg">
 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
 <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 14.813h-2.094v2.094h-2.093v-2.094H9.562v-2.094h3.813V9.188H9.562V7.093h3.813V5h2.093v2.093h2.094v2.094h-2.094v3.532h2.094v2.094z"/>
@@ -145,32 +152,37 @@ email, volume, document patterns, and public risk signals, then gives you a clea
 <ul class="mt-6 space-y-2 text-sm text-slate-300">
 <li class="flex items-start gap-2">
 <span class="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
-<span><strong>Instant Risk Scoring:</strong> 0–100 score with color-coded risk levels in seconds.</span>
+<span><strong>Instant Risk Scoring:</strong> 0–100 score with color-coded risk levels (Green/Yellow/Red/Black) in under 10 seconds.</span>
 </li>
 <li class="flex items-start gap-2">
 <span class="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
-<span><strong>Fraud Detection:</strong> Flags free emails, fake volumes, upfront payment scams, and recycled LOIs.</span>
+<span><strong>Multi-Party Extraction:</strong> AI identifies ALL parties (buyers, sellers, intermediaries) with banking details and contact info.</span>
 </li>
 <li class="flex items-start gap-2">
 <span class="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
-<span><strong>Document Fingerprinting:</strong> Catches serial scammers reusing the same documents.</span>
+<span><strong>15+ Database Checks:</strong> Cross-references OFAC, Interpol, Companies House, OpenSanctions, and 11 more sources.</span>
 </li>
 <li class="flex items-start gap-2">
 <span class="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
-<span><strong>Sanctions Screening:</strong> Cross-checks against OFAC, UN, and EU sanctions lists.</span>
+<span><strong>Document Fingerprinting:</strong> SHA-256 hashing detects recycled documents and serial scammers.</span>
 </li>
 <li class="flex items-start gap-2">
 <span class="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
-<span><strong>AI Data Extraction:</strong> Automatically pulls buyer, seller, commodity, pricing, and terms.</span>
+<span><strong>Fraud Pattern Detection:</strong> Flags free emails, impossible volumes, 100% upfront payments, and suspicious payment terms.</span>
 </li>
 <li class="flex items-start gap-2">
 <span class="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
-<span><strong>Clear Next Steps:</strong> Know immediately whether to proceed or walk away.</span>
+<span><strong>Manual Review Layer:</strong> Verify and correct AI extractions before finalizing—earn "User-Verified" badge for higher accuracy.</span>
 </li>
 <li class="flex items-start gap-2">
 <span class="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
-<span><strong>Export Reports:</strong> Download JSON reports for compliance and legal review.</span>
+<span><strong>Professional PDF Reports:</strong> Download detailed reports with database findings and party details.</span>
 </li>
+<li class="flex items-start gap-2">
+<span class="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
+<span>💰 <strong>Crypto Payments:</strong> Pay with BTC, ETH, USDT, and more—no credit card needed.</span>
+</li>
+</ul>
 <li class="flex items-start gap-2">
 <span class="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
 <span>💰 <strong>Crypto Payments:</strong> Pay with BTC, ETH, USDT, and more—no credit card needed.</span>
@@ -782,7 +794,7 @@ Cross-references publicly available sanctions lists, corporate registries, and e
 Monthly
 </button>
 <button onclick="togglePricingPeriod('annual')" id="annualBtn" class="px-3 py-1 rounded-lg text-xs font-semibold text-slate-400 hover:text-slate-200">
-Annual <span class="text-[10px] text-emerald-400">Save 20%</span>
+Annual <span class="text-[10px] text-yellow-400 font-bold">Save 20%</span>
 </button>
 </div>
 </div>

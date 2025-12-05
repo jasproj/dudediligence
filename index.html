@@ -1194,7 +1194,11 @@ function calculateRuleBasedScore(data) {
             score -= 8;
             redFlags.push("Payment terms missing");
         } else {
-            const paymentLower = data.paymentTerms.toLowerCase();
+            // Handle both old string format and new object format
+            const paymentText = typeof data.paymentTerms === 'string' 
+                ? data.paymentTerms 
+                : (data.paymentTerms.details || data.paymentTerms.method || JSON.stringify(data.paymentTerms));
+            const paymentLower = paymentText.toLowerCase();
             if (paymentLower.includes('upfront') || paymentLower.includes('advance') || paymentLower.includes('100%')) {
                 score -= 15;
                 redFlags.push("⚠️ 100% upfront payment - HIGH FRAUD RISK");
@@ -1204,12 +1208,18 @@ function calculateRuleBasedScore(data) {
         }
 
         // Document Integrity Checks
-        if (!data.deliveryTerms || data.deliveryTerms === "Not specified") {
+        const deliveryText = typeof data.deliveryTerms === 'string' 
+            ? data.deliveryTerms 
+            : (data.deliveryTerms?.incoterms || "Not specified");
+        if (!deliveryText || deliveryText === "Not specified") {
             score -= 7;
             redFlags.push("Delivery terms missing");
         }
 
-        if (!data.port || data.port === "Not specified") {
+        const portText = typeof data.port === 'string'
+            ? data.port
+            : (data.delivery?.loadingPort || data.delivery?.dischargePort || "Not specified");
+        if (!portText || portText === "Not specified") {
             score -= 7;
             redFlags.push("Port not specified");
         }
@@ -2107,8 +2117,18 @@ function updateResultsUI(result) {
         document.getElementById('extractedDataSection').classList.remove('hidden');
         document.getElementById('extractedCompany').textContent = result.extractedData.buyer?.name || 'Not specified';
         document.getElementById('extractedCountry').textContent = result.extractedData.buyer?.country || 'Not specified';
-        document.getElementById('extractedCommodity').textContent = result.extractedData.commodity || 'Not specified';
-        document.getElementById('extractedQuantity').textContent = result.extractedData.quantity || 'Not specified';
+        
+        // Handle commodity as string or object
+        const commodityText = typeof result.extractedData.commodity === 'string'
+            ? result.extractedData.commodity
+            : (result.extractedData.commodity?.name || 'Not specified');
+        document.getElementById('extractedCommodity').textContent = commodityText;
+        
+        // Handle quantity as string or object
+        const quantityText = typeof result.extractedData.quantity === 'string'
+            ? result.extractedData.quantity
+            : (result.extractedData.commodity?.quantity || 'Not specified');
+        document.getElementById('extractedQuantity').textContent = quantityText;
     }
 
     // Fingerprint section

@@ -428,6 +428,14 @@ Waiting...
 </ul>
 </div>
 
+<!-- Parties Involved Section (NEW!) -->
+<div id="partiesSection" class="hidden px-5 py-4 border-b border-slate-800">
+<div class="text-[11px] font-semibold text-slate-400 mb-3">👥 PARTIES INVOLVED</div>
+<div id="partiesList" class="space-y-3">
+<!-- Dynamically populated -->
+</div>
+</div>
+
 <!-- Extracted Data (Collapsible) -->
 <div id="extractedDataSection" class="hidden px-5 py-4 border-b border-slate-800">
 <button onclick="toggleExtractedData()" class="w-full flex items-center justify-between text-[11px] font-semibold text-slate-400 hover:text-cyan-400 transition">
@@ -2005,6 +2013,45 @@ function updateResultsUI(result) {
                 </span>
                 <span class="text-[10px] text-emerald-400 font-semibold">+${pointAddition} pts</span>
             </li>`;
+        }).join('');
+    }
+    
+    // Parties Involved (NEW!)
+    if (result.extractedData && result.extractedData.parties && result.extractedData.parties.length > 0) {
+        document.getElementById('partiesSection').classList.remove('hidden');
+        const partiesList = document.getElementById('partiesList');
+        
+        const roleIcons = {
+            'Buyer': '🏢',
+            'Seller': '🏭',
+            'Intermediary': '🔄',
+            'Broker': '💼'
+        };
+        
+        const roleColors = {
+            'Buyer': 'border-cyan-500/30 bg-cyan-500/5',
+            'Seller': 'border-emerald-500/30 bg-emerald-500/5',
+            'Intermediary': 'border-amber-500/30 bg-amber-500/5',
+            'Broker': 'border-purple-500/30 bg-purple-500/5'
+        };
+        
+        partiesList.innerHTML = result.extractedData.parties.map(party => {
+            const icon = roleIcons[party.role] || '🏢';
+            const colorClass = roleColors[party.role] || 'border-slate-700 bg-slate-900/40';
+            
+            return `<div class="border rounded-lg p-3 ${colorClass}">
+                <div class="flex items-center gap-2 mb-2">
+                    <span class="text-lg">${icon}</span>
+                    <span class="text-[10px] font-semibold text-slate-400 uppercase">${party.role}</span>
+                </div>
+                <div class="space-y-1">
+                    <div class="text-[12px] font-semibold text-slate-200">${party.companyName}</div>
+                    ${party.country !== 'Not specified' ? `<div class="text-[10px] text-slate-400">📍 ${party.country}</div>` : ''}
+                    ${party.representative !== 'Not specified' ? `<div class="text-[10px] text-slate-300">👤 ${party.representative}</div>` : ''}
+                    ${party.email !== 'Not specified' ? `<div class="text-[10px] text-slate-400">📧 ${party.email}</div>` : ''}
+                    ${party.phone !== 'Not specified' ? `<div class="text-[10px] text-slate-400">📞 ${party.phone}</div>` : ''}
+                </div>
+            </div>`;
         }).join('');
     }
     

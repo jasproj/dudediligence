@@ -3668,8 +3668,14 @@ function renderHeroVariation() {
 }
 
 // Run IMMEDIATELY (in case DOM is already loaded)
+console.log('🚀🚀🚀 HERO SCRIPT LOADED - Starting execution...');
+console.log('DOM readyState:', document.readyState);
+console.log('heroVariation element exists?', !!document.getElementById('heroVariation'));
+console.log('heroBullets element exists?', !!document.getElementById('heroBullets'));
+
 if (document.readyState === 'loading') {
   // DOM is still loading, wait for it
+  console.log('⏳ Waiting for DOMContentLoaded...');
   document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 DDP: DOM loaded, rendering hero...');
     renderHeroVariation();
@@ -3682,5 +3688,39 @@ if (document.readyState === 'loading') {
   console.log('✅ DDP: Hero rendered immediately');
 }
 
+// ALSO run on window load as a backup
+window.addEventListener('load', function() {
+  const heroContainer = document.getElementById('heroVariation');
+  if (!heroContainer || !heroContainer.innerHTML || heroContainer.innerHTML.includes('Variation will be injected')) {
+    console.log('⚠️ Hero not rendered yet, rendering on window load...');
+    renderHeroVariation();
+  }
+});
+
 // Track conversions with variation
-function trackCo
+
+// Track conversions with variation
+function trackConversionWithVariation(eventName) {
+  const marker = document.getElementById('hero-variation-marker');
+  const variation = marker ? marker.dataset.variation : 'unknown';
+  
+  if (typeof gtag !== 'undefined') {
+    gtag('event', eventName, {
+      'hero_variation': variation
+    });
+  }
+}
+
+// Add tracking to CTA buttons
+document.addEventListener('DOMContentLoaded', function() {
+  // Track clicks on key CTAs
+  document.querySelectorAll('a[href*="pricing"], button[onclick*="runDiligence"]').forEach(function(el) {
+    el.addEventListener('click', function() {
+      trackConversionWithVariation('cta_click');
+    });
+  });
+});
+</script>
+
+</body>
+</html>

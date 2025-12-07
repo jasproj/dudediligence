@@ -93,6 +93,26 @@ z-index: 1;
 .bot-eye-glow {
   animation: scan 2s ease-in-out infinite;
 }
+
+/* Step circle sequential glow animation */
+@keyframes stepGlow {
+  0%, 20% {
+    background: rgba(6, 182, 212, 0.4);
+    border-color: rgba(6, 182, 212, 0.8);
+    box-shadow: 0 0 15px rgba(6, 182, 212, 0.6);
+    transform: scale(1.1);
+  }
+  40%, 100% {
+    background: rgba(6, 182, 212, 0.1);
+    border-color: rgba(6, 182, 212, 0.4);
+    box-shadow: none;
+    transform: scale(1);
+  }
+}
+
+.step-circle {
+  animation: stepGlow 3.6s ease-in-out infinite;
+}
 </style>
 <!-- jsPDF Library for PDF Generation -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -117,14 +137,20 @@ z-index: 1;
 <header class="border-b border-slate-800/80 bg-black/60 backdrop-blur sticky top-0 z-40">
 <div class="mx-auto max-w-6xl px-3 py-3 flex items-center justify-between">
 
-<!-- LEFT: Logo (matches footer style) -->
-<div class="flex items-center gap-3">
-<div class="h-8 w-8 rounded-lg bg-cyan-500/20 border border-cyan-400/40 flex items-center justify-center">
-<span class="text-cyan-300 font-semibold text-sm">DDP</span>
+<!-- LEFT: Logo (Compact on mobile) -->
+<div class="flex items-center gap-2">
+<div class="h-8 w-8 md:h-9 md:w-9 rounded-xl bg-cyan-500/20 border border-cyan-400/40 flex items-center justify-center flex-shrink-0">
+<span class="text-cyan-300 font-semibold text-base md:text-lg">DDP</span>
 </div>
+
+<!-- Hide details on tiny screens, show on 360px+ -->
 <div class="hidden min-[360px]:block">
-<div class="text-sm font-semibold text-slate-300">Dude Diligence Pro</div>
-<div class="text-[10px] text-slate-500">AI-Powered Risk Assessment</div>
+<div class="flex items-center gap-2">
+<span class="font-semibold text-slate-50 tracking-tight text-sm md:text-base">Dude Diligence Pro</span>
+</div>
+<p class="text-[10px] md:text-xs text-slate-400 hidden sm:block">
+Instant due diligence reports
+</p>
 </div>
 </div>
 
@@ -251,7 +277,7 @@ Buy Credits →
 
 <label class="block">
 <span class="text-xs font-medium text-slate-300">Document</span>
-<div id="dropzone"
+<div id="dropzone" onclick="document.getElementById('fileInput').click()"
 class="mt-2 flex flex-col items-center justify-center rounded-xl border border-dashed border-slate-700 bg-slate-900/60 px-4 py-6 text-center text-xs text-slate-400 cursor-pointer hover:border-cyan-400/70 hover:bg-slate-900 transition">
 <span class="mb-2 text-slate-200 font-medium" id="dropzoneText">Click to upload</span>
 <span class="text-[11px] text-slate-500">PDF, TXT, max 10 MB.</span>
@@ -264,7 +290,7 @@ class="w-full mt-3 inline-flex items-center justify-center rounded-xl bg-cyan-50
 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
 </svg>
-Run Dude Diligence Pro
+Run The Dude
 </button>
 
 <p id="statusMessage" class="text-[11px] text-slate-500 h-4 mt-2"></p>
@@ -1031,7 +1057,7 @@ fileInput.addEventListener('change', (e) => {
     if (file) {
         currentFile = file;
         document.getElementById('dropzoneText').textContent = `✓ ${file.name}`;
-        document.getElementById('statusMessage').textContent = 'File ready. Click "Run Dude Diligence Pro" to analyze.';
+        document.getElementById('statusMessage').textContent = 'File ready. Click "Run The Dude" to analyze.';
     }
 });
 
@@ -2660,33 +2686,31 @@ function togglePricingPeriod(period) {
     const annualBtn = document.getElementById('annualBtn');
     
     if (!monthlyPricing || !annualPricing || !monthlyBtn || !annualBtn) {
-        console.error('Pricing elements not found');
+        console.error('Pricing elements not found:', {monthlyPricing, annualPricing, monthlyBtn, annualBtn});
         return;
     }
     
     if (period === 'monthly') {
         // Show monthly, hide annual
-        monthlyPricing.classList.remove('hidden');
-        annualPricing.classList.add('hidden');
+        monthlyPricing.style.display = 'grid';
+        annualPricing.style.display = 'none';
         
         // Update button styles
-        monthlyBtn.classList.add('bg-cyan-500', 'text-white', 'shadow-lg');
-        monthlyBtn.classList.remove('text-slate-400', 'hover:bg-slate-800');
-        annualBtn.classList.remove('bg-cyan-500', 'text-white', 'shadow-lg');
-        annualBtn.classList.add('text-slate-400', 'hover:bg-slate-800');
+        monthlyBtn.className = 'px-6 py-2.5 rounded-lg text-sm font-semibold bg-cyan-500 text-white shadow-lg hover:bg-cyan-600 transition';
+        annualBtn.className = 'px-6 py-2.5 rounded-lg text-sm font-semibold text-slate-400 hover:text-slate-200 flex items-center gap-2 hover:bg-slate-800 transition';
     } else {
         // Show annual, hide monthly  
-        monthlyPricing.classList.add('hidden');
-        annualPricing.classList.remove('hidden');
+        monthlyPricing.style.display = 'none';
+        annualPricing.style.display = 'grid';
         
         // Update button styles
-        annualBtn.classList.add('bg-cyan-500', 'text-white', 'shadow-lg');
-        annualBtn.classList.remove('text-slate-400', 'hover:bg-slate-800');
-        monthlyBtn.classList.remove('bg-cyan-500', 'text-white', 'shadow-lg');
-        monthlyBtn.classList.add('text-slate-400', 'hover:bg-slate-800');
+        annualBtn.className = 'px-6 py-2.5 rounded-lg text-sm font-semibold bg-cyan-500 text-white shadow-lg flex items-center gap-2 hover:bg-cyan-600 transition';
+        monthlyBtn.className = 'px-6 py-2.5 rounded-lg text-sm font-semibold text-slate-400 hover:text-slate-200 hover:bg-slate-800 transition';
     }
     
     console.log('✅ Pricing toggled successfully to:', period);
+    console.log('Monthly display:', monthlyPricing.style.display);
+    console.log('Annual display:', annualPricing.style.display);
     
     // Track pricing preference
     if (typeof gtag !== 'undefined') {

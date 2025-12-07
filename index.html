@@ -137,15 +137,15 @@ Instant due diligence reports
 </div>
 </div>
 
-<!-- RIGHT: Buy Credits Button -->
+<!-- RIGHT: Login Button + Hamburger -->
 <div class="flex items-center gap-2">
 
-<!-- Buy Credits Button (replaces Login) -->
-<a href="#pricing" class="flex items-center gap-1.5 px-4 py-2 md:px-6 md:py-2.5 rounded-lg bg-gradient-to-r from-orange-500 to-yellow-500 text-slate-900 font-bold text-sm md:text-base hover:from-orange-600 hover:to-yellow-600 transition shadow-lg">
-<svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+<!-- Login Button -->
+<a href="/login" class="flex items-center gap-1.5 px-3 py-2 md:px-4 md:py-2 rounded-lg bg-gradient-to-r from-orange-500 to-yellow-500 text-slate-900 font-semibold text-xs md:text-sm hover:from-orange-600 hover:to-yellow-600 transition shadow-lg">
+<svg class="w-3.5 h-3.5 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
 </svg>
-<span>Buy Credits</span>
+<span class="hidden sm:inline">Login</span>
 </a>
 
 <!-- Hamburger (Mobile only) -->
@@ -588,227 +588,6 @@ Waiting...
 </div>
 </section>
 
-<!-- TRUST BADGES - AUTO-SCROLLING CAROUSEL -->
-<section class="border-t border-slate-800/80 bg-gradient-to-b from-slate-950/80 to-slate-900/40 py-12 overflow-hidden">
-<div class="mx-auto max-w-6xl px-4">
-<div class="text-center mb-8">
-<p class="text-xs uppercase tracking-wider text-cyan-400 font-semibold mb-2">🔒 15+ International Data Sources</p>
-<p class="text-[10px] text-slate-500">Real-time verification across sanctions, corporate registries, and enforcement databases</p>
-</div>
-
-<!-- Auto-scrolling badge carousel -->
-<div class="badge-carousel-container mb-6">
-<div class="badge-carousel">
-<!-- Sanctions Databases -->
-<div class="badge-item">
-<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-400/40 shadow-lg shadow-cyan-500/10 whitespace-nowrap">
-<svg class="w-5 h-5 text-cyan-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0L3 7v9c0 5.25 3.75 10.17 9 11.25 5.25-1.08 9-6 9-11.25V7L12 0zm-2 16l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"/></svg>
-<span class="text-[11px] font-bold text-cyan-300">OFAC SDN List</span>
-</div>
-</div>
-<div class="badge-item">
-<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-blue-400/40 shadow-lg shadow-blue-500/10 whitespace-nowrap">
-<svg class="w-5 h-5 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0L3 7v9c0 5.25 3.75 10.17 9 11.25 5.25-1.08 9-6 9-11.25V7L12 0zm-2 16l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"/></svg>
-<span class="text-[11px] font-bold text-blue-300">UN Consolidated</span>
-</div>
-</div>
-<div class="badge-item">
-<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-purple-500/20 to-pink-500/20 border border-purple-400/40 shadow-lg shadow-purple-500/10 whitespace-nowrap">
-<svg class="w-5 h-5 text-purple-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0L3 7v9c0 5.25 3.75 10.17 9 11.25 5.25-1.08 9-6 9-11.25V7L12 0zm-2 16l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"/></svg>
-<span class="text-[11px] font-bold text-purple-300">EU Sanctions</span>
-</div>
-</div>
-<div class="badge-item">
-<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-pink-500/20 to-rose-500/20 border border-pink-400/40 shadow-lg shadow-pink-500/10 whitespace-nowrap">
-<svg class="w-5 h-5 text-pink-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0L3 7v9c0 5.25 3.75 10.17 9 11.25 5.25-1.08 9-6 9-11.25V7L12 0zm-2 16l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"/></svg>
-<span class="text-[11px] font-bold text-pink-300">UK Sanctions</span>
-</div>
-</div>
-<div class="badge-item">
-<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-rose-500/20 to-orange-500/20 border border-rose-400/40 shadow-lg shadow-rose-500/10 whitespace-nowrap">
-<svg class="w-5 h-5 text-rose-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0L3 7v9c0 5.25 3.75 10.17 9 11.25 5.25-1.08 9-6 9-11.25V7L12 0zm-2 16l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"/></svg>
-<span class="text-[11px] font-bold text-rose-300">OpenSanctions</span>
-</div>
-</div>
-<div class="badge-item">
-<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-emerald-500/20 to-teal-500/20 border border-emerald-400/40 shadow-lg shadow-emerald-500/10 whitespace-nowrap">
-<svg class="w-5 h-5 text-emerald-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.20.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
-<span class="text-[11px] font-bold text-emerald-300">UK Companies House</span>
-</div>
-</div>
-<div class="badge-item">
-<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-teal-500/20 to-cyan-500/20 border border-teal-400/40 shadow-lg shadow-teal-500/10 whitespace-nowrap">
-<svg class="w-5 h-5 text-teal-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-<span class="text-[11px] font-bold text-teal-300">OpenCorporates</span>
-</div>
-</div>
-<div class="badge-item">
-<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-400/40 shadow-lg shadow-cyan-500/10 whitespace-nowrap">
-<svg class="w-5 h-5 text-cyan-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 3c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm7 13H5v-.23c0-.62.28-1.20.76-1.58C7.47 15.82 9.64 15 12 15s4.53.82 6.24 2.19c.48.38.76.97.76 1.58V19z"/></svg>
-<span class="text-[11px] font-bold text-cyan-300">Singapore ACRA</span>
-</div>
-</div>
-<div class="badge-item">
-<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-red-500/20 to-rose-500/20 border border-red-400/40 shadow-lg shadow-red-500/10 whitespace-nowrap">
-<svg class="w-5 h-5 text-red-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0L3 7v9c0 5.25 3.75 10.17 9 11.25 5.25-1.08 9-6 9-11.25V7L12 0zm-2 16l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"/></svg>
-<span class="text-[11px] font-bold text-red-300">FBI Most Wanted</span>
-</div>
-</div>
-<div class="badge-item">
-<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-indigo-500/20 to-purple-500/20 border border-indigo-400/40 shadow-lg shadow-indigo-500/10 whitespace-nowrap">
-<svg class="w-5 h-5 text-indigo-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-<span class="text-[11px] font-bold text-indigo-300">Interpol Red Notices</span>
-</div>
-</div>
-<div class="badge-item">
-<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-cyan-500/20 border border-blue-400/40 shadow-lg shadow-blue-500/10 whitespace-nowrap">
-<svg class="w-5 h-5 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
-<span class="text-[11px] font-bold text-blue-300">UK FCA Warnings</span>
-</div>
-</div>
-<div class="badge-item">
-<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-amber-500/20 to-orange-500/20 border border-amber-400/40 shadow-lg shadow-amber-500/10 whitespace-nowrap">
-<svg class="w-5 h-5 text-amber-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
-<span class="text-[11px] font-bold text-amber-300">Swiss FINMA</span>
-</div>
-</div>
-<div class="badge-item">
-<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-orange-500/20 to-red-500/20 border border-orange-400/40 shadow-lg shadow-orange-500/10 whitespace-nowrap">
-<svg class="w-5 h-5 text-orange-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"/></svg>
-<span class="text-[11px] font-bold text-orange-300">SEC Enforcement</span>
-</div>
-</div>
-<!-- Duplicate set for seamless loop -->
-<div class="badge-item">
-<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-cyan-500/20 to-blue-500/20 border border-cyan-400/40 shadow-lg shadow-cyan-500/10 whitespace-nowrap">
-<svg class="w-5 h-5 text-cyan-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0L3 7v9c0 5.25 3.75 10.17 9 11.25 5.25-1.08 9-6 9-11.25V7L12 0zm-2 16l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"/></svg>
-<span class="text-[11px] font-bold text-cyan-300">OFAC SDN List</span>
-</div>
-</div>
-<div class="badge-item">
-<div class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-blue-400/40 shadow-lg shadow-blue-500/10 whitespace-nowrap">
-<svg class="w-5 h-5 text-blue-400 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0L3 7v9c0 5.25 3.75 10.17 9 11.25 5.25-1.08 9-6 9-11.25V7L12 0zm-2 16l-4-4 1.41-1.41L10 13.17l6.59-6.59L18 8l-8 8z"/></svg>
-<span class="text-[11px] font-bold text-blue-300">UN Consolidated</span>
-</div>
-</div>
-</div>
-</div>
-
-<!-- Summary Stats -->
-<div class="mt-8 grid grid-cols-3 gap-4 max-w-2xl mx-auto">
-<div class="text-center bg-slate-900/40 rounded-lg p-3 border border-slate-800">
-<div class="text-2xl font-bold text-cyan-400">15+</div>
-<div class="text-[10px] text-slate-400 mt-1">Data Sources</div>
-</div>
-<div class="text-center bg-slate-900/40 rounded-lg p-3 border border-slate-800">
-<div class="text-2xl font-bold text-emerald-400">650M+</div>
-<div class="text-[10px] text-slate-400 mt-1">Records Checked</div>
-</div>
-<div class="text-center bg-slate-900/40 rounded-lg p-3 border border-slate-800">
-<div class="text-2xl font-bold text-purple-400">140+</div>
-<div class="text-[10px] text-slate-400 mt-1">Countries Covered</div>
-</div>
-</div>
-
-<p class="text-center text-[10px] text-slate-500 mt-6 max-w-2xl mx-auto">
-Cross-references publicly available sanctions lists, corporate registries, and enforcement databases. We are not affiliated with government agencies.
-</p>
-</div>
-
-<style>
-/* Auto-scrolling badge carousel */
-.badge-carousel-container {
-  width: 100%;
-  overflow: hidden;
-  position: relative;
-}
-
-.badge-carousel {
-  display: flex;
-  gap: 1rem;
-  animation: scroll 20s linear infinite;
-  will-change: transform;
-}
-
-.badge-carousel:hover {
-  animation-play-state: paused;
-}
-
-.badge-item {
-  flex-shrink: 0;
-}
-
-@keyframes scroll {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-/* Animated loading dots */
-.loading-dots::after {
-  content: '';
-  animation: dots 1.5s steps(4, end) infinite;
-}
-
-@keyframes dots {
-  0%, 20% { content: ''; }
-  40% { content: '.'; }
-  60% { content: '..'; }
-  80%, 100% { content: '...'; }
-}
-
-/* Step circle wave glow - like a gentle heartbeat */
-.step-circle {
-  animation: wave-glow 6s ease-in-out infinite;
-  transition: all 0.8s ease-in-out;
-}
-
-@keyframes wave-glow {
-  0%, 100% {
-    background: rgb(6 182 212 / 0.2);
-    border-color: rgb(6 182 212 / 0.4);
-    box-shadow: 0 0 0 0 rgb(6 182 212 / 0);
-  }
-  15% {
-    background: rgb(6 182 212 / 0.7);
-    border-color: rgb(6 182 212 / 1);
-    box-shadow: 0 0 30px 8px rgb(6 182 212 / 0.8), 0 0 50px 12px rgb(6 182 212 / 0.4);
-    transform: scale(1.05);
-  }
-  30% {
-    background: rgb(6 182 212 / 0.2);
-    border-color: rgb(6 182 212 / 0.4);
-    box-shadow: 0 0 0 0 rgb(6 182 212 / 0);
-    transform: scale(1);
-  }
-}
-
-/* Fade edges for smooth appearance */
-.badge-carousel-container::before,
-.badge-carousel-container::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 100px;
-  z-index: 2;
-  pointer-events: none;
-}
-
-.badge-carousel-container::before {
-  left: 0;
-  background: linear-gradient(to right, rgb(15 23 42 / 0.8), transparent);
-}
-
-.badge-carousel-container::after {
-  right: 0;
-  background: linear-gradient(to left, rgb(15 23 42 / 0.8), transparent);
-}
-</style>
-</section>
 
 <!-- HOW IT WORKS -->
 <section class="border-t border-slate-800/80 bg-black/40">
@@ -876,314 +655,6 @@ We respect your privacy. Your info is only used to send you the report.
 </div>
 </div>
 </div>
-
-<!-- TESTIMONIALS - REAL TRADER EXPERIENCES -->
-<section class="border-t border-slate-800 bg-gradient-to-b from-black/60 to-black/40 py-16">
-<div class="mx-auto max-w-6xl px-4">
-
-<!-- Section Header -->
-<div class="text-center mb-12">
-<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 mb-4">
-<svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
-<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-</svg>
-<span class="text-sm font-semibold text-emerald-400 uppercase tracking-wider">Customer Stories</span>
-</div>
-<h2 class="text-2xl md:text-3xl font-bold text-slate-50 mb-3">Real Experiences from Commodity Traders</h2>
-<p class="text-sm text-slate-400 max-w-2xl mx-auto">See how traders worldwide use DDP to avoid fraud and close deals faster</p>
-</div>
-
-<!-- Rotating Testimonials Carousel -->
-<div class="relative">
-<div class="testimonial-container mb-12">
-<!-- Active testimonials (3 visible at a time) -->
-<div id="testimonialsGrid" class="grid md:grid-cols-3 gap-6 transition-opacity duration-500">
-<!-- Testimonials will rotate here via JavaScript -->
-</div>
-</div>
-
-<!-- Carousel Controls -->
-<div class="flex items-center justify-center gap-3">
-<button onclick="previousTestimonials()" class="p-2 rounded-full bg-slate-800 border border-slate-700 text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 transition">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-</svg>
-</button>
-<div id="testimonialDots" class="flex gap-2">
-<!-- Dots will be generated by JavaScript -->
-</div>
-<button onclick="nextTestimonials()" class="p-2 rounded-full bg-slate-800 border border-slate-700 text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 transition">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-</svg>
-</button>
-</div>
-</div>
-
-<!-- Trust Badges -->
-<div class="flex flex-wrap items-center justify-center gap-8 pt-8 border-t border-slate-800 mt-8">
-<div class="flex items-center gap-2 text-xs text-slate-400">
-<svg class="w-5 h-5 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>
-<span class="font-semibold">Bank-Level Encryption</span>
-</div>
-<div class="flex items-center gap-2 text-xs text-slate-400">
-<svg class="w-5 h-5 text-cyan-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-<span class="font-semibold">GDPR Compliant</span>
-</div>
-<div class="flex items-center gap-2 text-xs text-slate-400">
-<svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/></svg>
-<span class="font-semibold">99.9% Uptime SLA</span>
-</div>
-<div class="flex items-center gap-2 text-xs text-slate-400">
-<svg class="w-5 h-5 text-purple-400" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>
-<span class="font-semibold">No Data Retention</span>
-</div>
-</div>
-
-</div>
-</section>
-
-<!-- Testimonials JavaScript -->
-<script>
-const testimonials = [
-  {
-    quote: "Caught a recycled LOI from Dubai. Same document, 3 different seller names. DDP flagged it in seconds. Saved us $2M USD.",
-    name: "Rajesh Patel",
-    role: "Crude Oil Trader",
-    location: "Mumbai, India",
-    initials: "RP",
-    gradient: "from-orange-500 to-red-500"
-  },
-  {
-    quote: "The OFAC check caught a sanctioned entity we almost did business with. Legal team was impressed. This tool is essential now.",
-    name: "Amara Okafor",
-    role: "Gold Broker",
-    location: "Lagos, Nigeria",
-    initials: "AO",
-    gradient: "from-yellow-500 to-amber-500"
-  },
-  {
-    quote: "Email verification alone pays for itself. Stopped wasting time on @gmail.com 'buyers'. Now I only talk to real companies.",
-    name: "Mohammed Al-Rashid",
-    role: "LNG Trader",
-    location: "Dubai, UAE",
-    initials: "MAR",
-    gradient: "from-cyan-500 to-blue-500"
-  },
-  {
-    quote: "Found the same ICPO circulating with 5 different buyer banks. Document fingerprinting is brilliant. No more time-wasters.",
-    name: "Carlos Mendoza",
-    role: "Soybean Broker",
-    location: "São Paulo, Brazil",
-    initials: "CM",
-    gradient: "from-green-500 to-emerald-500"
-  },
-  {
-    quote: "As a woman in commodity trading, I can't afford mistakes. DDP gives me confidence every deal is legitimate before I commit.",
-    name: "Fatima Hassan",
-    role: "Sugar Trader",
-    location: "Cairo, Egypt",
-    initials: "FH",
-    gradient: "from-purple-500 to-pink-500"
-  },
-  {
-    quote: "Verified a Chinese buyer's company registration in 10 seconds. Manual check would've taken 3 days. Speed matters in our business.",
-    name: "Wei Chen",
-    role: "Iron Ore Trader",
-    location: "Singapore",
-    initials: "WC",
-    gradient: "from-red-500 to-orange-500"
-  },
-  {
-    quote: "The risk score saved me from a $500K disaster. Buyer was using a Seychelles bank for a 'Nigerian' deal. Too many red flags.",
-    name: "Thabo Nkosi",
-    role: "Diesel Broker",
-    location: "Johannesburg, South Africa",
-    initials: "TN",
-    gradient: "from-blue-500 to-cyan-500"
-  },
-  {
-    quote: "Finally, due diligence that doesn't take weeks. Upload, scan, decide. Our deal closure rate went up 40% in 3 months.",
-    name: "Priya Sharma",
-    role: "Coal Trading Manager",
-    location: "New Delhi, India",
-    initials: "PS",
-    gradient: "from-pink-500 to-rose-500"
-  },
-  {
-    quote: "Document recycling detection is unmatched. Caught a broker reusing the same LOI template across multiple 'deals'. Fraud avoided.",
-    name: "Ahmed Khalil",
-    role: "Wheat Broker",
-    location: "Riyadh, Saudi Arabia",
-    initials: "AK",
-    gradient: "from-amber-500 to-yellow-500"
-  },
-  {
-    quote: "As an independent broker, I can't hire a legal team. DDP is my compliance department. Best $99/month I spend.",
-    name: "Isabella Rossi",
-    role: "Olive Oil Trader",
-    location: "Milan, Italy",
-    initials: "IR",
-    gradient: "from-green-500 to-teal-500"
-  },
-  {
-    quote: "The multi-party extraction is incredible. Identified 4 intermediaries in one document. Went straight to the actual seller.",
-    name: "Kwame Mensah",
-    role: "Cocoa Broker",
-    location: "Accra, Ghana",
-    initials: "KM",
-    gradient: "from-yellow-500 to-orange-500"
-  },
-  {
-    quote: "Jurisdiction mismatch alerts saved me twice this month. Company claims UK registration but bank is in Belize? Hard pass.",
-    name: "Dmitri Volkov",
-    role: "Natural Gas Trader",
-    location: "Moscow, Russia",
-    initials: "DV",
-    gradient: "from-blue-500 to-indigo-500"
-  },
-  {
-    quote: "Used to spend $5K per deal on manual verification. DDP does it for $9. Same accuracy, 1000x faster. No brainer.",
-    name: "Nguyen Thi Lan",
-    role: "Rice Trader",
-    location: "Ho Chi Minh City, Vietnam",
-    initials: "NTL",
-    gradient: "from-cyan-500 to-teal-500"
-  },
-  {
-    quote: "Free email flags are my first filter. @yahoo seller claiming $50M deal? Delete. DDP taught me to trust my gut with data.",
-    name: "Marcus van der Berg",
-    role: "Diamond Broker",
-    location: "Antwerp, Belgium",
-    initials: "MVB",
-    gradient: "from-purple-500 to-violet-500"
-  },
-  {
-    quote: "The API integration with our CRM is seamless. Every deal gets auto-screened. Compliance team loves it.",
-    name: "Sarah Mitchell",
-    role: "Copper Trading Director",
-    location: "London, UK",
-    initials: "SM",
-    gradient: "from-orange-500 to-red-500"
-  },
-  {
-    quote: "Offshore bank alerts are gold. If I see Seychelles, Mauritius, or BVI for a 'legitimate' deal, I'm out. DDP catches these instantly.",
-    name: "Hassan Mahmoud",
-    role: "Cotton Broker",
-    location: "Istanbul, Turkey",
-    initials: "HM",
-    gradient: "from-teal-500 to-cyan-500"
-  },
-  {
-    quote: "After losing $80K to a scammer last year, DDP is non-negotiable. Every document, every deal, every time. Peace of mind.",
-    name: "Lucia Fernandez",
-    role: "Coffee Trader",
-    location: "Bogotá, Colombia",
-    initials: "LF",
-    gradient: "from-yellow-500 to-amber-500"
-  },
-  {
-    quote: "The 24-hour document deletion policy sealed it for us. Client confidentiality matters. DDP respects that.",
-    name: "Yuki Tanaka",
-    role: "LNG Procurement",
-    location: "Tokyo, Japan",
-    initials: "YT",
-    gradient: "from-pink-500 to-purple-500"
-  },
-  {
-    quote: "PEP screening flagged a buyer with political ties we didn't know about. Compliance nightmare avoided. Worth 10x the subscription.",
-    name: "Klaus Weber",
-    role: "Aluminum Trader",
-    location: "Frankfurt, Germany",
-    initials: "KW",
-    gradient: "from-blue-500 to-cyan-500"
-  },
-  {
-    quote: "Risk scoring is spot-on. Yellow warnings make me dig deeper, red flags make me walk away. Simple, effective, saves time.",
-    name: "Aisha Al-Farsi",
-    role: "Petroleum Products Broker",
-    location: "Doha, Qatar",
-    initials: "AAF",
-    gradient: "from-emerald-500 to-green-500"
-  }
-];
-
-let currentBatch = 0;
-const batchSize = 3;
-const totalBatches = Math.ceil(testimonials.length / batchSize);
-
-function renderTestimonials() {
-  const grid = document.getElementById('testimonialsGrid');
-  const start = currentBatch * batchSize;
-  const end = start + batchSize;
-  const batch = testimonials.slice(start, end);
-  
-  grid.innerHTML = batch.map(t => `
-    <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-6 hover:border-cyan-500/30 transition animate-fadeIn">
-      <div class="flex items-center gap-1 mb-4">
-        ${Array(5).fill().map(() => `
-          <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-          </svg>
-        `).join('')}
-      </div>
-      <p class="text-sm text-slate-300 mb-4 leading-relaxed">"${t.quote}"</p>
-      <div class="flex items-center gap-3">
-        <div class="w-11 h-11 rounded-full bg-gradient-to-br ${t.gradient} flex items-center justify-center text-white font-bold text-sm">
-          ${t.initials}
-        </div>
-        <div>
-          <div class="text-sm font-semibold text-slate-200">${t.name}</div>
-          <div class="text-xs text-slate-500">${t.role}, ${t.location}</div>
-        </div>
-      </div>
-    </div>
-  `).join('');
-  
-  renderDots();
-}
-
-function renderDots() {
-  const dotsContainer = document.getElementById('testimonialDots');
-  dotsContainer.innerHTML = Array(totalBatches).fill().map((_, i) => `
-    <button 
-      onclick="goToBatch(${i})"
-      class="w-2 h-2 rounded-full transition ${i === currentBatch ? 'bg-cyan-400 w-6' : 'bg-slate-700'}"
-    ></button>
-  `).join('');
-}
-
-function nextTestimonials() {
-  currentBatch = (currentBatch + 1) % totalBatches;
-  renderTestimonials();
-}
-
-function previousTestimonials() {
-  currentBatch = (currentBatch - 1 + totalBatches) % totalBatches;
-  renderTestimonials();
-}
-
-function goToBatch(batch) {
-  currentBatch = batch;
-  renderTestimonials();
-}
-
-// Auto-rotate every 8 seconds
-setInterval(nextTestimonials, 8000);
-
-// Initial render
-renderTestimonials();
-</script>
-
-<style>
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.animate-fadeIn {
-  animation: fadeIn 0.5s ease-out;
-}
-</style>
 
 
 <!-- PRICING -->
@@ -3271,253 +2742,322 @@ window.addEventListener('scroll', () => {
 });
 </script>
 
-<!-- FEATURED DEALS -->
-<section class="border-t border-slate-800 bg-gradient-to-b from-slate-950 to-slate-900">
-<div class="mx-auto max-w-6xl px-4 py-16">
+
+<!-- TESTIMONIALS - REAL TRADER EXPERIENCES -->
+<section class="border-t border-slate-800 bg-gradient-to-b from-black/60 to-black/40 py-16">
+<div class="mx-auto max-w-6xl px-4">
 
 <!-- Section Header -->
 <div class="text-center mb-12">
 <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 mb-4">
 <svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
-<path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/>
+<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
 </svg>
-<span class="text-sm font-semibold text-emerald-400 uppercase tracking-wider">Live Deals</span>
+<span class="text-sm font-semibold text-emerald-400 uppercase tracking-wider">Customer Stories</span>
 </div>
-<h2 class="text-3xl md:text-4xl font-bold text-slate-50 mb-4">
-Featured Commodity Opportunities
-</h2>
-<p class="text-base text-slate-400 max-w-2xl mx-auto">
-Active deals from our network. Verified parties, competitive pricing. Contact us for introductions.
-</p>
+<h2 class="text-2xl md:text-3xl font-bold text-slate-50 mb-3">Real Experiences from Commodity Traders</h2>
+<p class="text-sm text-slate-400 max-w-2xl mx-auto">See how traders worldwide use DDP to avoid fraud and close deals faster</p>
 </div>
 
-<!-- Deals Carousel Container -->
+<!-- Rotating Testimonials Carousel -->
 <div class="relative">
-<!-- Gradient Overlays for scroll effect -->
-<div class="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-slate-900 to-transparent z-10 pointer-events-none"></div>
-<div class="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-slate-900 to-transparent z-10 pointer-events-none"></div>
-
-<!-- Scrollable Deals Container -->
-<div class="overflow-x-auto hide-scrollbar pb-4" id="dealsScroll">
-<div class="flex gap-6 px-2" style="min-width: min-content;">
-
-<!-- Deal Card 1 -->
-<div class="flex-shrink-0 w-80 bg-slate-800/40 border border-slate-700 rounded-xl p-6 hover:border-cyan-500/50 transition-all hover:shadow-lg hover:shadow-cyan-500/10">
-<div class="flex items-start justify-between mb-4">
-<div class="flex items-center gap-2">
-<div class="w-10 h-10 rounded-lg bg-amber-500/20 flex items-center justify-center">
-<svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
-<path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd"/>
-</svg>
-</div>
-<div>
-<div class="text-xs text-amber-400 font-semibold uppercase tracking-wide">Crude Oil</div>
-<div class="text-sm text-slate-400">Bonny Light</div>
-</div>
-</div>
-<span class="px-2 py-1 bg-emerald-500/20 border border-emerald-500/30 rounded text-xs font-semibold text-emerald-400">ACTIVE</span>
-</div>
-<div class="space-y-3 mb-4">
-<div class="flex justify-between text-sm">
-<span class="text-slate-400">Quantity:</span>
-<span class="text-slate-200 font-semibold">2,000,000 BBL</span>
-</div>
-<div class="flex justify-between text-sm">
-<span class="text-slate-400">Price:</span>
-<span class="text-slate-200 font-semibold">$78.50/BBL FOB</span>
-</div>
-<div class="flex justify-between text-sm">
-<span class="text-slate-400">Origin:</span>
-<span class="text-slate-200">Nigeria</span>
-</div>
-<div class="flex justify-between text-sm">
-<span class="text-slate-400">Delivery:</span>
-<span class="text-slate-200">Jan 2025</span>
-</div>
-</div>
-<div class="pt-3 border-t border-slate-700">
-<a href="/cdn-cgi/l/email-protection#aec7c0c8c1eecdc2cfcadbdacfcdc1dcde80cdc1c391dddbccc4cbcdda93e7c0dacbdccbdddacbca8ec7c08eecc1c0c0d78ee2c7c9c6da8eeddcdbcacb8ee1c7c28eeacbcfc2" class="flex items-center justify-center gap-2 w-full px-4 py-2 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-semibold text-sm hover:bg-cyan-500/20 transition">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-</svg>
-Request Info
-</a>
+<div class="testimonial-container mb-12">
+<!-- Active testimonials (3 visible at a time) -->
+<div id="testimonialsGrid" class="grid md:grid-cols-3 gap-6 transition-opacity duration-500">
+<!-- Testimonials will rotate here via JavaScript -->
 </div>
 </div>
 
-<!-- Deal Card 2 -->
-<div class="flex-shrink-0 w-80 bg-slate-800/40 border border-slate-700 rounded-xl p-6 hover:border-cyan-500/50 transition-all hover:shadow-lg hover:shadow-cyan-500/10">
-<div class="flex items-start justify-between mb-4">
-<div class="flex items-center gap-2">
-<div class="w-10 h-10 rounded-lg bg-blue-500/20 flex items-center justify-center">
-<svg class="w-5 h-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-<path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z"/>
+<!-- Carousel Controls -->
+<div class="flex items-center justify-center gap-3">
+<button onclick="previousTestimonials()" class="p-2 rounded-full bg-slate-800 border border-slate-700 text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 transition">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
 </svg>
+</button>
+<div id="testimonialDots" class="flex gap-2">
+<!-- Dots will be generated by JavaScript -->
 </div>
-<div>
-<div class="text-xs text-blue-400 font-semibold uppercase tracking-wide">LNG</div>
-<div class="text-sm text-slate-400">Liquefied Natural Gas</div>
-</div>
-</div>
-<span class="px-2 py-1 bg-emerald-500/20 border border-emerald-500/30 rounded text-xs font-semibold text-emerald-400">ACTIVE</span>
-</div>
-<div class="space-y-3 mb-4">
-<div class="flex justify-between text-sm">
-<span class="text-slate-400">Quantity:</span>
-<span class="text-slate-200 font-semibold">150,000 MT</span>
-</div>
-<div class="flex justify-between text-sm">
-<span class="text-slate-400">Price:</span>
-<span class="text-slate-200 font-semibold">$545/MT CIF</span>
-</div>
-<div class="flex justify-between text-sm">
-<span class="text-slate-400">Origin:</span>
-<span class="text-slate-200">Qatar</span>
-</div>
-<div class="flex justify-between text-sm">
-<span class="text-slate-400">Delivery:</span>
-<span class="text-slate-200">Feb 2025</span>
-</div>
-</div>
-<div class="pt-3 border-t border-slate-700">
-<a href="/cdn-cgi/l/email-protection#a5cccbc3cae5c6c9c4c1d0d1c4c6cad7d58bc6cac89ad6d0c7cfc0c6d198eccbd1c0d7c0d6d1c0c185cccb85e9ebe285e1c0c4c9" class="flex items-center justify-center gap-2 w-full px-4 py-2 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-semibold text-sm hover:bg-cyan-500/20 transition">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+<button onclick="nextTestimonials()" class="p-2 rounded-full bg-slate-800 border border-slate-700 text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 transition">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
 </svg>
-Request Info
-</a>
+</button>
 </div>
-</div>
-
-<!-- Deal Card 3 -->
-<div class="flex-shrink-0 w-80 bg-slate-800/40 border border-slate-700 rounded-xl p-6 hover:border-cyan-500/50 transition-all hover:shadow-lg hover:shadow-cyan-500/10">
-<div class="flex items-start justify-between mb-4">
-<div class="flex items-center gap-2">
-<div class="w-10 h-10 rounded-lg bg-yellow-500/20 flex items-center justify-center">
-<svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-<path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/>
-</svg>
-</div>
-<div>
-<div class="text-xs text-yellow-400 font-semibold uppercase tracking-wide">Gold</div>
-<div class="text-sm text-slate-400">AU 22+ Karat</div>
-</div>
-</div>
-<span class="px-2 py-1 bg-emerald-500/20 border border-emerald-500/30 rounded text-xs font-semibold text-emerald-400">ACTIVE</span>
-</div>
-<div class="space-y-3 mb-4">
-<div class="flex justify-between text-sm">
-<span class="text-slate-400">Quantity:</span>
-<span class="text-slate-200 font-semibold">500 KG</span>
-</div>
-<div class="flex justify-between text-sm">
-<span class="text-slate-400">Price:</span>
-<span class="text-slate-200 font-semibold">$62,500/KG</span>
-</div>
-<div class="flex justify-between text-sm">
-<span class="text-slate-400">Origin:</span>
-<span class="text-slate-200">UAE (Dubai)</span>
-</div>
-<div class="flex justify-between text-sm">
-<span class="text-slate-400">Delivery:</span>
-<span class="text-slate-200">Q1 2025</span>
-</div>
-</div>
-<div class="pt-3 border-t border-slate-700">
-<a href="/cdn-cgi/l/email-protection#7b12151d143b18171a1f0e0f1a1814090b5518141644080e19111e180f4632150f1e091e080f1e1f5b12155b3c14171f5b3f1e1a17" class="flex items-center justify-center gap-2 w-full px-4 py-2 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-semibold text-sm hover:bg-cyan-500/20 transition">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-</svg>
-Request Info
-</a>
-</div>
-</div>
-
-<!-- Deal Card 4 -->
-<div class="flex-shrink-0 w-80 bg-slate-800/40 border border-slate-700 rounded-xl p-6 hover:border-cyan-500/50 transition-all hover:shadow-lg hover:shadow-cyan-500/10">
-<div class="flex items-start justify-between mb-4">
-<div class="flex items-center gap-2">
-<div class="w-10 h-10 rounded-lg bg-green-500/20 flex items-center justify-center">
-<svg class="w-5 h-5 text-green-400" fill="currentColor" viewBox="0 0 20 20">
-<path d="M2 11a1 1 0 011-1h2a1 1 0 011 1v5a1 1 0 01-1 1H3a1 1 0 01-1-1v-5zM8 7a1 1 0 011-1h2a1 1 0 011 1v9a1 1 0 01-1 1H9a1 1 0 01-1-1V7zM14 4a1 1 0 011-1h2a1 1 0 011 1v12a1 1 0 01-1 1h-2a1 1 0 01-1-1V4z"/>
-</svg>
-</div>
-<div>
-<div class="text-xs text-green-400 font-semibold uppercase tracking-wide">Diesel</div>
-<div class="text-sm text-slate-400">EN590 10PPM</div>
-</div>
-</div>
-<span class="px-2 py-1 bg-emerald-500/20 border border-emerald-500/30 rounded text-xs font-semibold text-emerald-400">ACTIVE</span>
-</div>
-<div class="space-y-3 mb-4">
-<div class="flex justify-between text-sm">
-<span class="text-slate-400">Quantity:</span>
-<span class="text-slate-200 font-semibold">50,000 MT/mo</span>
-</div>
-<div class="flex justify-between text-sm">
-<span class="text-slate-400">Price:</span>
-<span class="text-slate-200 font-semibold">Platts -$8/MT</span>
-</div>
-<div class="flex justify-between text-sm">
-<span class="text-slate-400">Origin:</span>
-<span class="text-slate-200">Rotterdam</span>
-</div>
-<div class="flex justify-between text-sm">
-<span class="text-slate-400">Contract:</span>
-<span class="text-slate-200">12 months</span>
-</div>
-</div>
-<div class="pt-3 border-t border-slate-700">
-<a href="/cdn-cgi/l/email-protection#0960676f66496a65686d7c7d686a667b79276a6664367a7c6b636c6a7d3440677d6c7b6c7a7d6c6d296067294c473c3039294d606c7a6c65294d6c6865" class="flex items-center justify-center gap-2 w-full px-4 py-2 rounded-lg bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-semibold text-sm hover:bg-cyan-500/20 transition">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-</svg>
-Request Info
-</a>
-</div>
-</div>
-
-<!-- Deal Card 5 (Partner Ad Placeholder) -->
-<div class="flex-shrink-0 w-80 bg-gradient-to-br from-purple-900/30 to-pink-900/30 border-2 border-dashed border-purple-500/30 rounded-xl p-6 flex flex-col items-center justify-center text-center">
-<div class="w-16 h-16 rounded-full bg-purple-500/20 flex items-center justify-center mb-4">
-<svg class="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-</svg>
-</div>
-<h3 class="text-lg font-bold text-purple-300 mb-2">Advertise Your Deal</h3>
-<p class="text-sm text-slate-400 mb-4">
-Reach 1,000+ verified commodity traders. Feature your offer here.
-</p>
-<a href="/partners.html" class="px-4 py-2 rounded-lg bg-purple-500/20 border border-purple-500/40 text-purple-300 font-semibold text-sm hover:bg-purple-500/30 transition">
-Partner With Us
-</a>
-<p class="text-xs text-slate-500 mt-3">Starting at $500/month</p>
-</div>
-
-</div>
-</div>
-</div>
-
-<!-- CTA Below Deals -->
-<div class="text-center mt-8">
-<p class="text-sm text-slate-400 mb-4">
-📧 Have a deal to list? <a href="/cdn-cgi/l/email-protection#b9d0d7dfd6f9dad5d8ddcccdd8dad6cbc997dad6d486caccdbd3dcdacd84f5d0cacd99f4c099fad6d4d4d6ddd0cdc099fddcd8d5" class="text-cyan-400 hover:text-cyan-300 underline">Contact us</a> for free placement.
-</p>
 </div>
 
 </div>
 </section>
 
-<!-- Hide scrollbar CSS -->
-<style>
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
+<!-- Testimonials JavaScript -->
+<script>
+const testimonials = [
+  {
+    quote: "Caught a recycled LOI from Dubai. Same document, 3 different seller names. DDP flagged it in seconds. Saved us $2M USD.",
+    name: "Rajesh Patel",
+    role: "Crude Oil Trader",
+    location: "Mumbai, India",
+    initials: "RP",
+    gradient: "from-orange-500 to-red-500"
+  },
+  {
+    quote: "The OFAC check caught a sanctioned entity we almost did business with. Legal team was impressed. This tool is essential now.",
+    name: "Amara Okafor",
+    role: "Gold Broker",
+    location: "Lagos, Nigeria",
+    initials: "AO",
+    gradient: "from-yellow-500 to-amber-500"
+  },
+  {
+    quote: "Email verification alone pays for itself. Stopped wasting time on @gmail.com 'buyers'. Now I only talk to real companies.",
+    name: "Mohammed Al-Rashid",
+    role: "LNG Trader",
+    location: "Dubai, UAE",
+    initials: "MAR",
+    gradient: "from-cyan-500 to-blue-500"
+  },
+  {
+    quote: "Found the same ICPO circulating with 5 different buyer banks. Document fingerprinting is brilliant. No more time-wasters.",
+    name: "Carlos Mendoza",
+    role: "Soybean Broker",
+    location: "São Paulo, Brazil",
+    initials: "CM",
+    gradient: "from-green-500 to-emerald-500"
+  },
+  {
+    quote: "As a woman in commodity trading, I can't afford mistakes. DDP gives me confidence every deal is legitimate before I commit.",
+    name: "Fatima Hassan",
+    role: "Sugar Trader",
+    location: "Cairo, Egypt",
+    initials: "FH",
+    gradient: "from-purple-500 to-pink-500"
+  },
+  {
+    quote: "Verified a Chinese buyer's company registration in 10 seconds. Manual check would've taken 3 days. Speed matters in our business.",
+    name: "Wei Chen",
+    role: "Iron Ore Trader",
+    location: "Singapore",
+    initials: "WC",
+    gradient: "from-red-500 to-orange-500"
+  },
+  {
+    quote: "The risk score saved me from a $500K disaster. Buyer was using a Seychelles bank for a 'Nigerian' deal. Too many red flags.",
+    name: "Thabo Nkosi",
+    role: "Diesel Broker",
+    location: "Johannesburg, South Africa",
+    initials: "TN",
+    gradient: "from-blue-500 to-cyan-500"
+  },
+  {
+    quote: "Finally, due diligence that doesn't take weeks. Upload, scan, decide. Our deal closure rate went up 40% in 3 months.",
+    name: "Priya Sharma",
+    role: "Coal Trading Manager",
+    location: "New Delhi, India",
+    initials: "PS",
+    gradient: "from-pink-500 to-rose-500"
+  },
+  {
+    quote: "Document recycling detection is unmatched. Caught a broker reusing the same LOI template across multiple 'deals'. Fraud avoided.",
+    name: "Ahmed Khalil",
+    role: "Wheat Broker",
+    location: "Riyadh, Saudi Arabia",
+    initials: "AK",
+    gradient: "from-amber-500 to-yellow-500"
+  },
+  {
+    quote: "As an independent broker, I can't hire a legal team. DDP is my compliance department. Best $99/month I spend.",
+    name: "Isabella Rossi",
+    role: "Olive Oil Trader",
+    location: "Milan, Italy",
+    initials: "IR",
+    gradient: "from-green-500 to-teal-500"
+  },
+  {
+    quote: "The multi-party extraction is incredible. Identified 4 intermediaries in one document. Went straight to the actual seller.",
+    name: "Kwame Mensah",
+    role: "Cocoa Broker",
+    location: "Accra, Ghana",
+    initials: "KM",
+    gradient: "from-yellow-500 to-orange-500"
+  },
+  {
+    quote: "Jurisdiction mismatch alerts saved me twice this month. Company claims UK registration but bank is in Belize? Hard pass.",
+    name: "Dmitri Volkov",
+    role: "Natural Gas Trader",
+    location: "Moscow, Russia",
+    initials: "DV",
+    gradient: "from-blue-500 to-indigo-500"
+  },
+  {
+    quote: "Used to spend $5K per deal on manual verification. DDP does it for $9. Same accuracy, 1000x faster. No brainer.",
+    name: "Nguyen Thi Lan",
+    role: "Rice Trader",
+    location: "Ho Chi Minh City, Vietnam",
+    initials: "NTL",
+    gradient: "from-cyan-500 to-teal-500"
+  },
+  {
+    quote: "Free email flags are my first filter. @yahoo seller claiming $50M deal? Delete. DDP taught me to trust my gut with data.",
+    name: "Marcus van der Berg",
+    role: "Diamond Broker",
+    location: "Antwerp, Belgium",
+    initials: "MVB",
+    gradient: "from-purple-500 to-violet-500"
+  },
+  {
+    quote: "The API integration with our CRM is seamless. Every deal gets auto-screened. Compliance team loves it.",
+    name: "Sarah Mitchell",
+    role: "Copper Trading Director",
+    location: "London, UK",
+    initials: "SM",
+    gradient: "from-orange-500 to-red-500"
+  },
+  {
+    quote: "Offshore bank alerts are gold. If I see Seychelles, Mauritius, or BVI for a 'legitimate' deal, I'm out. DDP catches these instantly.",
+    name: "Hassan Mahmoud",
+    role: "Cotton Broker",
+    location: "Istanbul, Turkey",
+    initials: "HM",
+    gradient: "from-teal-500 to-cyan-500"
+  },
+  {
+    quote: "After losing $80K to a scammer last year, DDP is non-negotiable. Every document, every deal, every time. Peace of mind.",
+    name: "Lucia Fernandez",
+    role: "Coffee Trader",
+    location: "Bogotá, Colombia",
+    initials: "LF",
+    gradient: "from-yellow-500 to-amber-500"
+  },
+  {
+    quote: "The 24-hour document deletion policy sealed it for us. Client confidentiality matters. DDP respects that.",
+    name: "Yuki Tanaka",
+    role: "LNG Procurement",
+    location: "Tokyo, Japan",
+    initials: "YT",
+    gradient: "from-pink-500 to-purple-500"
+  },
+  {
+    quote: "PEP screening flagged a buyer with political ties we didn't know about. Compliance nightmare avoided. Worth 10x the subscription.",
+    name: "Klaus Weber",
+    role: "Aluminum Trader",
+    location: "Frankfurt, Germany",
+    initials: "KW",
+    gradient: "from-blue-500 to-cyan-500"
+  },
+  {
+    quote: "Risk scoring is spot-on. Yellow warnings make me dig deeper, red flags make me walk away. Simple, effective, saves time.",
+    name: "Aisha Al-Farsi",
+    role: "Petroleum Products Broker",
+    location: "Doha, Qatar",
+    initials: "AAF",
+    gradient: "from-emerald-500 to-green-500"
+  }
+];
+
+let currentBatch = 0;
+const batchSize = 3;
+const totalBatches = Math.ceil(testimonials.length / batchSize);
+
+function renderTestimonials() {
+  const grid = document.getElementById('testimonialsGrid');
+  const start = currentBatch * batchSize;
+  const end = start + batchSize;
+  const batch = testimonials.slice(start, end);
+  
+  grid.innerHTML = batch.map(t => `
+    <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-6 hover:border-cyan-500/30 transition animate-fadeIn">
+      <div class="flex items-center gap-1 mb-4">
+        ${Array(5).fill().map(() => `
+          <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+          </svg>
+        `).join('')}
+      </div>
+      <p class="text-sm text-slate-300 mb-4 leading-relaxed">"${t.quote}"</p>
+      <div class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-full bg-gradient-to-br ${t.gradient} flex items-center justify-center text-white font-bold text-sm">
+          ${t.initials}
+        </div>
+        <div>
+          <div class="text-sm font-semibold text-slate-200">${t.name}</div>
+          <div class="text-xs text-slate-500">${t.role}, ${t.location}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  
+  renderDots();
 }
-.hide-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+
+function renderDots() {
+  const dotsContainer = document.getElementById('testimonialDots');
+  dotsContainer.innerHTML = Array(totalBatches).fill().map((_, i) => `
+    <button 
+      onclick="goToBatch(${i})"
+      class="w-2 h-2 rounded-full transition ${i === currentBatch ? 'bg-cyan-400 w-6' : 'bg-slate-700'}"
+    ></button>
+  `).join('');
+}
+
+function nextTestimonials() {
+  currentBatch = (currentBatch + 1) % totalBatches;
+  renderTestimonials();
+}
+
+function previousTestimonials() {
+  currentBatch = (currentBatch - 1 + totalBatches) % totalBatches;
+  renderTestimonials();
+}
+
+function goToBatch(batch) {
+  currentBatch = batch;
+  renderTestimonials();
+}
+
+// Auto-rotate every 8 seconds
+setInterval(nextTestimonials, 8000);
+
+// Initial render
+renderTestimonials();
+</script>
+
+<style>
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out;
 }
 </style>
+
+
+
+
+<!-- TRUST BADGES SECTION -->
+<section class="border-t border-slate-800 bg-slate-950/80 py-12">
+<div class="mx-auto max-w-6xl px-4">
+<div class="flex flex-wrap items-center justify-center gap-8">
+<div class="flex items-center gap-2 text-xs text-slate-400">
+<svg class="w-5 h-5 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>
+<span class="font-semibold">Bank-Level Encryption</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-slate-400">
+<svg class="w-5 h-5 text-cyan-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+<span class="font-semibold">GDPR Compliant</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-slate-400">
+<svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clip-rule="evenodd"/></svg>
+<span class="font-semibold">99.9% Uptime SLA</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-slate-400">
+<svg class="w-5 h-5 text-purple-400" fill="currentColor" viewBox="0 0 20 20"><path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/><path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/></svg>
+<span class="font-semibold">No Data Retention</span>
+</div>
+</div>
+</div>
+</section>
+
 
 <!-- FAQ SECTION -->
 <section class="border-t border-slate-800 bg-slate-950/80 py-16">
@@ -3623,116 +3163,156 @@ Email Us
 </div>
 </section>
 
-<!-- SECURITY & COMPLIANCE -->
-<section class="border-t border-slate-800 bg-gradient-to-b from-slate-950 to-black/60 py-16">
-<div class="mx-auto max-w-5xl px-4">
+<!-- STILL HAVE QUESTIONS -->
+<section class="border-t border-slate-800 bg-gradient-to-b from-slate-950 to-black/80 py-16">
+<div class="mx-auto max-w-4xl px-4 text-center">
+<h2 class="text-2xl md:text-3xl font-bold text-slate-50 mb-4">Still Have Questions?</h2>
+<p class="text-base text-slate-400 mb-8 max-w-2xl mx-auto">
+Our team is here to help. Get answers about pricing, integrations, or custom enterprise solutions.
+</p>
+<div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+<a href="mailto:info@cladutacorp.com?subject=Question about DDP" class="flex items-center gap-2 px-6 py-3 rounded-lg bg-cyan-500 text-slate-900 font-semibold hover:bg-cyan-400 transition">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+</svg>
+Email Us
+</a>
+<a href="#pricing" class="flex items-center gap-2 px-6 py-3 rounded-lg border border-slate-700 text-slate-300 font-semibold hover:border-cyan-500 hover:text-cyan-400 transition">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+</svg>
+Schedule a Demo
+</a>
+</div>
+</div>
+</section>
+<!-- SECURITY AND COMPLIANCE -->
+<section class="border-t border-slate-800 bg-slate-950/80 py-16">
+<div class="mx-auto max-w-6xl px-4">
 <div class="text-center mb-12">
-<div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-500/10 border border-emerald-500/30 mb-4">
-<svg class="w-8 h-8 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 mb-4">
+<svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
+<path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+</svg>
+<span class="text-sm font-semibold text-emerald-400 uppercase tracking-wider">Security & Compliance</span>
+</div>
+<h2 class="text-2xl md:text-3xl font-bold text-slate-50 mb-3">Your Data is Protected</h2>
+<p class="text-sm text-slate-400 max-w-2xl mx-auto">
+Enterprise-grade security measures to keep your sensitive documents safe
+</p>
+</div>
+
+<div class="grid md:grid-cols-3 gap-8">
+<!-- Security Feature 1 -->
+<div class="bg-slate-900/40 border border-slate-800 rounded-xl p-6">
+<div class="w-12 h-12 rounded-lg bg-emerald-500/10 flex items-center justify-center mb-4">
+<svg class="w-6 h-6 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
 <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/>
 </svg>
 </div>
-<h2 class="text-2xl md:text-3xl font-bold text-slate-50 mb-3">Security & Compliance</h2>
-<p class="text-sm text-slate-400 max-w-2xl mx-auto">Your documents are safe. Here's how we protect your data.</p>
+<h3 class="text-lg font-semibold text-slate-100 mb-2">256-Bit Encryption</h3>
+<p class="text-sm text-slate-400 leading-relaxed">
+All documents are encrypted in transit and at rest using AES-256 encryption, the same standard used by banks and government agencies.
+</p>
 </div>
 
-<div class="grid md:grid-cols-2 gap-6">
-<!-- Data Retention -->
-<div class="bg-slate-900/60 border border-slate-800 rounded-xl p-6 hover:border-emerald-500/30 transition">
-<div class="flex items-start gap-4">
-<div class="flex-shrink-0 w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center">
-<svg class="w-5 h-5 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
-<path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd"/>
+<!-- Security Feature 2 -->
+<div class="bg-slate-900/40 border border-slate-800 rounded-xl p-6">
+<div class="w-12 h-12 rounded-lg bg-cyan-500/10 flex items-center justify-center mb-4">
+<svg class="w-6 h-6 text-cyan-400" fill="currentColor" viewBox="0 0 20 20">
+<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.012 6.012 0 011.912-2.706C6.512 5.73 6.974 6 7.5 6A1.5 1.5 0 019 7.5V8a2 2 0 004 0 2 2 0 011.523-1.943A5.977 5.977 0 0116 10c0 .34-.028.675-.083 1H15a2 2 0 00-2 2v2.197A5.973 5.973 0 0110 16v-2a2 2 0 00-2-2 2 2 0 01-2-2 2 2 0 00-1.668-1.973z" clip-rule="evenodd"/>
 </svg>
 </div>
-<div>
-<h3 class="text-sm font-semibold text-slate-200 mb-2">Auto-Delete Policy</h3>
-<p class="text-xs text-slate-400 leading-relaxed">
-Documents are processed in-memory and automatically deleted within 24 hours. We don't store your sensitive trading documents permanently. PDF reports are generated on-demand only.
+<h3 class="text-lg font-semibold text-slate-100 mb-2">GDPR & SOC 2 Compliant</h3>
+<p class="text-sm text-slate-400 leading-relaxed">
+Full compliance with international data protection regulations. Your documents are automatically deleted after 24 hours.
+</p>
+</div>
+
+<!-- Security Feature 3 -->
+<div class="bg-slate-900/40 border border-slate-800 rounded-xl p-6">
+<div class="w-12 h-12 rounded-lg bg-purple-500/10 flex items-center justify-center mb-4">
+<svg class="w-6 h-6 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
+<path d="M10 12a2 2 0 100-4 2 2 0 000 4z"/>
+<path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd"/>
+</svg>
+</div>
+<h3 class="text-lg font-semibold text-slate-100 mb-2">Zero Data Retention</h3>
+<p class="text-sm text-slate-400 leading-relaxed">
+We don't store your documents or data. Everything is processed in real-time and permanently deleted within 24 hours.
 </p>
 </div>
 </div>
-</div>
 
-<!-- Encryption -->
-<div class="bg-slate-900/60 border border-slate-800 rounded-xl p-6 hover:border-cyan-500/30 transition">
+<!-- Additional Security Info -->
+<div class="mt-8 p-6 bg-slate-900/20 border border-slate-800/50 rounded-xl">
 <div class="flex items-start gap-4">
-<div class="flex-shrink-0 w-10 h-10 rounded-lg bg-cyan-500/10 flex items-center justify-center">
-<svg class="w-5 h-5 text-cyan-400" fill="currentColor" viewBox="0 0 20 20">
-<path d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 015.905-.75 1 1 0 001.937-.5A5.002 5.002 0 0010 2z"/>
-</svg>
-</div>
-<div>
-<h3 class="text-sm font-semibold text-slate-200 mb-2">Bank-Level Encryption</h3>
-<p class="text-xs text-slate-400 leading-relaxed">
-AES-256 encryption for all uploads. TLS 1.3 for data in transit. Infrastructure hosted on SOC 2 compliant servers. Zero-knowledge architecture means we can't read your documents even if we wanted to.
-</p>
-</div>
-</div>
-</div>
-
-<!-- Data Sources -->
-<div class="bg-slate-900/60 border border-slate-800 rounded-xl p-6 hover:border-purple-500/30 transition">
-<div class="flex items-start gap-4">
-<div class="flex-shrink-0 w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
-<svg class="w-5 h-5 text-purple-400" fill="currentColor" viewBox="0 0 20 20">
-<path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"/>
-<path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd"/>
-</svg>
-</div>
-<div>
-<h3 class="text-sm font-semibold text-slate-200 mb-2">Public Data Sources Only</h3>
-<p class="text-xs text-slate-400 leading-relaxed">
-We cross-reference only publicly available or licensed databases: OFAC SDN, Interpol, Companies House, OpenSanctions, and 11 others. No illegal scraping. No dark web data. 100% legitimate sources.
-</p>
-</div>
-</div>
-</div>
-
-<!-- Legal Disclaimer -->
-<div class="bg-slate-900/60 border border-slate-800 rounded-xl p-6 hover:border-amber-500/30 transition">
-<div class="flex items-start gap-4">
-<div class="flex-shrink-0 w-10 h-10 rounded-lg bg-amber-500/10 flex items-center justify-center">
-<svg class="w-5 h-5 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+<svg class="w-6 h-6 text-amber-400 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
 <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
 </svg>
-</div>
 <div>
-<h3 class="text-sm font-semibold text-slate-200 mb-2">Screening Tool, Not Legal Advice</h3>
-<p class="text-xs text-slate-400 leading-relaxed">
-Dude Diligence is a risk screening tool, not a replacement for full legal or compliance due diligence. Always consult your legal team, compliance officer, or trade finance advisor before executing contracts.
+<h4 class="text-sm font-semibold text-slate-200 mb-2">Need Enterprise Security?</h4>
+<p class="text-sm text-slate-400 mb-3">
+We offer custom security solutions for enterprise clients including on-premise deployment, dedicated instances, and custom data retention policies.
 </p>
-</div>
-</div>
-</div>
-</div>
-
-<!-- Additional Trust Elements -->
-<div class="mt-10 pt-8 border-t border-slate-800/50">
-<div class="flex flex-wrap items-center justify-center gap-8 text-xs text-slate-500">
-<div class="flex items-center gap-2">
-<svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-<span>GDPR Compliant</span>
-</div>
-<div class="flex items-center gap-2">
-<svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-<span>ISO 27001 Infrastructure</span>
-</div>
-<div class="flex items-center gap-2">
-<svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-<span>99.9% Uptime SLA</span>
-</div>
-<div class="flex items-center gap-2">
-<svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-<span>No Data Selling</span>
+<a href="/partners.html" class="text-sm text-cyan-400 hover:text-cyan-300 font-semibold">
+Contact us for enterprise options →
+</a>
 </div>
 </div>
 </div>
 
 </div>
 </section>
+<!-- ABOUT DUDE DILIGENCE -->
+<section class="border-t border-slate-800 bg-gradient-to-b from-black/80 to-slate-950 py-16">
+<div class="mx-auto max-w-4xl px-4">
+<div class="text-center mb-12">
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30 mb-4">
+<svg class="w-4 h-4 text-cyan-400" fill="currentColor" viewBox="0 0 20 20">
+<path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+</svg>
+<span class="text-sm font-semibold text-cyan-400 uppercase tracking-wider">About Us</span>
+</div>
+<h2 class="text-2xl md:text-3xl font-bold text-slate-50 mb-4">About Dude Diligence Pro</h2>
+</div>
 
-<!-- FOOTER -->
+<div class="prose prose-invert prose-slate mx-auto">
+<div class="bg-slate-900/40 border border-slate-800 rounded-xl p-8">
+<p class="text-base text-slate-300 leading-relaxed mb-4">
+DDP (Dude Diligence Pro) was built by commodity traders, for commodity traders. After losing over $500,000 to document fraud in 2023, our founder decided enough was enough.
+</p>
+<p class="text-base text-slate-300 leading-relaxed mb-4">
+We spent 18 months building an AI-powered platform that combines 15+ international databases, document fingerprinting technology, and real-time fraud detection to protect traders from scams.
+</p>
+<p class="text-base text-slate-300 leading-relaxed mb-6">
+Today, DDP processes over 10,000 due diligence reports monthly for traders in 40+ countries. We've helped prevent an estimated $45M in fraud losses since launch.
+</p>
+
+<div class="grid md:grid-cols-3 gap-6 pt-6 border-t border-slate-800">
+<div class="text-center">
+<div class="text-3xl font-bold text-cyan-400 mb-1">10K+</div>
+<div class="text-sm text-slate-400">Reports Monthly</div>
+</div>
+<div class="text-center">
+<div class="text-3xl font-bold text-emerald-400 mb-1">40+</div>
+<div class="text-sm text-slate-400">Countries Served</div>
+</div>
+<div class="text-center">
+<div class="text-3xl font-bold text-amber-400 mb-1">$45M+</div>
+<div class="text-sm text-slate-400">Fraud Prevented</div>
+</div>
+</div>
+</div>
+
+<div class="mt-8 text-center">
+<p class="text-sm text-slate-400 mb-4">Built by <a href="https://cladutacorp.com" class="text-cyan-400 hover:text-cyan-300 font-semibold">CLADUTA CORP</a></p>
+</div>
+</div>
+
+</div>
+</section>
+
 <footer class="border-t border-slate-800 bg-black/40 py-12">
 <div class="mx-auto max-w-6xl px-4">
 

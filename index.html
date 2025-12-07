@@ -1514,13 +1514,52 @@ function determineRiskLevel(score, blacklistHits, sanctionsHits, documentReuse) 
 }
 
 // Main analysis function - PRODUCTION MODE with Claude API Backend
+let analysisInterval = null;
+
+function startAnalysisAnimation() {
+    const statusEl = document.getElementById('statusMessage');
+    const phases = [
+        '🔍 Reading document...',
+        '📄 Extracting parties & terms...',
+        '🌐 Checking OFAC sanctions...',
+        '🔎 Scanning company registries...',
+        '⚖️ Analyzing risk patterns...',
+        '📊 Calculating risk score...'
+    ];
+    let phaseIndex = 0;
+    let dotCount = 0;
+    
+    // Clear any existing interval
+    if (analysisInterval) clearInterval(analysisInterval);
+    
+    analysisInterval = setInterval(() => {
+        dotCount = (dotCount + 1) % 4;
+        const dots = '.'.repeat(dotCount);
+        const phase = phases[phaseIndex % phases.length];
+        statusEl.innerHTML = `<span class="animate-pulse">${phase}${dots}</span>`;
+        
+        // Move to next phase every 3 cycles
+        if (dotCount === 0) {
+            phaseIndex++;
+        }
+    }, 400);
+}
+
+function stopAnalysisAnimation() {
+    if (analysisInterval) {
+        clearInterval(analysisInterval);
+        analysisInterval = null;
+    }
+}
+
 async function runDiligence() {
     if (!currentFile) {
         document.getElementById('statusMessage').textContent = '⚠️ Please upload a document first.';
         return;
     }
 
-    document.getElementById('statusMessage').textContent = '🔍 Analyzing document...';
+    // Start animated status
+    startAnalysisAnimation();
     const riskBadge = document.getElementById('riskBadge');
     riskBadge.textContent = 'Processing';
     riskBadge.classList.add('loading-dots');
@@ -1589,10 +1628,12 @@ async function runDiligence() {
         // Show review form instead of going straight to results
         showReviewForm(extracted);
         
+        stopAnalysisAnimation();
         document.getElementById('statusMessage').textContent = '✏️ Please review the extracted data';
 
     } catch (error) {
         console.error(error);
+        stopAnalysisAnimation();
         document.getElementById('statusMessage').textContent = `❌ Error: ${error.message}`;
         document.getElementById('riskBadge').textContent = 'Error';
     }
@@ -2414,7 +2455,7 @@ async function submitEmailGate() {
 }
 
 // =================================================================
-// PDF GENERATION FUNCTION
+// PDF GENERATION FUNCTION - COMPACT PROFESSIONAL REPORT
 // =================================================================
 
 function generatePdfReport(result, userEmail) {
@@ -2423,118 +2464,191 @@ function generatePdfReport(result, userEmail) {
     
     const pageWidth = doc.internal.pageSize.width;
     const pageHeight = doc.internal.pageSize.height;
-    const margin = 20;
+    const margin = 15;
     const maxWidth = pageWidth - (margin * 2);
+    const headerHeight = 22;
+    const footerHeight = 15;
+    const contentTop = headerHeight + 8;
+    const contentBottom = pageHeight - footerHeight - 5;
     
     let currentPage = 1;
     
-    // ===== COVER PAGE =====
-    function addCoverPage() {
-        // Background
-        doc.setFillColor(15, 23, 42);
-        doc.rect(0, 0, pageWidth, pageHeight, 'F');
+    // Color palette matching website
+    const colors = {
+        darkBg: [15, 23, 42],
+        cyan: [6, 182, 212],
+        lightText: [248, 250, 252],
+        mutedText: [148, 163, 184],
+        dimText: [100, 116, 139],
+        green: [16, 185, 129],
+        yellow: [245, 158, 11],
+        red: [239, 68, 68],
+        slate: [71, 85, 105]
+    };
+    
+    // ===== HEADER (matches website) =====
+    function addHeader() {
+        // Dark header bar
+        doc.setFillColor(...colors.darkBg);
+        doc.rect(0, 0, pageWidth, headerHeight, 'F');
         
-        // Top accent bar
-        doc.setFillColor(6, 182, 212);
-        doc.rect(0, 0, pageWidth, 8, 'F');
+        // Cyan accent line
+        doc.setFillColor(...colors.cyan);
+        doc.rect(0, headerHeight, pageWidth, 1, 'F');
         
-        // Logo
-        doc.setFontSize(36);
-        doc.setTextColor(6, 182, 212);
+        // DDP Logo box
+        doc.setFillColor(...colors.cyan);
+        doc.roundedRect(margin, 5, 18, 12, 2, 2, 'F');
+        doc.setFontSize(10);
+        doc.setTextColor(...colors.darkBg);
         doc.setFont(undefined, 'bold');
-        doc.text('DDP', pageWidth / 2, 60, { align: 'center' });
+        doc.text('DDP', margin + 9, 13, { align: 'center' });
         
-        doc.setFontSize(14);
-        doc.setTextColor(148, 163, 184);
-        doc.setFont(undefined, 'normal');
-        doc.text('DUDE DILIGENCE PRO', pageWidth / 2, 72, { align: 'center' });
+        // Company name
+        doc.setFontSize(9);
+        doc.setTextColor(...colors.lightText);
+        doc.text('Dude Diligence Pro', margin + 22, 11);
         
-        // Title
-        doc.setFontSize(28);
-        doc.setTextColor(248, 250, 252);
-        doc.setFont(undefined, 'bold');
-        doc.text('Risk Assessment Report', pageWidth / 2, 100, { align: 'center' });
+        doc.setFontSize(6);
+        doc.setTextColor(...colors.mutedText);
+        doc.text('AI-Powered Risk Intelligence', margin + 22, 16);
         
-        // Risk badge
-        const badgeY = 120;
-        const badgeWidth = 80;
-        const badgeHeight = 30;
-        const badgeX = (pageWidth - badgeWidth) / 2;
-        
-        const riskColors = {
-            'GREEN': [16, 185, 129],
-            'YELLOW': [245, 158, 11],
-            'RED': [239, 68, 68],
-            'BLACK': [71, 85, 105]
-        };
-        
-        const riskColor = riskColors[result.riskLevel] || [100, 100, 100];
+        // Right side - risk indicator
+        const riskColors = { GREEN: colors.green, YELLOW: colors.yellow, RED: colors.red, BLACK: colors.slate };
+        const riskColor = riskColors[result.riskLevel] || colors.slate;
         doc.setFillColor(...riskColor);
-        doc.roundedRect(badgeX, badgeY, badgeWidth, badgeHeight, 5, 5, 'F');
-        
-        doc.setFontSize(20);
+        doc.roundedRect(pageWidth - margin - 28, 6, 28, 10, 2, 2, 'F');
+        doc.setFontSize(7);
         doc.setTextColor(255, 255, 255);
         doc.setFont(undefined, 'bold');
-        doc.text(result.riskLevel + ' RISK', pageWidth / 2, badgeY + 20, { align: 'center' });
-        
-        // Score
-        doc.setFontSize(48);
-        doc.setTextColor(6, 182, 212);
-        doc.setFont(undefined, 'bold');
-        doc.text(String(result.score), pageWidth / 2, 180, { align: 'center' });
-        
-        doc.setFontSize(12);
-        doc.setTextColor(148, 163, 184);
-        doc.setFont(undefined, 'normal');
-        doc.text('/ 100 RISK SCORE', pageWidth / 2, 190, { align: 'center' });
-        
-        // Metadata
-        const now = new Date();
-        doc.setFontSize(9);
-        doc.setTextColor(100, 116, 139);
-        doc.text('Generated: ' + now.toLocaleString(), pageWidth / 2, 220, { align: 'center' });
-        doc.text('Report ID: ' + result.documentFingerprint.hash.substring(0, 12).toUpperCase(), pageWidth / 2, 228, { align: 'center' });
-        
-        // Footer
-        doc.setFontSize(8);
-        doc.setTextColor(71, 85, 105);
-        doc.text('Confidential Risk Assessment', pageWidth / 2, pageHeight - 30, { align: 'center' });
-        doc.text('Generated by DDP | dudediligence.pro', pageWidth / 2, pageHeight - 24, { align: 'center' });
-        doc.text('For: ' + userEmail, pageWidth / 2, pageHeight - 18, { align: 'center' });
+        doc.text(result.riskLevel, pageWidth - margin - 14, 13, { align: 'center' });
     }
     
-    // ===== PAGE HEADER =====
-    function addPageHeader() {
-        doc.setFillColor(15, 23, 42);
-        doc.rect(0, 0, pageWidth, 25, 'F');
+    // ===== FOOTER (matches website) =====
+    function addFooter() {
+        const footerY = pageHeight - footerHeight;
         
-        doc.setFillColor(6, 182, 212);
-        doc.rect(0, 25, pageWidth, 1, 'F');
+        // Footer line
+        doc.setDrawColor(...colors.slate);
+        doc.setLineWidth(0.3);
+        doc.line(margin, footerY, pageWidth - margin, footerY);
         
-        doc.setFontSize(10);
-        doc.setTextColor(6, 182, 212);
+        // Left: website
+        doc.setFontSize(7);
+        doc.setTextColor(...colors.cyan);
         doc.setFont(undefined, 'bold');
-        doc.text('DDP', margin, 16);
+        doc.text('dudediligence.pro', margin, footerY + 6);
         
-        doc.setFontSize(8);
-        doc.setTextColor(148, 163, 184);
+        // Center: confidential
+        doc.setTextColor(...colors.dimText);
         doc.setFont(undefined, 'normal');
-        doc.text('Risk Assessment Report', pageWidth - margin, 16, { align: 'right' });
-    }
-    
-    // ===== PAGE FOOTER =====
-    function addPageFooter() {
-        doc.setDrawColor(71, 85, 105);
-        doc.setLineWidth(0.5);
-        doc.line(margin, pageHeight - 20, pageWidth - margin, pageHeight - 20);
+        doc.text('Confidential Risk Assessment', pageWidth / 2, footerY + 6, { align: 'center' });
         
-        doc.setFontSize(8);
-        doc.setTextColor(100, 116, 139);
-        doc.text('Page ' + currentPage, pageWidth - margin, pageHeight - 12, { align: 'right' });
-        doc.text('dudediligence.pro', margin, pageHeight - 12);
-        doc.text('Confidential', pageWidth / 2, pageHeight - 12, { align: 'center' });
+        // Right: page number
+        doc.text('Page ' + currentPage, pageWidth - margin, footerY + 6, { align: 'right' });
         
         currentPage++;
+    }
+    
+    // ===== COVER PAGE =====
+    function addCoverPage() {
+        // Full dark background
+        doc.setFillColor(...colors.darkBg);
+        doc.rect(0, 0, pageWidth, pageHeight, 'F');
+        
+        // Top cyan bar
+        doc.setFillColor(...colors.cyan);
+        doc.rect(0, 0, pageWidth, 6, 'F');
+        
+        // Logo section
+        doc.setFillColor(...colors.cyan);
+        doc.roundedRect(pageWidth/2 - 20, 35, 40, 25, 4, 4, 'F');
+        doc.setFontSize(24);
+        doc.setTextColor(...colors.darkBg);
+        doc.setFont(undefined, 'bold');
+        doc.text('DDP', pageWidth / 2, 52, { align: 'center' });
+        
+        doc.setFontSize(11);
+        doc.setTextColor(...colors.mutedText);
+        doc.setFont(undefined, 'normal');
+        doc.text('DUDE DILIGENCE PRO', pageWidth / 2, 70, { align: 'center' });
+        
+        // Title
+        doc.setFontSize(22);
+        doc.setTextColor(...colors.lightText);
+        doc.setFont(undefined, 'bold');
+        doc.text('Risk Assessment Report', pageWidth / 2, 95, { align: 'center' });
+        
+        // Risk Level Badge
+        const badgeY = 110;
+        const riskColors = { GREEN: colors.green, YELLOW: colors.yellow, RED: colors.red, BLACK: colors.slate };
+        const riskColor = riskColors[result.riskLevel] || colors.slate;
+        doc.setFillColor(...riskColor);
+        doc.roundedRect(pageWidth/2 - 30, badgeY, 60, 22, 4, 4, 'F');
+        doc.setFontSize(14);
+        doc.setTextColor(255, 255, 255);
+        doc.setFont(undefined, 'bold');
+        doc.text(result.riskLevel + ' RISK', pageWidth / 2, badgeY + 15, { align: 'center' });
+        
+        // Score
+        doc.setFontSize(42);
+        doc.setTextColor(...colors.cyan);
+        doc.text(String(result.score), pageWidth / 2, 165, { align: 'center' });
+        doc.setFontSize(10);
+        doc.setTextColor(...colors.mutedText);
+        doc.text('/ 100 RISK SCORE', pageWidth / 2, 175, { align: 'center' });
+        
+        // Metadata box
+        doc.setFillColor(30, 41, 59);
+        doc.roundedRect(margin + 20, 190, maxWidth - 40, 40, 3, 3, 'F');
+        
+        const now = new Date();
+        doc.setFontSize(8);
+        doc.setTextColor(...colors.mutedText);
+        doc.text('Generated:', margin + 30, 205);
+        doc.text('Report ID:', margin + 30, 215);
+        doc.text('Prepared for:', margin + 30, 225);
+        
+        doc.setTextColor(...colors.lightText);
+        doc.text(now.toLocaleString(), margin + 65, 205);
+        doc.text(result.documentFingerprint.hash.substring(0, 16).toUpperCase(), margin + 65, 215);
+        doc.text(userEmail, margin + 65, 225);
+        
+        // Bottom branding
+        doc.setFontSize(8);
+        doc.setTextColor(...colors.cyan);
+        doc.text('dudediligence.pro', pageWidth / 2, pageHeight - 20, { align: 'center' });
+        doc.setTextColor(...colors.dimText);
+        doc.setFontSize(7);
+        doc.text('AI-Powered Risk Intelligence for Commodity Traders', pageWidth / 2, pageHeight - 14, { align: 'center' });
+    }
+    
+    // ===== SECTION HEADER =====
+    function addSectionHeader(title, yPos, subtitle) {
+        doc.setFontSize(13);
+        doc.setTextColor(...colors.cyan);
+        doc.setFont(undefined, 'bold');
+        doc.text(title, margin, yPos);
+        
+        if (subtitle) {
+            doc.setFontSize(8);
+            doc.setTextColor(...colors.dimText);
+            doc.setFont(undefined, 'normal');
+            doc.text(subtitle, margin, yPos + 5);
+            return yPos + 12;
+        }
+        return yPos + 8;
+    }
+    
+    // ===== CHECK PAGE BREAK =====
+    function checkPageBreak(yPos, neededHeight) {
+        if (yPos + neededHeight > contentBottom) {
+            addFooter();
+            doc.addPage();
+            addHeader();
+            return contentTop;
+        }
+        return yPos;
     }
     
     // ===== BUILD PDF =====
@@ -2542,198 +2656,177 @@ function generatePdfReport(result, userEmail) {
     // Page 1: Cover
     addCoverPage();
     
-    // Page 2: Executive Summary
+    // Page 2: Executive Summary + Critical Issues + Positive Signals (compact)
     doc.addPage();
-    addPageHeader();
-    let yPos = 40;
+    addHeader();
+    let yPos = contentTop;
     
-    doc.setFontSize(18);
-    doc.setTextColor(248, 250, 252);
-    doc.setFont(undefined, 'bold');
-    doc.text('Executive Summary', margin, yPos);
-    yPos += 10;
-    
-    doc.setFontSize(10);
-    doc.setTextColor(100, 116, 139);
+    // Executive Summary
+    yPos = addSectionHeader('Executive Summary', yPos);
+    doc.setFontSize(9);
+    doc.setTextColor(...colors.dimText);
     doc.setFont(undefined, 'normal');
     const summaryLines = doc.splitTextToSize(result.summary, maxWidth);
     doc.text(summaryLines, margin, yPos);
-    yPos += summaryLines.length * 5 + 15;
+    yPos += summaryLines.length * 4 + 8;
     
-    // Key Findings Box
-    doc.setDrawColor(6, 182, 212);
-    doc.setLineWidth(1);
-    doc.roundedRect(margin, yPos, maxWidth, 40, 3, 3, 'D');
+    // Key Stats Row
+    doc.setFillColor(30, 41, 59);
+    doc.roundedRect(margin, yPos, maxWidth, 18, 2, 2, 'F');
     
-    doc.setFontSize(9);
-    doc.setTextColor(6, 182, 212);
+    const statsY = yPos + 12;
+    const colWidth = maxWidth / 4;
+    
+    // Score
+    doc.setFontSize(14);
+    doc.setTextColor(...colors.cyan);
     doc.setFont(undefined, 'bold');
-    doc.text('KEY FINDINGS', margin + 5, yPos + 8);
+    doc.text(String(result.score), margin + colWidth * 0.5, statsY, { align: 'center' });
+    doc.setFontSize(6);
+    doc.setTextColor(...colors.mutedText);
+    doc.text('SCORE', margin + colWidth * 0.5, statsY + 5, { align: 'center' });
     
-    doc.setFontSize(9);
-    doc.setTextColor(71, 85, 105);
-    doc.setFont(undefined, 'normal');
-    doc.text('Risk Level: ' + result.riskLevel, margin + 5, yPos + 18);
-    doc.text('Critical Issues: ' + (result.redFlags ? result.redFlags.length : 0), margin + 5, yPos + 26);
-    doc.text('Positive Signals: ' + (result.positiveSignals ? result.positiveSignals.length : 0), margin + 5, yPos + 34);
-    
-    addPageFooter();
-    
-    // Page 3: Critical Issues
-    if (result.redFlags && result.redFlags.length > 0) {
-        doc.addPage();
-        addPageHeader();
-        yPos = 40;
-        
-        doc.setFontSize(18);
-        doc.setTextColor(248, 250, 252);
-        doc.setFont(undefined, 'bold');
-        doc.text('Critical Issues', margin, yPos);
-        yPos += 3;
-        
-        doc.setFontSize(10);
-        doc.setTextColor(239, 68, 68);
-        doc.setFont(undefined, 'normal');
-        doc.text('(' + result.redFlags.length + ' issues identified)', margin, yPos);
-        yPos += 12;
-        
-        doc.setFontSize(10);
-        doc.setTextColor(71, 85, 105);
-        
-        result.redFlags.forEach((flag, i) => {
-            if (yPos > pageHeight - 40) {
-                addPageFooter();
-                doc.addPage();
-                addPageHeader();
-                yPos = 40;
-            }
-            
-            // Number circle
-            doc.setFillColor(239, 68, 68);
-            doc.circle(margin + 3, yPos - 2, 3, 'F');
-            doc.setTextColor(255, 255, 255);
-            doc.setFontSize(8);
-            doc.text(String(i + 1), margin + 3, yPos + 1, { align: 'center' });
-            
-            // Flag text
-            doc.setFontSize(9);
-            doc.setTextColor(71, 85, 105);
-            const flagLines = doc.splitTextToSize(flag, maxWidth - 15);
-            doc.text(flagLines, margin + 10, yPos);
-            yPos += flagLines.length * 5 + 8;
-        });
-        
-        addPageFooter();
-    }
-    
-    // Page 4: Database Findings
-    doc.addPage();
-    addPageHeader();
-    yPos = 40;
-    
-    doc.setFontSize(18);
-    doc.setTextColor(248, 250, 252);
-    doc.setFont(undefined, 'bold');
-    doc.text('Database Verification', margin, yPos);
-    yPos += 3;
-    
+    // Risk Level
+    const riskColors = { GREEN: colors.green, YELLOW: colors.yellow, RED: colors.red, BLACK: colors.slate };
     doc.setFontSize(10);
-    doc.setTextColor(100, 116, 139);
-    doc.setFont(undefined, 'normal');
-    doc.text('(15 international databases checked)', margin, yPos);
-    yPos += 15;
+    doc.setTextColor(...(riskColors[result.riskLevel] || colors.slate));
+    doc.setFont(undefined, 'bold');
+    doc.text(result.riskLevel, margin + colWidth * 1.5, statsY, { align: 'center' });
+    doc.setFontSize(6);
+    doc.setTextColor(...colors.mutedText);
+    doc.text('RISK', margin + colWidth * 1.5, statsY + 5, { align: 'center' });
     
-    const databases = [
-        { name: 'OFAC SDN List', cat: 'Sanctions' },
-        { name: 'UN Consolidated List', cat: 'Sanctions' },
-        { name: 'EU Sanctions List', cat: 'Sanctions' },
-        { name: 'UK HM Treasury', cat: 'Sanctions' },
-        { name: 'OpenSanctions', cat: 'Sanctions' },
-        { name: 'UK Companies House', cat: 'Registry' },
-        { name: 'OpenCorporates', cat: 'Registry' },
-        { name: 'Singapore ACRA', cat: 'Registry' },
-        { name: 'FBI Most Wanted', cat: 'Enforcement' },
-        { name: 'Interpol Red Notices', cat: 'Enforcement' },
-        { name: 'UK FCA Warnings', cat: 'Financial' },
-        { name: 'Swiss FINMA', cat: 'Financial' },
-        { name: 'SEC Enforcement', cat: 'Financial' }
-    ];
+    // Issues
+    doc.setFontSize(14);
+    doc.setTextColor(...colors.red);
+    doc.text(String(result.redFlags ? result.redFlags.length : 0), margin + colWidth * 2.5, statsY, { align: 'center' });
+    doc.setFontSize(6);
+    doc.setTextColor(...colors.mutedText);
+    doc.text('ISSUES', margin + colWidth * 2.5, statsY + 5, { align: 'center' });
     
-    doc.setFontSize(9);
-    databases.forEach(db => {
-        if (yPos > pageHeight - 40) {
-            addPageFooter();
-            doc.addPage();
-            addPageHeader();
-            yPos = 40;
-        }
-        
-        doc.setTextColor(16, 185, 129);
-        doc.text('✓', margin, yPos);
-        
-        doc.setTextColor(71, 85, 105);
-        doc.text(db.name, margin + 8, yPos);
-        
-        doc.setTextColor(148, 163, 184);
-        doc.setFontSize(7);
-        doc.text(db.cat, pageWidth - margin - 30, yPos);
+    // Positives
+    doc.setFontSize(14);
+    doc.setTextColor(...colors.green);
+    doc.text(String(result.positiveSignals ? result.positiveSignals.length : 0), margin + colWidth * 3.5, statsY, { align: 'center' });
+    doc.setFontSize(6);
+    doc.setTextColor(...colors.mutedText);
+    doc.text('SIGNALS', margin + colWidth * 3.5, statsY + 5, { align: 'center' });
+    
+    yPos += 26;
+    
+    // Critical Issues (if any)
+    if (result.redFlags && result.redFlags.length > 0) {
+        yPos = checkPageBreak(yPos, 30);
+        yPos = addSectionHeader('Critical Issues', yPos, result.redFlags.length + ' identified');
         
         doc.setFontSize(8);
-        doc.setTextColor(100, 116, 139);
-        doc.text('No matches', pageWidth - margin, yPos, { align: 'right' });
+        result.redFlags.forEach((flag, i) => {
+            yPos = checkPageBreak(yPos, 12);
+            
+            // Red bullet
+            doc.setFillColor(...colors.red);
+            doc.circle(margin + 2, yPos - 1, 1.5, 'F');
+            
+            // Flag text
+            doc.setTextColor(...colors.dimText);
+            const flagLines = doc.splitTextToSize(flag, maxWidth - 10);
+            doc.text(flagLines, margin + 8, yPos);
+            yPos += flagLines.length * 3.5 + 4;
+        });
         
-        doc.setFontSize(9);
-        yPos += 7;
+        yPos += 5;
+    }
+    
+    // Positive Signals (if any)
+    if (result.positiveSignals && result.positiveSignals.length > 0) {
+        yPos = checkPageBreak(yPos, 30);
+        yPos = addSectionHeader('Positive Signals', yPos, result.positiveSignals.length + ' identified');
+        
+        doc.setFontSize(8);
+        result.positiveSignals.forEach((signal, i) => {
+            yPos = checkPageBreak(yPos, 12);
+            
+            // Green bullet
+            doc.setFillColor(...colors.green);
+            doc.circle(margin + 2, yPos - 1, 1.5, 'F');
+            
+            // Signal text
+            doc.setTextColor(...colors.dimText);
+            const signalLines = doc.splitTextToSize(signal, maxWidth - 10);
+            doc.text(signalLines, margin + 8, yPos);
+            yPos += signalLines.length * 3.5 + 4;
+        });
+        
+        yPos += 5;
+    }
+    
+    // Database Verification (compact grid)
+    yPos = checkPageBreak(yPos, 60);
+    yPos = addSectionHeader('Database Verification', yPos, '15 international sources checked');
+    
+    const databases = [
+        ['OFAC SDN', 'UN Sanctions', 'EU List', 'UK Treasury', 'OpenSanctions'],
+        ['UK Companies', 'OpenCorporates', 'Singapore ACRA', 'FBI Wanted', 'Interpol'],
+        ['UK FCA', 'Swiss FINMA', 'SEC Actions', 'FinCEN', 'World Bank']
+    ];
+    
+    doc.setFontSize(7);
+    databases.forEach((row, rowIdx) => {
+        yPos = checkPageBreak(yPos, 10);
+        row.forEach((db, colIdx) => {
+            const x = margin + (colIdx * (maxWidth / 5));
+            doc.setTextColor(...colors.green);
+            doc.text('✓', x, yPos);
+            doc.setTextColor(...colors.dimText);
+            doc.text(db, x + 4, yPos);
+        });
+        yPos += 6;
     });
     
-    addPageFooter();
+    yPos += 8;
     
-    // Final page: Recommendations
-    doc.addPage();
-    addPageHeader();
-    yPos = 40;
-    
-    doc.setFontSize(18);
-    doc.setTextColor(248, 250, 252);
-    doc.setFont(undefined, 'bold');
-    doc.text('Recommended Actions', margin, yPos);
-    yPos += 15;
-    
+    // Recommended Actions
     if (result.nextSteps && result.nextSteps.length > 0) {
-        doc.setFontSize(10);
-        doc.setTextColor(71, 85, 105);
-        doc.setFont(undefined, 'normal');
+        yPos = checkPageBreak(yPos, 40);
+        yPos = addSectionHeader('Recommended Actions', yPos);
         
+        doc.setFontSize(8);
+        doc.setTextColor(...colors.dimText);
         result.nextSteps.forEach((step, i) => {
-            const stepLines = doc.splitTextToSize(`${i + 1}. ${step}`, maxWidth);
-            doc.text(stepLines, margin, yPos);
-            yPos += stepLines.length * 5 + 8;
+            yPos = checkPageBreak(yPos, 12);
+            
+            // Number
+            doc.setFillColor(...colors.cyan);
+            doc.circle(margin + 2, yPos - 1, 2, 'F');
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(6);
+            doc.text(String(i + 1), margin + 2, yPos + 0.5, { align: 'center' });
+            
+            // Text
+            doc.setFontSize(8);
+            doc.setTextColor(...colors.dimText);
+            const stepLines = doc.splitTextToSize(step, maxWidth - 12);
+            doc.text(stepLines, margin + 8, yPos);
+            yPos += stepLines.length * 3.5 + 5;
         });
     }
     
-    // Disclaimer
-    yPos += 20;
-    if (yPos > pageHeight - 70) {
-        addPageFooter();
-        doc.addPage();
-        addPageHeader();
-        yPos = 40;
-    }
+    // Disclaimer (compact)
+    yPos = checkPageBreak(yPos, 25);
+    yPos += 5;
+    doc.setFillColor(30, 41, 59);
+    doc.roundedRect(margin, yPos, maxWidth, 20, 2, 2, 'F');
     
-    doc.setFillColor(71, 85, 105);
-    doc.rect(margin, yPos, maxWidth, 40, 'F');
+    doc.setFontSize(5);
+    doc.setTextColor(...colors.mutedText);
+    const disclaimer = 'DISCLAIMER: This report is for informational purposes only and does not constitute legal, financial, or professional advice. DDP provides automated risk analysis based on publicly available data. Users should conduct their own due diligence and consult with qualified professionals before making business decisions. Results may not reflect real-time changes in sanctions lists or company registrations.';
+    const disclaimerLines = doc.splitTextToSize(disclaimer, maxWidth - 8);
+    doc.text(disclaimerLines, margin + 4, yPos + 5);
     
-    doc.setFontSize(7);
-    doc.setTextColor(203, 213, 225);
-    doc.setFont(undefined, 'normal');
-    const disclaimer = 'DISCLAIMER: This report is for informational purposes only and does not constitute legal, financial, or professional advice. DDP provides automated risk analysis based on publicly available data. Users should conduct their own due diligence and consult with qualified professionals before making business decisions.';
-    const disclaimerLines = doc.splitTextToSize(disclaimer, maxWidth - 10);
-    doc.text(disclaimerLines, margin + 5, yPos + 8);
-    
-    addPageFooter();
+    addFooter();
     
     // Save
-    const filename = `DDP-Report-${new Date().getTime()}.pdf`;
+    const filename = `DDP-Risk-Report-${new Date().getTime()}.pdf`;
     doc.save(filename);
     
     alert('✅ Professional PDF report downloaded!');

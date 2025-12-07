@@ -159,9 +159,6 @@ z-index: 1;
 <div class="hidden min-[360px]:block">
 <div class="flex items-center gap-2">
 <span class="font-semibold text-slate-50 tracking-tight text-sm md:text-base">Dude Diligence Pro</span>
-<span class="hidden sm:inline text-[10px] uppercase tracking-[0.18em] text-slate-500 border border-slate-700/80 rounded px-1.5 py-[2px]">
-AI Verify
-</span>
 </div>
 <p class="text-[10px] md:text-xs text-slate-400 hidden sm:block">
 Instant due diligence reports
@@ -180,8 +177,8 @@ Instant due diligence reports
 <span class="hidden sm:inline">Login</span>
 </a>
 
-<!-- Hamburger (Mobile only) -->
-<button onclick="toggleMobileMenu()" class="md:hidden text-slate-400 hover:text-cyan-400 transition p-1.5">
+<!-- Hamburger Menu -->
+<button onclick="toggleMobileMenu()" class="text-slate-400 hover:text-cyan-400 transition p-1.5">
 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
 </svg>
@@ -191,8 +188,8 @@ Instant due diligence reports
 </div>
 </header>
 
-<!-- Mobile Menu Slide-out -->
-<div id="mobileMenu" class="hidden fixed inset-0 z-50 md:hidden">
+<!-- Slide-out Menu -->
+<div id="mobileMenu" class="hidden fixed inset-0 z-50">
 <!-- Backdrop -->
 <div onclick="toggleMobileMenu()" class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
 <!-- Menu Panel -->
@@ -211,11 +208,14 @@ Instant due diligence reports
 <a href="#pricing" onclick="toggleMobileMenu()" class="px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition">
 Pricing
 </a>
-<a href="#pricing" class="px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition">
-How It Works
-</a>
-<a href="/partners.html" class="px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition">
+<a href="/partners.html" onclick="toggleMobileMenu()" class="px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition">
 Partners
+</a>
+<a href="/sample-report.html" onclick="toggleMobileMenu()" class="px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition">
+Sample Report
+</a>
+<a href="/how-it-works.html" onclick="toggleMobileMenu()" class="px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition">
+How It Works
 </a>
 </nav>
 </div>
@@ -277,7 +277,7 @@ See Sample Report
 <div class="rounded-2xl border border-slate-800 bg-slate-950/70 backdrop-blur shadow-lg shadow-cyan-500/10">
 <div class="px-5 py-4 border-b border-slate-800 flex items-center justify-between">
 <div>
-<h2 class="text-sm font-semibold text-slate-100">Run The Dude</h2>
+<h2 class="text-sm font-semibold text-slate-100">Run Dude Diligence Pro</h2>
 <p class="text-xs text-slate-400">Upload LOI, ICPO, or combined PDFs.</p>
 </div>
 <a href="#pricing" class="rounded-full bg-gradient-to-r from-orange-500 to-yellow-500 px-4 py-1.5 text-xs font-bold text-slate-900 hover:from-orange-600 hover:to-yellow-600 transition">
@@ -287,15 +287,15 @@ Buy Credits →
 
 <div class="px-5 pt-4 pb-5 space-y-4">
 
-<label class="block">
+<div class="block">
 <span class="text-xs font-medium text-slate-300">Document</span>
 <div id="dropzone" onclick="document.getElementById('fileInput').click()"
 class="mt-2 flex flex-col items-center justify-center rounded-xl border border-dashed border-slate-700 bg-slate-900/60 px-4 py-6 text-center text-xs text-slate-400 cursor-pointer hover:border-cyan-400/70 hover:bg-slate-900 transition">
 <span class="mb-2 text-slate-200 font-medium" id="dropzoneText">Click to upload</span>
 <span class="text-[11px] text-slate-500">PDF, TXT, max 10 MB.</span>
+</div>
 <input id="fileInput" type="file" accept=".pdf,.txt" class="hidden" />
 </div>
-</label>
 
 <button onclick="runDiligence()"
 class="w-full mt-3 inline-flex items-center justify-center rounded-xl bg-cyan-500 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-cyan-400 transition shadow-lg">
@@ -765,7 +765,7 @@ Dedicated account manager
 </div>
 
 <!-- ANNUAL PRICING (hidden by default) -->
-<div id="annualPricing" class="hidden grid md:grid-cols-4 gap-4 text-xs">
+<div id="annualPricing" class="grid md:grid-cols-4 gap-4 text-xs" style="display: none;">
 
 <div class="rounded-xl border border-emerald-500/40 bg-emerald-500/5 p-5 hover:border-emerald-500/60 transition">
 <div class="flex items-center justify-between mb-3">
@@ -2783,50 +2783,6 @@ window.addEventListener('scroll', () => {
 </script>
 
 
-
-<!-- WHAT HAPPENS NEXT -->
-<div class="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 rounded-2xl p-8 mb-10">
-<h3 class="text-xl font-bold text-slate-50 mb-6 text-center">Here's What Happens After You Sign Up</h3>
-<div class="grid md:grid-cols-3 gap-6">
-<div class="flex gap-4">
-<div class="flex-shrink-0">
-<div class="w-10 h-10 rounded-full bg-cyan-500 text-white flex items-center justify-center text-lg font-bold">1</div>
-</div>
-<div>
-<div class="text-sm font-semibold text-slate-200 mb-1">Upload Your First Document</div>
-<div class="text-xs text-slate-400 leading-relaxed">LOI, ICPO, KYC, FCO—any format works. Drag & drop or click to upload.</div>
-</div>
-</div>
-<div class="flex gap-4">
-<div class="flex-shrink-0">
-<div class="w-10 h-10 rounded-full bg-cyan-500 text-white flex items-center justify-center text-lg font-bold">2</div>
-</div>
-<div>
-<div class="text-sm font-semibold text-slate-200 mb-1">Get Results in 10 Seconds</div>
-<div class="text-xs text-slate-400 leading-relaxed">AI scans 15+ databases, detects fraud patterns, and gives you a clear risk score.</div>
-</div>
-</div>
-<div class="flex gap-4">
-<div class="flex-shrink-0">
-<div class="w-10 h-10 rounded-full bg-cyan-500 text-white flex items-center justify-center text-lg font-bold">3</div>
-</div>
-<div>
-<div class="text-sm font-semibold text-slate-200 mb-1">Download Full PDF Report</div>
-<div class="text-xs text-slate-400 leading-relaxed">Professional report with red flags, database findings, and next steps—ready to share.</div>
-</div>
-</div>
-</div>
-
-<!-- Money-Back Guarantee -->
-<div class="mt-6 pt-6 border-t border-cyan-500/20 text-center">
-<div class="inline-flex items-center gap-2 text-sm text-emerald-400 font-semibold">
-<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-30-Day Money-Back Guarantee • Cancel Anytime • No Questions Asked
-</div>
-</div>
-</div>
-
-
 <!-- TESTIMONIALS - REAL TRADER EXPERIENCES -->
 <section class="border-t border-slate-800 bg-gradient-to-b from-black/60 to-black/40 py-16">
 <div class="mx-auto max-w-6xl px-4">
@@ -3392,7 +3348,7 @@ Partner With Us
 <!-- CTA Below Deals -->
 <div class="text-center mt-8">
 <p class="text-sm text-slate-400 mb-4">
-📧 Have a deal to list? <a href="/cdn-cgi/l/email-protection#6900070f06290a05080d1c1d080a061b19470a0604">Contact us</a> for free placement.
+📧 Have a deal to list? <a href="mailto:contacts@dudediligence.pro?subject=Deal Listing Request" class="text-cyan-400 hover:text-cyan-300 font-semibold">Contact us</a> for free placement.
 </p>
 </div>
 
@@ -3460,7 +3416,7 @@ Partner With Us
 <div class="mx-auto max-w-4xl px-4">
 <div class="text-center mb-12">
 <h2 class="text-2xl md:text-3xl font-bold text-slate-50 mb-3">Frequently Asked Questions</h2>
-<p class="text-sm text-slate-400">Everything you need to know about Dude Diligence</p>
+<p class="text-sm text-slate-400">Everything you need to know about Dude Diligence Pro</p>
 </div>
 
 <div class="space-y-4">
@@ -3553,14 +3509,8 @@ Our AI has <strong class="text-slate-300">92% extraction accuracy</strong> on st
 <p class="text-base text-slate-400 mb-8 max-w-2xl mx-auto">
 Our team is here to help. Get answers about pricing, integrations, or custom enterprise solutions.
 </p>
-<div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-<a href="/cdn-cgi/l/email-protection#97fef9f1f8d7f4fbf6f3e2e3f6f4f8e5e7b9f4f8fa">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-</svg>
-Email Us
-</a>
-<a href="#pricing" class="flex items-center gap-2 px-6 py-3 rounded-lg border border-slate-700 text-slate-300 font-semibold hover:border-cyan-500 hover:text-cyan-400 transition">
+<div class="flex items-center justify-center">
+<a href="mailto:contacts@dudediligence.pro?subject=Demo Request - DDP" class="flex items-center gap-2 px-8 py-4 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold text-base hover:from-cyan-600 hover:to-blue-600 transition shadow-lg">
 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
 </svg>

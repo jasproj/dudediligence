@@ -2209,10 +2209,10 @@ async function submitEmailGate() {
     }
     
     // ✅ FIXED: Send to Formspree (leads get emailed to you!)
-    // SETUP REQUIRED: Replace YOUR_FORM_ID with your actual Formspree form ID
-    // Get yours at: https://formspree.io (free account, takes 5 mins)
+    // Formspree lead capture configured - mgvglvrd
+    // Leads will be emailed to your Formspree account
     try {
-        await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+        await fetch('https://formspree.io/f/mgvglvrd', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

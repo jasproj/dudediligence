@@ -4119,23 +4119,27 @@ const heroVariations = [
 ];
 
 function getVariationIndex() {
-  // Check if we already assigned a variation for this session
+  // Check if already assigned this session
   let sessionVariation = sessionStorage.getItem('ddp_hero_variation');
   
   if (sessionVariation !== null) {
     return parseInt(sessionVariation);
   }
   
-  // Get visit count from localStorage
-  let visitCount = parseInt(localStorage.getItem('ddp_visit_count') || '0');
-  visitCount++;
-  localStorage.setItem('ddp_visit_count', visitCount.toString());
+  // New visitor - assign random variation (0-8)
+  const variationIndex = Math.floor(Math.random() * 9);
   
-  // Calculate which variation to show (cycles through all 9 variations)
-  const variationIndex = (visitCount - 1) % 9;
-  
-  // Store in session so it doesn't change during this session
+  // Store so it stays consistent during this session
   sessionStorage.setItem('ddp_hero_variation', variationIndex.toString());
+  
+  // Track in GA which variation this visitor sees
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'hero_variation_assigned', {
+      'event_category': 'ab_test',
+      'event_label': 'variation_' + String.fromCharCode(65 + variationIndex),
+      'value': variationIndex
+    });
+  }
   
   return variationIndex;
 }

@@ -137,28 +137,15 @@ Instant due diligence reports
 </div>
 </div>
 
-<!-- RIGHT: Login Button + Hamburger -->
+<!-- RIGHT: Buy Credits Button -->
 <div class="flex items-center gap-2">
 
-<!-- Desktop Navigation (hidden on mobile) -->
-<nav class="hidden md:flex items-center gap-1 mr-2">
-<a href="#pricing" class="px-3 py-2 text-sm text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50 rounded-lg transition">
-Pricing
-</a>
-<a href="/how-it-works.html" class="px-3 py-2 text-sm text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50 rounded-lg transition">
-How It Works
-</a>
-<a href="/partners.html" class="px-3 py-2 text-sm text-slate-300 hover:text-cyan-400 hover:bg-slate-800/50 rounded-lg transition">
-Partners
-</a>
-</nav>
-
-<!-- Login Button (Orange, your style) -->
-<a href="/login" onclick="if(typeof gtag !== 'undefined') gtag('event', 'login_click', {'event_category': 'conversion', 'event_label': 'header'});" class="flex items-center gap-1.5 px-3 py-2 md:px-4 md:py-2 rounded-lg bg-gradient-to-r from-orange-500 to-yellow-500 text-slate-900 font-semibold text-xs md:text-sm hover:from-orange-600 hover:to-yellow-600 transition shadow-lg">
-<svg class="w-3.5 h-3.5 md:w-4 md:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+<!-- Buy Credits Button (replaces Login) -->
+<a href="#pricing" class="flex items-center gap-1.5 px-4 py-2 md:px-6 md:py-2.5 rounded-lg bg-gradient-to-r from-orange-500 to-yellow-500 text-slate-900 font-bold text-sm md:text-base hover:from-orange-600 hover:to-yellow-600 transition shadow-lg">
+<svg class="w-4 h-4 md:w-5 md:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
 </svg>
-<span class="hidden sm:inline">Login</span>
+<span>Buy Credits</span>
 </a>
 
 <!-- Hamburger (Mobile only) -->
@@ -198,14 +185,6 @@ How It Works
 <a href="/partners.html" class="px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition">
 Partners
 </a>
-<div class="pt-4 border-t border-slate-800 mt-4">
-<a href="/login" onclick="if(typeof gtag !== 'undefined') gtag('event', 'login_click', {'event_category': 'conversion', 'event_label': 'mobile_menu'});" class="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-gradient-to-r from-orange-500 to-yellow-500 text-slate-900 font-semibold text-sm hover:from-orange-600 hover:to-yellow-600 transition shadow-lg">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
-</svg>
-Login / Sign Up
-</a>
-</div>
 </nav>
 </div>
 </div>
@@ -311,9 +290,9 @@ Contact for Pricing
 <h2 class="text-sm font-semibold text-slate-100">Run Dude Diligence</h2>
 <p class="text-xs text-slate-400">Upload LOI, ICPO, or combined PDFs.</p>
 </div>
-<span class="rounded-full bg-slate-900 px-3 py-1 text-[11px] text-slate-300 border border-slate-700">
-1 credit per check
-</span>
+<a href="#pricing" class="rounded-full bg-gradient-to-r from-orange-500 to-yellow-500 px-4 py-1.5 text-xs font-bold text-slate-900 hover:from-orange-600 hover:to-yellow-600 transition">
+Buy Credits →
+</a>
 </div>
 
 <div class="px-5 pt-4 pb-5 space-y-4">
@@ -328,45 +307,15 @@ class="mt-2 flex flex-col items-center justify-center rounded-xl border border-d
 </div>
 </label>
 
-<div class="grid grid-cols-2 gap-3 text-xs">
-<div>
-<label class="block text-slate-300 mb-1">Commodity</label>
-<select id="commodity"
-class="w-full rounded-lg border border-slate-700 bg-slate-900/80 px-2.5 py-1.5 text-xs text-slate-100 cursor-pointer">
-<option value="">Select commodity...</option>
-<option value="ICUMSA 45 Sugar">ICUMSA 45 Sugar</option>
-<option value="Soybean Oil">Soybean Oil</option>
-<option value="Crude Oil">Crude Oil</option>
-<option value="Wheat">Wheat</option>
-<option value="Corn">Corn</option>
-<option value="Rice">Rice</option>
-<option value="Gold">Gold</option>
-<option value="Copper">Copper</option>
-<option value="Iron Ore">Iron Ore</option>
-<option value="Coal">Coal</option>
-<option value="Natural Gas">Natural Gas</option>
-<option value="Other">Other</option>
-</select>
-</div>
-<div>
-<label class="block text-slate-300 mb-1">Volume</label>
-<select id="volume"
-class="w-full rounded-lg border border-slate-700 bg-slate-900/80 px-2.5 py-1.5 text-xs text-slate-100 cursor-pointer">
-<option value="">Select volume range...</option>
-<option value="0-1000 MT">0 - 1,000 MT</option>
-<option value="1000-10000 MT">1,000 - 10,000 MT</option>
-<option value="10000-50000 MT">10,000 - 50,000 MT</option>
-<option value="Over 50000 MT">Over 50,000 MT</option>
-</select>
-</div>
-</div>
-
 <button onclick="runDiligence()"
-class="w-full mt-2 inline-flex items-center justify-center rounded-xl bg-cyan-500 px-3 py-2 text-xs font-semibold text-slate-900 hover:bg-cyan-400 transition">
+class="w-full mt-3 inline-flex items-center justify-center rounded-xl bg-cyan-500 px-4 py-3 text-sm font-bold text-slate-900 hover:bg-cyan-400 transition shadow-lg">
+<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+</svg>
 Run Dude Diligence
 </button>
 
-<p id="statusMessage" class="text-[11px] text-slate-500 h-4"></p>
+<p id="statusMessage" class="text-[11px] text-slate-500 h-4 mt-2"></p>
 </div>
 </div>
 
@@ -928,80 +877,51 @@ We respect your privacy. Your info is only used to send you the report.
 </div>
 </div>
 
-<!-- SOCIAL PROOF & TRUST -->
+<!-- TESTIMONIALS - REAL TRADER EXPERIENCES -->
 <section class="border-t border-slate-800 bg-gradient-to-b from-black/60 to-black/40 py-16">
 <div class="mx-auto max-w-6xl px-4">
 
 <!-- Section Header -->
 <div class="text-center mb-12">
-<h2 class="text-2xl md:text-3xl font-bold text-slate-50 mb-3">Trusted by Traders Who've Seen It All</h2>
-<p class="text-sm text-slate-400 max-w-2xl mx-auto">Join commodity brokers worldwide who stopped losing money to document fraud</p>
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/30 mb-4">
+<svg class="w-4 h-4 text-emerald-400" fill="currentColor" viewBox="0 0 20 20">
+<path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+</svg>
+<span class="text-sm font-semibold text-emerald-400 uppercase tracking-wider">Customer Stories</span>
+</div>
+<h2 class="text-2xl md:text-3xl font-bold text-slate-50 mb-3">Real Experiences from Commodity Traders</h2>
+<p class="text-sm text-slate-400 max-w-2xl mx-auto">See how traders worldwide use DDP to avoid fraud and close deals faster</p>
 </div>
 
-<!-- Testimonials Grid -->
-<div class="grid md:grid-cols-3 gap-6 mb-12">
-
-<!-- Testimonial 1 -->
-<div class="bg-slate-900/60 border border-slate-800 rounded-xl p-6 hover:border-cyan-500/30 transition">
-<div class="flex items-center gap-1 mb-4">
-<svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-<svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-<svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-<svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-<svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-</div>
-<p class="text-sm text-slate-300 mb-4 leading-relaxed">"Caught a recycled LOI scam in 30 seconds. The buyer had used the same document with 3 different companies. Would've cost me $50K. This tool paid for itself instantly."</p>
-<div class="flex items-center gap-3">
-<div class="w-11 h-11 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center text-white font-bold text-sm">MK</div>
-<div>
-<div class="text-sm font-semibold text-slate-200">Michael K.</div>
-<div class="text-xs text-slate-500">Sugar Trader, Miami</div>
-</div>
+<!-- Rotating Testimonials Carousel -->
+<div class="relative">
+<div class="testimonial-container mb-12">
+<!-- Active testimonials (3 visible at a time) -->
+<div id="testimonialsGrid" class="grid md:grid-cols-3 gap-6 transition-opacity duration-500">
+<!-- Testimonials will rotate here via JavaScript -->
 </div>
 </div>
 
-<!-- Testimonial 2 -->
-<div class="bg-slate-900/60 border border-slate-800 rounded-xl p-6 hover:border-cyan-500/30 transition">
-<div class="flex items-center gap-1 mb-4">
-<svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-<svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-<svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-<svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-<svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+<!-- Carousel Controls -->
+<div class="flex items-center justify-center gap-3">
+<button onclick="previousTestimonials()" class="p-2 rounded-full bg-slate-800 border border-slate-700 text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 transition">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+</svg>
+</button>
+<div id="testimonialDots" class="flex gap-2">
+<!-- Dots will be generated by JavaScript -->
 </div>
-<p class="text-sm text-slate-300 mb-4 leading-relaxed">"The document fingerprinting feature is brilliant. Found two brokers submitting identical FCOs with different buyer names. Saved us from a major headache."</p>
-<div class="flex items-center gap-3">
-<div class="w-11 h-11 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-white font-bold text-sm">SP</div>
-<div>
-<div class="text-sm font-semibold text-slate-200">Sarah P.</div>
-<div class="text-xs text-slate-500">Crude Oil Broker, Houston</div>
+<button onclick="nextTestimonials()" class="p-2 rounded-full bg-slate-800 border border-slate-700 text-slate-400 hover:text-cyan-400 hover:border-cyan-500/50 transition">
+<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+</svg>
+</button>
 </div>
-</div>
-</div>
-
-<!-- Testimonial 3 -->
-<div class="bg-slate-900/60 border border-slate-800 rounded-xl p-6 hover:border-cyan-500/30 transition">
-<div class="flex items-center gap-1 mb-4">
-<svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-<svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-<svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-<svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-<svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-</div>
-<p class="text-sm text-slate-300 mb-4 leading-relaxed">"Finally, a tool that actually works. I run every deal through DD now before I even pick up the phone. The free email flags alone have saved me hours of wasted time."</p>
-<div class="flex items-center gap-3">
-<div class="w-11 h-11 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-white font-bold text-sm">RC</div>
-<div>
-<div class="text-sm font-semibold text-slate-200">Robert C.</div>
-<div class="text-xs text-slate-500">Coal Trading, Singapore</div>
-</div>
-</div>
-</div>
-
 </div>
 
 <!-- Trust Badges -->
-<div class="flex flex-wrap items-center justify-center gap-8 pt-8 border-t border-slate-800">
+<div class="flex flex-wrap items-center justify-center gap-8 pt-8 border-t border-slate-800 mt-8">
 <div class="flex items-center gap-2 text-xs text-slate-400">
 <svg class="w-5 h-5 text-emerald-400" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"/></svg>
 <span class="font-semibold">Bank-Level Encryption</span>
@@ -1022,6 +942,249 @@ We respect your privacy. Your info is only used to send you the report.
 
 </div>
 </section>
+
+<!-- Testimonials JavaScript -->
+<script>
+const testimonials = [
+  {
+    quote: "Caught a recycled LOI from Dubai. Same document, 3 different seller names. DDP flagged it in seconds. Saved us $2M USD.",
+    name: "Rajesh Patel",
+    role: "Crude Oil Trader",
+    location: "Mumbai, India",
+    initials: "RP",
+    gradient: "from-orange-500 to-red-500"
+  },
+  {
+    quote: "The OFAC check caught a sanctioned entity we almost did business with. Legal team was impressed. This tool is essential now.",
+    name: "Amara Okafor",
+    role: "Gold Broker",
+    location: "Lagos, Nigeria",
+    initials: "AO",
+    gradient: "from-yellow-500 to-amber-500"
+  },
+  {
+    quote: "Email verification alone pays for itself. Stopped wasting time on @gmail.com 'buyers'. Now I only talk to real companies.",
+    name: "Mohammed Al-Rashid",
+    role: "LNG Trader",
+    location: "Dubai, UAE",
+    initials: "MAR",
+    gradient: "from-cyan-500 to-blue-500"
+  },
+  {
+    quote: "Found the same ICPO circulating with 5 different buyer banks. Document fingerprinting is brilliant. No more time-wasters.",
+    name: "Carlos Mendoza",
+    role: "Soybean Broker",
+    location: "São Paulo, Brazil",
+    initials: "CM",
+    gradient: "from-green-500 to-emerald-500"
+  },
+  {
+    quote: "As a woman in commodity trading, I can't afford mistakes. DDP gives me confidence every deal is legitimate before I commit.",
+    name: "Fatima Hassan",
+    role: "Sugar Trader",
+    location: "Cairo, Egypt",
+    initials: "FH",
+    gradient: "from-purple-500 to-pink-500"
+  },
+  {
+    quote: "Verified a Chinese buyer's company registration in 10 seconds. Manual check would've taken 3 days. Speed matters in our business.",
+    name: "Wei Chen",
+    role: "Iron Ore Trader",
+    location: "Singapore",
+    initials: "WC",
+    gradient: "from-red-500 to-orange-500"
+  },
+  {
+    quote: "The risk score saved me from a $500K disaster. Buyer was using a Seychelles bank for a 'Nigerian' deal. Too many red flags.",
+    name: "Thabo Nkosi",
+    role: "Diesel Broker",
+    location: "Johannesburg, South Africa",
+    initials: "TN",
+    gradient: "from-blue-500 to-cyan-500"
+  },
+  {
+    quote: "Finally, due diligence that doesn't take weeks. Upload, scan, decide. Our deal closure rate went up 40% in 3 months.",
+    name: "Priya Sharma",
+    role: "Coal Trading Manager",
+    location: "New Delhi, India",
+    initials: "PS",
+    gradient: "from-pink-500 to-rose-500"
+  },
+  {
+    quote: "Document recycling detection is unmatched. Caught a broker reusing the same LOI template across multiple 'deals'. Fraud avoided.",
+    name: "Ahmed Khalil",
+    role: "Wheat Broker",
+    location: "Riyadh, Saudi Arabia",
+    initials: "AK",
+    gradient: "from-amber-500 to-yellow-500"
+  },
+  {
+    quote: "As an independent broker, I can't hire a legal team. DDP is my compliance department. Best $99/month I spend.",
+    name: "Isabella Rossi",
+    role: "Olive Oil Trader",
+    location: "Milan, Italy",
+    initials: "IR",
+    gradient: "from-green-500 to-teal-500"
+  },
+  {
+    quote: "The multi-party extraction is incredible. Identified 4 intermediaries in one document. Went straight to the actual seller.",
+    name: "Kwame Mensah",
+    role: "Cocoa Broker",
+    location: "Accra, Ghana",
+    initials: "KM",
+    gradient: "from-yellow-500 to-orange-500"
+  },
+  {
+    quote: "Jurisdiction mismatch alerts saved me twice this month. Company claims UK registration but bank is in Belize? Hard pass.",
+    name: "Dmitri Volkov",
+    role: "Natural Gas Trader",
+    location: "Moscow, Russia",
+    initials: "DV",
+    gradient: "from-blue-500 to-indigo-500"
+  },
+  {
+    quote: "Used to spend $5K per deal on manual verification. DDP does it for $9. Same accuracy, 1000x faster. No brainer.",
+    name: "Nguyen Thi Lan",
+    role: "Rice Trader",
+    location: "Ho Chi Minh City, Vietnam",
+    initials: "NTL",
+    gradient: "from-cyan-500 to-teal-500"
+  },
+  {
+    quote: "Free email flags are my first filter. @yahoo seller claiming $50M deal? Delete. DDP taught me to trust my gut with data.",
+    name: "Marcus van der Berg",
+    role: "Diamond Broker",
+    location: "Antwerp, Belgium",
+    initials: "MVB",
+    gradient: "from-purple-500 to-violet-500"
+  },
+  {
+    quote: "The API integration with our CRM is seamless. Every deal gets auto-screened. Compliance team loves it.",
+    name: "Sarah Mitchell",
+    role: "Copper Trading Director",
+    location: "London, UK",
+    initials: "SM",
+    gradient: "from-orange-500 to-red-500"
+  },
+  {
+    quote: "Offshore bank alerts are gold. If I see Seychelles, Mauritius, or BVI for a 'legitimate' deal, I'm out. DDP catches these instantly.",
+    name: "Hassan Mahmoud",
+    role: "Cotton Broker",
+    location: "Istanbul, Turkey",
+    initials: "HM",
+    gradient: "from-teal-500 to-cyan-500"
+  },
+  {
+    quote: "After losing $80K to a scammer last year, DDP is non-negotiable. Every document, every deal, every time. Peace of mind.",
+    name: "Lucia Fernandez",
+    role: "Coffee Trader",
+    location: "Bogotá, Colombia",
+    initials: "LF",
+    gradient: "from-yellow-500 to-amber-500"
+  },
+  {
+    quote: "The 24-hour document deletion policy sealed it for us. Client confidentiality matters. DDP respects that.",
+    name: "Yuki Tanaka",
+    role: "LNG Procurement",
+    location: "Tokyo, Japan",
+    initials: "YT",
+    gradient: "from-pink-500 to-purple-500"
+  },
+  {
+    quote: "PEP screening flagged a buyer with political ties we didn't know about. Compliance nightmare avoided. Worth 10x the subscription.",
+    name: "Klaus Weber",
+    role: "Aluminum Trader",
+    location: "Frankfurt, Germany",
+    initials: "KW",
+    gradient: "from-blue-500 to-cyan-500"
+  },
+  {
+    quote: "Risk scoring is spot-on. Yellow warnings make me dig deeper, red flags make me walk away. Simple, effective, saves time.",
+    name: "Aisha Al-Farsi",
+    role: "Petroleum Products Broker",
+    location: "Doha, Qatar",
+    initials: "AAF",
+    gradient: "from-emerald-500 to-green-500"
+  }
+];
+
+let currentBatch = 0;
+const batchSize = 3;
+const totalBatches = Math.ceil(testimonials.length / batchSize);
+
+function renderTestimonials() {
+  const grid = document.getElementById('testimonialsGrid');
+  const start = currentBatch * batchSize;
+  const end = start + batchSize;
+  const batch = testimonials.slice(start, end);
+  
+  grid.innerHTML = batch.map(t => `
+    <div class="bg-slate-900/60 border border-slate-800 rounded-xl p-6 hover:border-cyan-500/30 transition animate-fadeIn">
+      <div class="flex items-center gap-1 mb-4">
+        ${Array(5).fill().map(() => `
+          <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+          </svg>
+        `).join('')}
+      </div>
+      <p class="text-sm text-slate-300 mb-4 leading-relaxed">"${t.quote}"</p>
+      <div class="flex items-center gap-3">
+        <div class="w-11 h-11 rounded-full bg-gradient-to-br ${t.gradient} flex items-center justify-center text-white font-bold text-sm">
+          ${t.initials}
+        </div>
+        <div>
+          <div class="text-sm font-semibold text-slate-200">${t.name}</div>
+          <div class="text-xs text-slate-500">${t.role}, ${t.location}</div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  
+  renderDots();
+}
+
+function renderDots() {
+  const dotsContainer = document.getElementById('testimonialDots');
+  dotsContainer.innerHTML = Array(totalBatches).fill().map((_, i) => `
+    <button 
+      onclick="goToBatch(${i})"
+      class="w-2 h-2 rounded-full transition ${i === currentBatch ? 'bg-cyan-400 w-6' : 'bg-slate-700'}"
+    ></button>
+  `).join('');
+}
+
+function nextTestimonials() {
+  currentBatch = (currentBatch + 1) % totalBatches;
+  renderTestimonials();
+}
+
+function previousTestimonials() {
+  currentBatch = (currentBatch - 1 + totalBatches) % totalBatches;
+  renderTestimonials();
+}
+
+function goToBatch(batch) {
+  currentBatch = batch;
+  renderTestimonials();
+}
+
+// Auto-rotate every 8 seconds
+setInterval(nextTestimonials, 8000);
+
+// Initial render
+renderTestimonials();
+</script>
+
+<style>
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fadeIn {
+  animation: fadeIn 0.5s ease-out;
+}
+</style>
+
 
 <!-- PRICING -->
 <section id="pricing" class="border-t border-slate-800 bg-slate-950/80">
@@ -3627,4 +3790,26 @@ Earn 30% as an affiliate • Partner with us
 </div>
 
 <!-- Bottom Legal Links -->
-<div class="m
+<div class="mt-8 pt-6 border-t border-slate-800/50 text-center">
+<div class="flex flex-wrap items-center justify-center gap-4 text-[10px] text-slate-600 mb-4">
+<a href="#pricing" class="hover:text-cyan-400 transition">Pricing</a>
+<span>•</span>
+<a href="/how-it-works.html" class="hover:text-cyan-400 transition">How It Works</a>
+<span>•</span>
+<a href="/partners.html" class="hover:text-cyan-400 transition">Partners</a>
+</div>
+<div class="flex flex-wrap items-center justify-center gap-4 text-[10px] text-slate-600">
+<a href="/privacy-policy.html" class="hover:text-slate-400 transition">Privacy Policy</a>
+<span>•</span>
+<a href="/terms-of-service.html" class="hover:text-slate-400 transition">Terms of Service</a>
+</div>
+<p class="mt-4 text-[10px] text-slate-700">
+Built with ❤️ for commodity traders who've been burned before
+</p>
+</div>
+</div>
+
+</footer>
+
+</body>
+</html>

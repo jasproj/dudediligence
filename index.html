@@ -198,7 +198,14 @@ Partners
 <div>
 <!-- Hero Variation Container (rotates on each visit) -->
 <div id="heroVariation">
-<!-- Variation will be injected by JavaScript -->
+<!-- Default headline (will be replaced by JavaScript variation) -->
+<h1 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-50 mb-3 leading-tight">
+$2.3M in Fraud Stopped This Month Alone
+</h1>
+
+<p class="text-lg md:text-xl text-cyan-400 font-semibold mb-4">
+Join 1,000+ brokers who verify every deal before signing anything
+</p>
 </div>
 
 <!-- Target Audience Badges -->
@@ -216,7 +223,19 @@ Upload LOIs, ICPOs, KYC packs, or mandate letters. Our AI detects fake documents
 </p>
 
 <ul id="heroBullets" class="mt-6 space-y-2 text-sm text-slate-300">
-<!-- Bullets will be injected by JavaScript -->
+<!-- Default bullets (will be replaced by JavaScript variation) -->
+<li class="flex items-start gap-2">
+<span class="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
+<span><strong>Real Results:</strong> $45M in fraud prevented since launch</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
+<span><strong>The Same Scam, Different Names:</strong> 50,000+ recycled documents cataloged</span>
+</li>
+<li class="flex items-start gap-2">
+<span class="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
+<span><strong>No More Wasted Weeks:</strong> 14 days → 10 seconds</span>
+</li>
 </ul>
 
 <!-- How It Works Button (Mobile & Desktop) -->
@@ -3696,6 +3715,12 @@ window.addEventListener('load', function() {
     renderHeroVariation();
   }
 });
+
+// FORCE render after 100ms as absolute backup
+setTimeout(function() {
+  console.log('⚡ Force rendering hero after 100ms...');
+  renderHeroVariation();
+}, 100);
 
 // Track conversions with variation
 

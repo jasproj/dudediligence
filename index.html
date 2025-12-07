@@ -196,14 +196,10 @@ Partners
 
 <!-- LEFT SIDE -->
 <div>
-<!-- Hero Section -->
-<h1 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-50 mb-3 leading-tight">
-Trade with Confidence Using AI-Powered Risk Assessment
-</h1>
-
-<p class="text-lg md:text-xl text-cyan-400 font-semibold mb-4">
-Verify documents, check databases, and assess counterparties in seconds—before you sign anything
-</p>
+<!-- Hero Variation Container (rotates on each visit) -->
+<div id="heroVariation">
+<!-- Variation will be injected by JavaScript -->
+</div>
 
 <!-- Target Audience Badges -->
 <div class="flex items-center gap-3 mb-6">
@@ -219,19 +215,8 @@ Verify documents, check databases, and assess counterparties in seconds—before
 Upload LOIs, ICPOs, KYC packs, or mandate letters. Our AI scans documents, cross-references databases, and highlights potential risks—giving you clear insights to make informed decisions.
 </p>
 
-<ul class="mt-6 space-y-2 text-sm text-slate-300">
-<li class="flex items-start gap-2">
-<span class="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
-<span><strong>Instant Document Verification:</strong> Upload and analyze in seconds, not days</span>
-</li>
-<li class="flex items-start gap-2">
-<span class="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
-<span><strong>Multi-Database Cross-Checking:</strong> OFAC, sanctions lists, and company registries</span>
-</li>
-<li class="flex items-start gap-2">
-<span class="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
-<span><strong>Clear Risk Scoring:</strong> Green, yellow, or red flags with actionable insights</span>
-</li>
+<ul id="heroBullets" class="mt-6 space-y-2 text-sm text-slate-300">
+<!-- Bullets will be injected by JavaScript -->
 </ul>
 
 <!-- How It Works Button (Mobile & Desktop) -->
@@ -3542,18 +3527,159 @@ Built with ❤️ for commodity traders who've been burned before
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// Track CTA clicks
+// 3 POSITIVE HERO VARIATIONS FOR A/B TESTING
+const heroVariations = [
+  {
+    // VARIATION A - AI-Powered Confidence
+    headline: "Trade with Confidence Using AI-Powered Risk Assessment",
+    subheadline: "Verify documents, check databases, and assess counterparties in seconds—before you sign anything",
+    bullets: [
+      {
+        text: "<strong>Instant Document Verification:</strong> Upload and analyze in seconds, not days"
+      },
+      {
+        text: "<strong>Multi-Database Cross-Checking:</strong> OFAC, sanctions lists, and company registries"
+      },
+      {
+        text: "<strong>Clear Risk Scoring:</strong> Green, yellow, or red flags with actionable insights"
+      },
+      {
+        text: "<strong>Smart Fraud Detection:</strong> AI catches recycled documents and common scam patterns"
+      },
+      {
+        text: "<strong>Professional Reports:</strong> Export PDF reports to share with partners and compliance teams"
+      }
+    ]
+  },
+  {
+    // VARIATION B - Speed & Efficiency Focus
+    headline: "From Document to Decision in 10 Seconds",
+    subheadline: "AI-powered due diligence that helps you move fast without missing red flags",
+    bullets: [
+      {
+        text: "<strong>10-Second Analysis:</strong> Get comprehensive risk reports faster than manual checks"
+      },
+      {
+        text: "<strong>15+ Database Sources:</strong> Automatic screening across sanctions lists and registries"
+      },
+      {
+        text: "<strong>Multi-Party Extraction:</strong> AI identifies all parties—buyers, sellers, banks, intermediaries"
+      },
+      {
+        text: "<strong>Document Fingerprinting:</strong> Detect if the same LOI is being recycled across deals"
+      },
+      {
+        text: "<strong>Email Domain Checks:</strong> Flag free emails (@gmail, @yahoo) that don't match corporate deals"
+      }
+    ]
+  },
+  {
+    // VARIATION C - Protection & Peace of Mind
+    headline: "Make Smarter Trading Decisions with AI Verification",
+    subheadline: "Know who you're dealing with before you commit—backed by 15+ global data sources",
+    bullets: [
+      {
+        text: "<strong>Comprehensive Screening:</strong> Check parties against OFAC, Interpol, and sanctions lists"
+      },
+      {
+        text: "<strong>Company Registry Verification:</strong> Confirm business registration and corporate standing"
+      },
+      {
+        text: "<strong>Banking Red Flag Detection:</strong> Alert on offshore accounts and jurisdiction mismatches"
+      },
+      {
+        text: "<strong>Risk Score Dashboard:</strong> See at-a-glance if a deal is green, yellow, or red"
+      },
+      {
+        text: "<strong>User-Verified Data Option:</strong> Review AI extractions for maximum accuracy and compliance"
+      },
+      {
+        text: "<strong>24/7 Availability:</strong> Run checks anytime, anywhere—no waiting for business hours"
+      }
+    ]
+  }
+];
+
+function getVariationIndex() {
+  // Check if we already assigned a variation for this session
+  let sessionVariation = sessionStorage.getItem('ddp_hero_variation');
+  
+  if (sessionVariation !== null) {
+    return parseInt(sessionVariation);
+  }
+  
+  // Get visit count from localStorage
+  let visitCount = parseInt(localStorage.getItem('ddp_visit_count') || '0');
+  visitCount++;
+  localStorage.setItem('ddp_visit_count', visitCount.toString());
+  
+  // Calculate which variation to show (cycles 0, 1, 2, 0, 1, 2...)
+  const variationIndex = (visitCount - 1) % 3;
+  
+  // Store in session so it doesn't change during this session
+  sessionStorage.setItem('ddp_hero_variation', variationIndex.toString());
+  
+  return variationIndex;
+}
+
+function renderHeroVariation() {
+  const variationIndex = getVariationIndex();
+  const variation = heroVariations[variationIndex];
+  
+  console.log(`📊 DDP: Showing Variation ${String.fromCharCode(65 + variationIndex)} (${variation.headline.substring(0, 30)}...)`);
+  
+  const heroContainer = document.getElementById('heroVariation');
+  const bulletsContainer = document.getElementById('heroBullets');
+  
+  if (!heroContainer || !bulletsContainer) {
+    console.error('❌ DDP: Hero containers not found!');
+    return;
+  }
+  
+  // Build bullets HTML
+  const bulletsHTML = variation.bullets.map(bullet => `
+    <li class="flex items-start gap-2">
+      <span class="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
+      <span>${bullet.text}</span>
+    </li>
+  `).join('');
+  
+  // Inject the headline and subheadline
+  heroContainer.innerHTML = `
+    <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-50 mb-3 leading-tight">
+      ${variation.headline}
+    </h1>
+    
+    <p class="text-lg md:text-xl text-cyan-400 font-semibold mb-4">
+      ${variation.subheadline}
+    </p>
+  `;
+  
+  // Inject the bullets
+  bulletsContainer.innerHTML = bulletsHTML;
+}
+
+// Run IMMEDIATELY
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', renderHeroVariation);
+} else {
+  renderHeroVariation();
+}
+
+// Track CTA clicks with variation
 document.addEventListener('DOMContentLoaded', function() {
+  const variationIndex = getVariationIndex();
+  const variationLetter = String.fromCharCode(65 + variationIndex);
+  
   document.querySelectorAll('a[href*="pricing"], button[onclick*="runDiligence"]').forEach(function(el) {
     el.addEventListener('click', function() {
       if (typeof gtag !== 'undefined') {
         gtag('event', 'cta_click', {
-          'event_category': 'engagement'
+          'event_category': 'engagement',
+          'hero_variation': variationLetter
         });
       }
     });
-  });
-});
   });
 });
 </script>

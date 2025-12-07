@@ -3996,4 +3996,18 @@ document.addEventListener('DOMContentLoaded', function() {
   const variationIndex = getVariationIndex();
   const variationLetter = String.fromCharCode(65 + variationIndex);
   
-  document.
+  document.querySelectorAll('a[href="#pricing"]').forEach(link => {
+    link.addEventListener('click', function() {
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'cta_click', {
+          'event_category': 'conversion',
+          'event_label': 'hero_variation_' + variationLetter,
+          'value': variationIndex
+        });
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>

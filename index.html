@@ -196,13 +196,10 @@ Partners
 
 <!-- LEFT SIDE -->
 <div>
-<h1 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-50 mb-3 leading-tight">
-Stop Losing Deals to Document Fraud
-</h1>
-
-<p class="text-lg md:text-xl text-cyan-400 font-semibold mb-4">
-Verify commodity traders in 10 seconds—before you waste another call
-</p>
+<!-- Hero Variation Container (rotates on each visit) -->
+<div id="heroVariation">
+<!-- Variation will be injected by JavaScript -->
+</div>
 
 <!-- Target Audience Badges -->
 <div class="flex items-center gap-3 mb-6">
@@ -218,7 +215,7 @@ Verify commodity traders in 10 seconds—before you waste another call
 Upload LOIs, ICPOs, KYC packs, or mandate letters. Our AI detects fake documents, recycled scams, and payment fraud in seconds—giving you a clear risk score and next steps.
 </p>
 
-<ul class="mt-6 space-y-2 text-sm text-slate-300">
+<ul id="heroBullets" class="mt-6 space-y-2 text-sm text-slate-300">
 <li class="flex items-start gap-2">
 <span class="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
 <span><strong>Catch Recycled LOIs & Fake Mandates:</strong> SHA-256 fingerprinting detects documents used across multiple deals—before you waste calls or NCNDs.</span>
@@ -246,10 +243,6 @@ Upload LOIs, ICPOs, KYC packs, or mandate letters. Our AI detects fake documents
 <li class="flex items-start gap-2">
 <span class="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
 <span><strong>Professional PDF Reports:</strong> Share with partners, legal teams, or compliance—fully branded and exportable.</span>
-</li>
-<li class="flex items-start gap-2">
-<span class="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
-<span>💰 <strong>Crypto Payments Accepted:</strong> Pay with BTC, ETH, USDT, TAO—no credit card required, no questions asked.</span>
 </li>
 </ul>
 
@@ -733,7 +726,6 @@ Pay only when you check
 </li>
 <li class="flex items-center gap-1.5">
 <svg class="w-3 h-3 text-emerald-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-Crypto payments accepted
 </li>
 <li class="flex items-center gap-1.5">
 <svg class="w-3 h-3 text-emerald-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
@@ -834,7 +826,6 @@ Pay only when you check
 </li>
 <li class="flex items-center gap-1.5">
 <svg class="w-3 h-3 text-emerald-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-Crypto payments accepted
 </li>
 <li class="flex items-center gap-1.5">
 <svg class="w-3 h-3 text-emerald-400 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
@@ -943,109 +934,6 @@ Volume discounts available
 </main>
 </div>
 
-<!-- CRYPTO PAYMENT MODAL -->
-<div id="cryptoModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
-<div class="bg-slate-900 rounded-2xl w-full max-w-2xl shadow-2xl border border-slate-800 relative max-h-[90vh] overflow-y-auto">
-
-<!-- Close Button -->
-<button onclick="closeCryptoModal()" class="absolute top-4 right-4 text-slate-500 hover:text-slate-300 z-10">
-<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-</svg>
-</button>
-
-<!-- Step 1: Plan Selection -->
-<div id="cryptoStep1" class="p-8">
-<div class="text-center mb-6">
-<div class="w-16 h-16 bg-orange-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-<svg class="w-8 h-8 text-orange-400" fill="currentColor" viewBox="0 0 24 24">
-<path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 14.813h-2.094v2.094h-2.093v-2.094H9.562v-2.094h3.813V9.188H9.562V7.093h3.813V5h2.093v2.093h2.094v2.094h-2.094v3.532h2.094v2.094z"/>
-</svg>
-</div>
-<h2 class="text-2xl font-bold text-slate-50 mb-2">Pay with Bitcoin</h2>
-<p class="text-sm text-slate-400">Select your plan to continue</p>
-</div>
-
-<!-- Plan Cards -->
-<div class="grid md:grid-cols-2 gap-4">
-<!-- Pay-as-you-go -->
-<button onclick="selectCryptoPlan('payg', 9)" class="text-left p-4 rounded-xl border-2 border-slate-700 hover:border-emerald-500 bg-slate-800/50 hover:bg-emerald-500/5 transition group">
-<div class="flex items-center justify-between mb-2">
-<span class="text-sm font-semibold text-emerald-400">💵 Pay-As-You-Go</span>
-<svg class="w-5 h-5 text-slate-600 group-hover:text-emerald-400 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-</svg>
-</div>
-<div class="text-2xl font-bold text-slate-50 mb-1">$9</div>
-<p class="text-xs text-slate-400">Single risk assessment</p>
-</button>
-
-<!-- Essential -->
-<button onclick="selectCryptoPlan('essential', 99)" class="text-left p-4 rounded-xl border-2 border-slate-700 hover:border-cyan-500 bg-slate-800/50 hover:bg-cyan-500/5 transition group">
-<div class="flex items-center justify-between mb-2">
-<span class="text-sm font-semibold text-slate-300">📊 Essential</span>
-<svg class="w-5 h-5 text-slate-600 group-hover:text-cyan-400 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-</svg>
-</div>
-<div class="text-2xl font-bold text-slate-50 mb-1">$99</div>
-<p class="text-xs text-slate-400">25 checks/month • 30 days access</p>
-</button>
-
-<!-- Professional -->
-<button onclick="selectCryptoPlan('professional', 299)" class="text-left p-4 rounded-xl border-2 border-slate-700 hover:border-cyan-500 bg-slate-800/50 hover:bg-cyan-500/5 transition group">
-<div class="flex items-center justify-between mb-2">
-<span class="text-sm font-semibold text-cyan-300">⚡ Professional</span>
-<svg class="w-5 h-5 text-slate-600 group-hover:text-cyan-400 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-</svg>
-</div>
-<div class="text-2xl font-bold text-slate-50 mb-1">$299</div>
-<p class="text-xs text-slate-400">150 checks/month • 30 days access</p>
-</button>
-
-<!-- Enterprise -->
-<button onclick="selectCryptoPlan('enterprise', 999)" class="text-left p-4 rounded-xl border-2 border-slate-700 hover:border-purple-500 bg-slate-800/50 hover:bg-purple-500/5 transition group">
-<div class="flex items-center justify-between mb-2">
-<span class="text-sm font-semibold text-purple-300">🚀 Enterprise</span>
-<svg class="w-5 h-5 text-slate-600 group-hover:text-purple-400 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-</svg>
-</div>
-<div class="text-2xl font-bold text-slate-50 mb-1">$999</div>
-<p class="text-xs text-slate-400">Unlimited checks • 30 days access</p>
-</button>
-</div>
-
-<p class="text-xs text-slate-500 text-center mt-6">
-🔒 Secure payment via NOWPayments • Payments in BTC
-</p>
-</div>
-
-<!-- Step 2: Payment Details (Hidden by default) -->
-<div id="cryptoStep2" class="hidden p-8">
-<div class="text-center mb-6">
-<button onclick="backToPlanSelection()" class="absolute top-6 left-6 text-slate-400 hover:text-slate-300 flex items-center gap-1 text-sm">
-<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-</svg>
-Back
-</button>
-
-<div class="w-16 h-16 bg-orange-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-<svg class="w-8 h-8 text-orange-400" fill="currentColor" viewBox="0 0 24 24">
-<path d="M23.638 14.904c-1.602 6.43-8.113 10.34-14.542 8.736C2.67 22.05-1.244 15.525.362 9.105 1.962 2.67 8.475-1.243 14.9.358c6.43 1.605 10.342 8.115 8.738 14.548v-.002zm-6.35-4.613c.24-1.59-.974-2.45-2.64-3.03l.54-2.153-1.315-.33-.525 2.107c-.345-.087-.705-.167-1.064-.25l.526-2.127-1.32-.33-.54 2.165c-.285-.067-.565-.132-.84-.2l-1.815-.45-.35 1.407s.975.225.955.236c.535.136.63.486.615.766l-1.477 5.92c-.075.166-.24.406-.614.314.015.02-.96-.24-.96-.24l-.66 1.51 1.71.426.93.242-.54 2.19 1.32.327.54-2.17c.36.1.705.19 1.05.273l-.51 2.154 1.32.33.545-2.19c2.24.427 3.93.257 4.64-1.774.57-1.637-.03-2.58-1.217-3.196.854-.193 1.5-.76 1.68-1.93h.01zm-3.01 4.22c-.404 1.64-3.157.75-4.05.53l.72-2.9c.896.23 3.757.67 3.33 2.37zm.41-4.24c-.37 1.49-2.662.735-3.405.55l.654-2.64c.744.18 3.137.524 2.75 2.084v.006z"/>
-</svg>
-</div>
-<h3 class="text-xl font-bold text-slate-50 mb-1" id="selectedPlanTitle">Professional Plan</h3>
-<p class="text-sm text-slate-400" id="selectedPlanAmount">$299</p>
-</div>
-
-<!-- Loading State -->
-<div id="paymentLoading" class="text-center py-8">
-<div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-slate-700 border-t-cyan-500 mb-4"></div>
-<p class="text-slate-400">Creating payment invoice...</p>
-</div>
 
 <!-- Payment Details (Hidden until loaded) -->
 <div id="paymentDetails" class="hidden">
@@ -1068,7 +956,7 @@ Copy
 <!-- Payment Amount -->
 <div class="bg-slate-800 rounded-xl p-4 mb-6">
 <label class="block text-xs font-semibold text-slate-400 mb-2">Amount to send:</label>
-<div class="text-2xl font-bold text-slate-50" id="paymentAmount">0.00123456 BTC</div>
+<div class="text-2xl font-bold text-slate-50" id="paymentAmount">$0.00</div>
 <div class="text-sm text-slate-400 mt-1" id="paymentAmountUSD">≈ $299 USD</div>
 </div>
 
@@ -1128,7 +1016,6 @@ Unlimited verifications, blacklist checks, passport validation, fraud scanning, 
 <button onclick="handleStripePayment()" class="px-6 py-3 rounded-xl font-semibold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 transition text-sm shadow-lg">
 💳 Pay with Card (Stripe)
 </button>
-<button onclick="openCryptoModal(); closeUpsell();" class="px-6 py-3 rounded-xl font-semibold text-slate-900 bg-gradient-to-r from-orange-400 to-yellow-400 hover:from-orange-500 hover:to-yellow-500 transition text-sm">
 ₿ Pay with Crypto
 </button>
 </div>
@@ -2342,13 +2229,11 @@ function exportReport() {
 }
 
 // Modal functions
-function openCryptoModal() {
     const m = document.getElementById('cryptoModal');
     m.classList.remove('hidden');
     m.classList.add('flex');
 }
 
-function closeCryptoModal() {
     const m = document.getElementById('cryptoModal');
     m.classList.add('hidden');
     m.classList.remove('flex');
@@ -3021,6 +2906,190 @@ setInterval(nextTestimonials, 8000);
 renderTestimonials();
 </script>
 
+<!-- Hero Variation Rotation Script -->
+<script>
+// 3 HERO VARIATIONS FOR A/B TESTING
+const heroVariations = [
+  {
+    // VARIATION A - PAIN POINT (Original)
+    headline: "Stop Losing Deals to Document Fraud",
+    subheadline: "Verify commodity traders in 10 seconds—before you waste another call",
+    bullets: [
+      {
+        text: "<strong>Catch Recycled LOIs & Fake Mandates:</strong> SHA-256 fingerprinting detects documents used across multiple deals—before you waste calls or NCNDs."
+      },
+      {
+        text: "<strong>Designed for Physical Commodity Brokers:</strong> Not generic KYC—we understand FCOs, ICPOs, vessel charters, and mandate structures."
+      },
+      {
+        text: "<strong>Instant Red Flags:</strong> Free emails (@gmail), impossible volumes (50M MT sugar), 100% upfront payments—all flagged in under 10 seconds."
+      },
+      {
+        text: "<strong>15+ Database Cross-Checks:</strong> OFAC, Interpol, Companies House, OpenSanctions, and 11 more sources screened automatically."
+      },
+      {
+        text: "<strong>Multi-Party Extraction:</strong> AI identifies buyers, sellers, intermediaries, banks, representatives—even when buried in dense documents."
+      },
+      {
+        text: "<strong>Manual Review Option:</strong> Verify AI extractions before finalizing—earn \"User-Verified\" badge for compliance documentation."
+      },
+      {
+        text: "<strong>Professional PDF Reports:</strong> Share with partners, legal teams, or compliance—fully branded and exportable."
+      }
+    ]
+  },
+  {
+    // VARIATION B - SOCIAL PROOF / RESULTS
+    headline: "$2.3M in Fraud Stopped This Month Alone",
+    subheadline: "Join 1,000+ brokers who verify every deal before signing anything",
+    bullets: [
+      {
+        text: "<strong>Real Results:</strong> Our users have prevented over $45M in fraud losses since launch. Your turn to stop being the victim."
+      },
+      {
+        text: "<strong>The Same Scam, Different Names:</strong> We've cataloged 50,000+ recycled documents. That \"exclusive\" LOI? We've seen it 47 times before."
+      },
+      {
+        text: "<strong>No More Wasted Weeks:</strong> Stop spending 14 days on due diligence. Get a complete risk report in 10 seconds—OFAC, Interpol, company verification, the works."
+      },
+      {
+        text: "<strong>Built by Traders Who Got Burned:</strong> Lost $500K to a fake Dubai seller in 2023. Built DDP so you don't have to learn the hard way."
+      },
+      {
+        text: "<strong>Your Compliance Department in One Click:</strong> PDF reports ready for your bank, legal team, or partners. No more manual background checks."
+      },
+      {
+        text: "<strong>Catches What You Miss:</strong> Gmail sellers, offshore banks in Seychelles, companies that don't exist—we flag it all automatically."
+      },
+      {
+        text: "<strong>Free Email = Red Flag:</strong> If they're doing $50M deals from @yahoo.com, they're not real. We catch this instantly so you don't waste a single call."
+      }
+    ]
+  },
+  {
+    // VARIATION C - URGENCY / FEAR
+    headline: "That $50M ICPO You're About to Sign? It's a Scam.",
+    subheadline: "We've seen this exact document 47 times. Different seller every time. Same fraud.",
+    bullets: [
+      {
+        text: "<strong>Document Recycling is EVERYWHERE:</strong> 68% of commodity deals use recycled LOIs, ICPOs, or mandates. SHA-256 fingerprinting catches them instantly."
+      },
+      {
+        text: "<strong>@Gmail.com \"Buyers\" Are NOT Real:</strong> Legitimate $10M+ deals don't come from free email addresses. We flag these in 2 seconds flat."
+      },
+      {
+        text: "<strong>Seychelles Banks = Automatic Red Flag:</strong> If the buyer bank is in an offshore haven but the company claims UK registration, RUN. We catch jurisdiction mismatches you'd never spot."
+      },
+      {
+        text: "<strong>OFAC Sanctions Check (Mandatory):</strong> One sanctioned entity on your deal = your entire business at risk. We screen 15+ watchlists automatically."
+      },
+      {
+        text: "<strong>Impossible Volumes? Instant Alert:</strong> Someone offering 50M MT of sugar from a company registered 6 months ago? Our AI flags absurd claims before you embarrass yourself."
+      },
+      {
+        text: "<strong>100% Payment Upfront = SCAM:</strong> Real commodity deals use LCs, escrow, or staged payments. Full upfront payment demands? We kill those deals for you."
+      },
+      {
+        text: "<strong>Companies That Don't Exist:</strong> We verify company registrations across UK Companies House, OpenCorporates, and 13 other registries. No more ghost buyers."
+      }
+    ]
+  }
+];
+
+// Get variation index (rotates each visit)
+function getVariationIndex() {
+  // Try to get from sessionStorage first (persists during session)
+  let sessionVariation = sessionStorage.getItem('ddp_hero_variation');
+  
+  if (sessionVariation !== null) {
+    return parseInt(sessionVariation);
+  }
+  
+  // Check localStorage for visit count
+  let visitCount = parseInt(localStorage.getItem('ddp_visit_count') || '0');
+  visitCount++;
+  localStorage.setItem('ddp_visit_count', visitCount.toString());
+  
+  // Rotate through variations
+  const variationIndex = (visitCount - 1) % 3;
+  
+  // Store in session so it doesn't change on page reload
+  sessionStorage.setItem('ddp_hero_variation', variationIndex.toString());
+  
+  // Track in GA4 if available
+  if (typeof gtag !== 'undefined') {
+    gtag('event', 'hero_variation_shown', {
+      'variation': variationIndex === 0 ? 'A_pain_point' : variationIndex === 1 ? 'B_social_proof' : 'C_urgency',
+      'visit_number': visitCount
+    });
+  }
+  
+  return variationIndex;
+}
+
+// Render the selected variation
+function renderHeroVariation() {
+  const variationIndex = getVariationIndex();
+  const variation = heroVariations[variationIndex];
+  
+  const heroContainer = document.getElementById('heroVariation');
+  if (!heroContainer) return;
+  
+  // Build bullets HTML
+  const bulletsHTML = variation.bullets.map(bullet => `
+    <li class="flex items-start gap-2">
+      <span class="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
+      <span>${bullet.text}</span>
+    </li>
+  `).join('');
+  
+  // Inject the variation
+  heroContainer.innerHTML = `
+    <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-50 mb-3 leading-tight">
+      ${variation.headline}
+    </h1>
+    
+    <p class="text-lg md:text-xl text-cyan-400 font-semibold mb-4">
+      ${variation.subheadline}
+    </p>
+    
+    <!-- Hidden variation marker for analytics -->
+    <div id="hero-variation-marker" data-variation="${variationIndex === 0 ? 'A' : variationIndex === 1 ? 'B' : 'C'}" style="display:none;"></div>
+  `;
+  
+  // Update bullets separately (they're in a different location)
+  const bulletsContainer = document.getElementById('heroBullets');
+  if (bulletsContainer) {
+    bulletsContainer.innerHTML = bulletsHTML;
+  }
+}
+
+// Run on page load
+renderHeroVariation();
+
+// Track conversions with variation
+function trackConversionWithVariation(eventName) {
+  const marker = document.getElementById('hero-variation-marker');
+  const variation = marker ? marker.dataset.variation : 'unknown';
+  
+  if (typeof gtag !== 'undefined') {
+    gtag('event', eventName, {
+      'hero_variation': variation
+    });
+  }
+}
+
+// Add tracking to CTA buttons
+document.addEventListener('DOMContentLoaded', function() {
+  // Track clicks on key CTAs
+  document.querySelectorAll('a[href*="pricing"], button[onclick*="runDiligence"]').forEach(function(el) {
+    el.addEventListener('click', function() {
+      trackConversionWithVariation('cta_click');
+    });
+  });
+});
+</script>
+
 <style>
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
@@ -3171,7 +3240,7 @@ Email Us
 Our team is here to help. Get answers about pricing, integrations, or custom enterprise solutions.
 </p>
 <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-<a href="mailto:info@cladutacorp.com?subject=Question about DDP" class="flex items-center gap-2 px-6 py-3 rounded-lg bg-cyan-500 text-slate-900 font-semibold hover:bg-cyan-400 transition">
+<a href="/cdn-cgi/l/email-protection#3851565e57785b54595c4d4c595b574a48165b5755074b4d5a525d5b4c05694d5d4b4c51575618595a574d4c187c7c68" class="flex items-center gap-2 px-6 py-3 rounded-lg bg-cyan-500 text-slate-900 font-semibold hover:bg-cyan-400 transition">
 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
 </svg>
@@ -3384,12 +3453,4 @@ Earn 30% as an affiliate • Partner with us
 <a href="/terms-of-service.html" class="hover:text-slate-400 transition">Terms of Service</a>
 </div>
 <p class="mt-4 text-[10px] text-slate-700">
-Built with ❤️ for commodity traders who've been burned before
-</p>
-</div>
-</div>
-
-</footer>
-
-</body>
-</html>
+Built with ❤️ for commodity traders who

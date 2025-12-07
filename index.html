@@ -117,23 +117,14 @@ z-index: 1;
 <header class="border-b border-slate-800/80 bg-black/60 backdrop-blur sticky top-0 z-40">
 <div class="mx-auto max-w-6xl px-3 py-3 flex items-center justify-between">
 
-<!-- LEFT: Logo (Compact on mobile) -->
-<div class="flex items-center gap-2">
-<div class="h-8 w-8 md:h-9 md:w-9 rounded-xl bg-cyan-500/20 border border-cyan-400/40 flex items-center justify-center flex-shrink-0">
-<span class="text-cyan-300 font-semibold text-base md:text-lg">DDP</span>
+<!-- LEFT: Logo (matches footer style) -->
+<div class="flex items-center gap-3">
+<div class="h-8 w-8 rounded-lg bg-cyan-500/20 border border-cyan-400/40 flex items-center justify-center">
+<span class="text-cyan-300 font-semibold text-sm">DDP</span>
 </div>
-
-<!-- Hide details on tiny screens, show on 360px+ -->
 <div class="hidden min-[360px]:block">
-<div class="flex items-center gap-2">
-<span class="font-semibold text-slate-50 tracking-tight text-sm md:text-base">Dude Diligence Pro</span>
-<span class="hidden sm:inline text-[10px] uppercase tracking-[0.18em] text-slate-500 border border-slate-700/80 rounded px-1.5 py-[2px]">
-AI Verify
-</span>
-</div>
-<p class="text-[10px] md:text-xs text-slate-400 hidden sm:block">
-Instant due diligence reports
-</p>
+<div class="text-sm font-semibold text-slate-300">Dude Diligence Pro</div>
+<div class="text-[10px] text-slate-500">AI-Powered Risk Assessment</div>
 </div>
 </div>
 
@@ -148,8 +139,8 @@ Instant due diligence reports
 <span class="hidden sm:inline">Login</span>
 </a>
 
-<!-- Hamburger (Mobile only) -->
-<button onclick="toggleMobileMenu()" class="md:hidden text-slate-400 hover:text-cyan-400 transition p-1.5">
+<!-- Hamburger Menu -->
+<button onclick="toggleMobileMenu()" class="text-slate-400 hover:text-cyan-400 transition p-1.5">
 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
 </svg>
@@ -159,8 +150,8 @@ Instant due diligence reports
 </div>
 </header>
 
-<!-- Mobile Menu Slide-out -->
-<div id="mobileMenu" class="hidden fixed inset-0 z-50 md:hidden">
+<!-- Slide-out Menu -->
+<div id="mobileMenu" class="hidden fixed inset-0 z-50">
 <!-- Backdrop -->
 <div onclick="toggleMobileMenu()" class="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
 <!-- Menu Panel -->
@@ -179,11 +170,14 @@ Instant due diligence reports
 <a href="#pricing" onclick="toggleMobileMenu()" class="px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition">
 Pricing
 </a>
-<a href="#pricing" class="px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition">
-How It Works
-</a>
-<a href="/partners.html" class="px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition">
+<a href="/partners.html" onclick="toggleMobileMenu()" class="px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition">
 Partners
+</a>
+<a href="/sample-report.html" onclick="toggleMobileMenu()" class="px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition">
+Sample Report
+</a>
+<a href="/how-it-works.html" onclick="toggleMobileMenu()" class="px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition">
+How It Works
 </a>
 </nav>
 </div>
@@ -245,7 +239,7 @@ See Sample Report
 <div class="rounded-2xl border border-slate-800 bg-slate-950/70 backdrop-blur shadow-lg shadow-cyan-500/10">
 <div class="px-5 py-4 border-b border-slate-800 flex items-center justify-between">
 <div>
-<h2 class="text-sm font-semibold text-slate-100">Run The Dude</h2>
+<h2 class="text-sm font-semibold text-slate-100">Run Dude Diligence Pro</h2>
 <p class="text-xs text-slate-400">Upload LOI, ICPO, or combined PDFs.</p>
 </div>
 <a href="#pricing" class="rounded-full bg-gradient-to-r from-orange-500 to-yellow-500 px-4 py-1.5 text-xs font-bold text-slate-900 hover:from-orange-600 hover:to-yellow-600 transition">
@@ -270,7 +264,7 @@ class="w-full mt-3 inline-flex items-center justify-center rounded-xl bg-cyan-50
 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
 </svg>
-Run The Dude
+Run Dude Diligence Pro
 </button>
 
 <p id="statusMessage" class="text-[11px] text-slate-500 h-4 mt-2"></p>
@@ -614,6 +608,52 @@ Download PDF Report →
 </div>
 </div>
 
+
+<!-- WHAT HAPPENS WHEN YOU SIGN UP -->
+<section class="border-t border-slate-800 bg-slate-950/80 py-10">
+<div class="mx-auto max-w-6xl px-4">
+<div class="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 rounded-2xl p-8">
+<h3 class="text-xl font-bold text-slate-50 mb-6 text-center">Here's What Happens When You Sign Up</h3>
+<div class="grid md:grid-cols-3 gap-6">
+<div class="flex gap-4">
+<div class="flex-shrink-0">
+<div class="w-10 h-10 rounded-full bg-cyan-500 text-white flex items-center justify-center text-lg font-bold">1</div>
+</div>
+<div>
+<div class="text-sm font-semibold text-slate-200 mb-1">Upload Your First Document</div>
+<div class="text-xs text-slate-400 leading-relaxed">LOI, ICPO, KYC, FCO—any format works. Drag & drop or click to upload.</div>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="flex-shrink-0">
+<div class="w-10 h-10 rounded-full bg-cyan-500 text-white flex items-center justify-center text-lg font-bold">2</div>
+</div>
+<div>
+<div class="text-sm font-semibold text-slate-200 mb-1">Get Results in 10 Seconds</div>
+<div class="text-xs text-slate-400 leading-relaxed">AI scans 15+ databases, detects fraud patterns, and gives you a clear risk score.</div>
+</div>
+</div>
+<div class="flex gap-4">
+<div class="flex-shrink-0">
+<div class="w-10 h-10 rounded-full bg-cyan-500 text-white flex items-center justify-center text-lg font-bold">3</div>
+</div>
+<div>
+<div class="text-sm font-semibold text-slate-200 mb-1">Download Full PDF Report</div>
+<div class="text-xs text-slate-400 leading-relaxed">Professional report with red flags, database findings, and next steps—ready to share.</div>
+</div>
+</div>
+</div>
+
+<!-- Money-Back Guarantee -->
+<div class="mt-6 pt-6 border-t border-cyan-500/20 text-center">
+<div class="inline-flex items-center gap-2 text-sm text-emerald-400 font-semibold">
+<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+30-Day Money-Back Guarantee • Cancel Anytime • No Questions Asked
+</div>
+</div>
+</div>
+</div>
+</section>
 
 <!-- PRICING -->
 <section id="pricing" class="border-t border-slate-800 bg-slate-950/80">
@@ -991,7 +1031,7 @@ fileInput.addEventListener('change', (e) => {
     if (file) {
         currentFile = file;
         document.getElementById('dropzoneText').textContent = `✓ ${file.name}`;
-        document.getElementById('statusMessage').textContent = 'File ready. Click "Run The Dude" to analyze.';
+        document.getElementById('statusMessage').textContent = 'File ready. Click "Run Dude Diligence Pro" to analyze.';
     }
 });
 
@@ -2626,24 +2666,24 @@ function togglePricingPeriod(period) {
     
     if (period === 'monthly') {
         // Show monthly, hide annual
-        monthlyPricing.style.display = 'grid';
-        annualPricing.style.display = 'none';
+        monthlyPricing.classList.remove('hidden');
+        annualPricing.classList.add('hidden');
         
         // Update button styles
         monthlyBtn.classList.add('bg-cyan-500', 'text-white', 'shadow-lg');
         monthlyBtn.classList.remove('text-slate-400', 'hover:bg-slate-800');
         annualBtn.classList.remove('bg-cyan-500', 'text-white', 'shadow-lg');
-        annualBtn.classList.add('text-slate-400');
+        annualBtn.classList.add('text-slate-400', 'hover:bg-slate-800');
     } else {
         // Show annual, hide monthly  
-        monthlyPricing.style.display = 'none';
-        annualPricing.style.display = 'grid';
+        monthlyPricing.classList.add('hidden');
+        annualPricing.classList.remove('hidden');
         
         // Update button styles
         annualBtn.classList.add('bg-cyan-500', 'text-white', 'shadow-lg');
         annualBtn.classList.remove('text-slate-400', 'hover:bg-slate-800');
         monthlyBtn.classList.remove('bg-cyan-500', 'text-white', 'shadow-lg');
-        monthlyBtn.classList.add('text-slate-400');
+        monthlyBtn.classList.add('text-slate-400', 'hover:bg-slate-800');
     }
     
     console.log('✅ Pricing toggled successfully to:', period);
@@ -2751,50 +2791,6 @@ window.addEventListener('scroll', () => {
     }
 });
 </script>
-
-
-
-<!-- WHAT HAPPENS NEXT -->
-<div class="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 border border-cyan-500/20 rounded-2xl p-8 mb-10">
-<h3 class="text-xl font-bold text-slate-50 mb-6 text-center">Here's What Happens After You Sign Up</h3>
-<div class="grid md:grid-cols-3 gap-6">
-<div class="flex gap-4">
-<div class="flex-shrink-0">
-<div class="w-10 h-10 rounded-full bg-cyan-500 text-white flex items-center justify-center text-lg font-bold">1</div>
-</div>
-<div>
-<div class="text-sm font-semibold text-slate-200 mb-1">Upload Your First Document</div>
-<div class="text-xs text-slate-400 leading-relaxed">LOI, ICPO, KYC, FCO—any format works. Drag & drop or click to upload.</div>
-</div>
-</div>
-<div class="flex gap-4">
-<div class="flex-shrink-0">
-<div class="w-10 h-10 rounded-full bg-cyan-500 text-white flex items-center justify-center text-lg font-bold">2</div>
-</div>
-<div>
-<div class="text-sm font-semibold text-slate-200 mb-1">Get Results in 10 Seconds</div>
-<div class="text-xs text-slate-400 leading-relaxed">AI scans 15+ databases, detects fraud patterns, and gives you a clear risk score.</div>
-</div>
-</div>
-<div class="flex gap-4">
-<div class="flex-shrink-0">
-<div class="w-10 h-10 rounded-full bg-cyan-500 text-white flex items-center justify-center text-lg font-bold">3</div>
-</div>
-<div>
-<div class="text-sm font-semibold text-slate-200 mb-1">Download Full PDF Report</div>
-<div class="text-xs text-slate-400 leading-relaxed">Professional report with red flags, database findings, and next steps—ready to share.</div>
-</div>
-</div>
-</div>
-
-<!-- Money-Back Guarantee -->
-<div class="mt-6 pt-6 border-t border-cyan-500/20 text-center">
-<div class="inline-flex items-center gap-2 text-sm text-emerald-400 font-semibold">
-<svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
-30-Day Money-Back Guarantee • Cancel Anytime • No Questions Asked
-</div>
-</div>
-</div>
 
 
 <!-- TESTIMONIALS - REAL TRADER EXPERIENCES -->
@@ -3523,14 +3519,8 @@ Our AI has <strong class="text-slate-300">92% extraction accuracy</strong> on st
 <p class="text-base text-slate-400 mb-8 max-w-2xl mx-auto">
 Our team is here to help. Get answers about pricing, integrations, or custom enterprise solutions.
 </p>
-<div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-<a href="/cdn-cgi/l/email-protection#97fef9f1f8d7f4fbf6f3e2e3f6f4f8e5e7b9f4f8fa">
-<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-</svg>
-Email Us
-</a>
-<a href="#pricing" class="flex items-center gap-2 px-6 py-3 rounded-lg border border-slate-700 text-slate-300 font-semibold hover:border-cyan-500 hover:text-cyan-400 transition">
+<div class="flex items-center justify-center">
+<a href="mailto:contacts@dudediligence.pro?subject=Demo Request - DDP" class="flex items-center gap-2 px-8 py-4 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold text-base hover:from-cyan-600 hover:to-blue-600 transition shadow-lg">
 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
 </svg>

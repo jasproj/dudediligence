@@ -237,7 +237,7 @@ See Sample Report
 </a>
 
 <!-- Mobile Contact Button -->
-<a href="mailto:info@cladutacorp.com">
+<a href="/cdn-cgi/l/email-protection#5c35323a331c3f303d3829283d3f332e2c723f3331">
 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
 </svg>
@@ -959,7 +959,7 @@ Unlimited verifications, blacklist checks, passport validation, fraud scanning, 
 </div>
 
 <!-- SCRIPT -->
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Floating Pricing Badge - Show after scrolling past hero
 window.addEventListener('scroll', function() {
     const floatingBadge = document.getElementById('floatingPricingBadge');
@@ -2433,26 +2433,41 @@ function closeUpsell() {
 
 // Toggle pricing period (monthly/annual)
 function togglePricingPeriod(period) {
+    console.log('Toggle pricing to:', period);
+    
     const monthlyPricing = document.getElementById('monthlyPricing');
     const annualPricing = document.getElementById('annualPricing');
     const monthlyBtn = document.getElementById('monthlyBtn');
     const annualBtn = document.getElementById('annualBtn');
     
+    if (!monthlyPricing || !annualPricing || !monthlyBtn || !annualBtn) {
+        console.error('Pricing elements not found');
+        return;
+    }
+    
     if (period === 'monthly') {
-        monthlyPricing.classList.remove('hidden');
-        annualPricing.classList.add('hidden');
-        monthlyBtn.classList.add('bg-cyan-500', 'text-white');
-        monthlyBtn.classList.remove('text-slate-400');
-        annualBtn.classList.remove('bg-cyan-500', 'text-white');
+        // Show monthly, hide annual
+        monthlyPricing.style.display = 'grid';
+        annualPricing.style.display = 'none';
+        
+        // Update button styles
+        monthlyBtn.classList.add('bg-cyan-500', 'text-white', 'shadow-lg');
+        monthlyBtn.classList.remove('text-slate-400', 'hover:bg-slate-800');
+        annualBtn.classList.remove('bg-cyan-500', 'text-white', 'shadow-lg');
         annualBtn.classList.add('text-slate-400');
     } else {
-        monthlyPricing.classList.add('hidden');
-        annualPricing.classList.remove('hidden');
-        annualBtn.classList.add('bg-cyan-500', 'text-white');
-        annualBtn.classList.remove('text-slate-400');
-        monthlyBtn.classList.remove('bg-cyan-500', 'text-white');
+        // Show annual, hide monthly  
+        monthlyPricing.style.display = 'none';
+        annualPricing.style.display = 'grid';
+        
+        // Update button styles
+        annualBtn.classList.add('bg-cyan-500', 'text-white', 'shadow-lg');
+        annualBtn.classList.remove('text-slate-400', 'hover:bg-slate-800');
+        monthlyBtn.classList.remove('bg-cyan-500', 'text-white', 'shadow-lg');
         monthlyBtn.classList.add('text-slate-400');
     }
+    
+    console.log('✅ Pricing toggled successfully to:', period);
     
     // Track pricing preference
     if (typeof gtag !== 'undefined') {
@@ -3003,7 +3018,7 @@ Active deals from our network. Verified parties, competitive pricing. Contact us
 </div>
 </div>
 <div class="pt-3 border-t border-slate-700">
-<a href="mailto:info@cladutacorp.com">
+<a href="/cdn-cgi/l/email-protection#adc4c3cbc2edcec1ccc9d8d9cccec2dfdd83cec2c0">
 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
 </svg>
@@ -3047,7 +3062,7 @@ Request Info
 </div>
 </div>
 <div class="pt-3 border-t border-slate-700">
-<a href="mailto:info@cladutacorp.com">
+<a href="/cdn-cgi/l/email-protection#5930373f36193a35383d2c2d383a362b29773a3634">
 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
 </svg>
@@ -3091,7 +3106,7 @@ Request Info
 </div>
 </div>
 <div class="pt-3 border-t border-slate-700">
-<a href="mailto:info@cladutacorp.com">
+<a href="/cdn-cgi/l/email-protection#563f38303916353a3732232237353924267835393b">
 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
 </svg>
@@ -3135,7 +3150,7 @@ Request Info
 </div>
 </div>
 <div class="pt-3 border-t border-slate-700">
-<a href="mailto:info@cladutacorp.com">
+<a href="/cdn-cgi/l/email-protection#066f68606946656a6762737267656974762865696b">
 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
 </svg>
@@ -3168,7 +3183,7 @@ Partner With Us
 <!-- CTA Below Deals -->
 <div class="text-center mt-8">
 <p class="text-sm text-slate-400 mb-4">
-📧 Have a deal to list? <a href="mailto:info@cladutacorp.com">Contact us</a> for free placement.
+📧 Have a deal to list? <a href="/cdn-cgi/l/email-protection#6900070f06290a05080d1c1d080a061b19470a0604">Contact us</a> for free placement.
 </p>
 </div>
 
@@ -3286,7 +3301,7 @@ Our AI has <strong class="text-slate-300">92% extraction accuracy</strong> on st
 Our team is here to help. Get answers about pricing, integrations, or custom enterprise solutions.
 </p>
 <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-<a href="mailto:info@cladutacorp.com">
+<a href="/cdn-cgi/l/email-protection#97fef9f1f8d7f4fbf6f3e2e3f6f4f8e5e7b9f4f8fa">
 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
 </svg>
@@ -3465,7 +3480,7 @@ Earn 30% as an affiliate • Partner with us
 <!-- Right: Copyright -->
 <div class="text-xs text-slate-500 text-center md:text-right">
 <div class="mb-1">© 2025 CLADUTA CORP</div>
-<a href="mailto:info@cladutacorp.com" class="hover:text-cyan-400 transition">info@cladutacorp.com</a>
+<a href="/cdn-cgi/l/email-protection#7a13141c153a19161b1e0f0e1b1915080a54191517" class="hover:text-cyan-400 transition"><span class="__cf_email__" data-cfemail="91f8fff7fed1f2fdf0f5e4e5f0f2fee3e1bff2fefc">[email&#160;protected]</span></a>
 </div>
 </div>
 
@@ -3490,7 +3505,7 @@ Built with ❤️ for commodity traders who've been burned before
 </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // 3 HERO VARIATIONS FOR A/B TESTING
 const heroVariations = [
   {
@@ -3668,26 +3683,4 @@ if (document.readyState === 'loading') {
 }
 
 // Track conversions with variation
-function trackConversionWithVariation(eventName) {
-  const marker = document.getElementById('hero-variation-marker');
-  const variation = marker ? marker.dataset.variation : 'unknown';
-  
-  if (typeof gtag !== 'undefined') {
-    gtag('event', eventName, {
-      'hero_variation': variation
-    });
-  }
-}
-
-// Add tracking to CTA buttons
-document.addEventListener('DOMContentLoaded', function() {
-  // Track clicks on key CTAs
-  document.querySelectorAll('a[href*="pricing"], button[onclick*="runDiligence"]').forEach(function(el) {
-    el.addEventListener('click', function() {
-      trackConversionWithVariation('cta_click');
-    });
-  });
-});
-</script>
-
-</body></html>
+function trackCo

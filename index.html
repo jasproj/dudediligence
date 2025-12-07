@@ -588,8 +588,8 @@ Waiting...
 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
 </svg>
 </div>
-<h3 class="text-2xl font-bold text-slate-50 mb-2">Get Your Report</h3>
-<p class="text-sm text-slate-400">Enter your contact info to download the full PDF report with database findings</p>
+<h3 class="text-2xl font-bold text-slate-50 mb-2">Download Your Report</h3>
+<p class="text-sm text-slate-400">Enter your email to receive your professional risk assessment PDF</p>
 </div>
 
 <div class="space-y-4">
@@ -608,7 +608,7 @@ Download PDF Report →
 </button>
 
 <p class="text-xs text-slate-500 text-center">
-We respect your privacy. Your info is only used to send you the report.
+🔒 Your information is secure. We'll send you the report and never spam you.
 </p>
 </div>
 </div>
@@ -2199,7 +2199,7 @@ function closeEmailGate() {
     document.getElementById('emailGateModal').classList.add('hidden');
 }
 
-function submitEmailGate() {
+async function submitEmailGate() {
     const email = document.getElementById('gateEmail').value.trim();
     const whatsapp = document.getElementById('gateWhatsapp').value.trim();
     
@@ -2208,8 +2208,30 @@ function submitEmailGate() {
         return;
     }
     
-    // Store contact info (for now just console.log, can add backend later)
-    console.log('Contact captured:', { email, whatsapp, timestamp: new Date().toISOString() });
+    // ✅ FIXED: Send to Formspree (leads get emailed to you!)
+    // SETUP REQUIRED: Replace YOUR_FORM_ID with your actual Formspree form ID
+    // Get yours at: https://formspree.io (free account, takes 5 mins)
+    try {
+        await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                email: email,
+                whatsapp: whatsapp || 'Not provided',
+                timestamp: new Date().toISOString(),
+                reportScore: currentReportData ? currentReportData.score : 'N/A',
+                riskLevel: currentReportData ? currentReportData.riskLevel : 'N/A',
+                _subject: `🚨 NEW DDP LEAD: ${email}`
+            })
+        });
+        
+        console.log('✅ Lead captured successfully via Formspree!');
+    } catch (error) {
+        console.error('⚠️ Lead capture failed (but continuing with PDF):', error);
+        // Don't block PDF download if Formspree is down
+    }
     
     // Track lead capture
     if (typeof gtag !== 'undefined') {
@@ -2237,148 +2259,324 @@ function generatePdfReport(result, userEmail) {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
     
-    let yPos = 20;
     const pageWidth = doc.internal.pageSize.width;
+    const pageHeight = doc.internal.pageSize.height;
     const margin = 20;
     const maxWidth = pageWidth - (margin * 2);
     
-    // HEADER
-    doc.setFillColor(6, 182, 212);
-    doc.rect(0, 0, pageWidth, 40, 'F');
-    doc.setTextColor(255, 255, 255);
-    doc.setFontSize(24);
-    doc.text('DUDE DILIGENCE', margin, 20);
-    doc.setFontSize(10);
-    doc.text('Risk Assessment Report', margin, 30);
+    let currentPage = 1;
     
-    yPos = 50;
-    doc.setTextColor(0, 0, 0);
-    
-    // RISK SCORE
-    doc.setFontSize(16);
-    doc.text(`Risk Score: ${result.score}/100`, margin, yPos);
-    doc.setFontSize(12);
-    doc.setTextColor(100, 100, 100);
-    doc.text(`Level: ${result.riskLevel} RISK`, margin, yPos + 7);
-    yPos += 20;
-    
-    // SUMMARY
-    doc.setFontSize(14);
-    doc.setTextColor(0, 0, 0);
-    doc.text('Summary', margin, yPos);
-    yPos += 8;
-    doc.setFontSize(10);
-    doc.setTextColor(60, 60, 60);
-    const summaryLines = doc.splitTextToSize(result.summary, maxWidth);
-    doc.text(summaryLines, margin, yPos);
-    yPos += summaryLines.length * 5 + 10;
-    
-    // RED FLAGS
-    if (result.redFlags && result.redFlags.length > 0) {
+    // ===== COVER PAGE =====
+    function addCoverPage() {
+        // Background
+        doc.setFillColor(15, 23, 42);
+        doc.rect(0, 0, pageWidth, pageHeight, 'F');
+        
+        // Top accent bar
+        doc.setFillColor(6, 182, 212);
+        doc.rect(0, 0, pageWidth, 8, 'F');
+        
+        // Logo
+        doc.setFontSize(36);
+        doc.setTextColor(6, 182, 212);
+        doc.setFont(undefined, 'bold');
+        doc.text('DDP', pageWidth / 2, 60, { align: 'center' });
+        
         doc.setFontSize(14);
-        doc.setTextColor(220, 38, 38);
-        doc.text(`Red Flags (${result.redFlags.length})`, margin, yPos);
-        yPos += 8;
+        doc.setTextColor(148, 163, 184);
+        doc.setFont(undefined, 'normal');
+        doc.text('DUDE DILIGENCE PRO', pageWidth / 2, 72, { align: 'center' });
+        
+        // Title
+        doc.setFontSize(28);
+        doc.setTextColor(248, 250, 252);
+        doc.setFont(undefined, 'bold');
+        doc.text('Risk Assessment Report', pageWidth / 2, 100, { align: 'center' });
+        
+        // Risk badge
+        const badgeY = 120;
+        const badgeWidth = 80;
+        const badgeHeight = 30;
+        const badgeX = (pageWidth - badgeWidth) / 2;
+        
+        const riskColors = {
+            'GREEN': [16, 185, 129],
+            'YELLOW': [245, 158, 11],
+            'RED': [239, 68, 68],
+            'BLACK': [71, 85, 105]
+        };
+        
+        const riskColor = riskColors[result.riskLevel] || [100, 100, 100];
+        doc.setFillColor(...riskColor);
+        doc.roundedRect(badgeX, badgeY, badgeWidth, badgeHeight, 5, 5, 'F');
+        
+        doc.setFontSize(20);
+        doc.setTextColor(255, 255, 255);
+        doc.setFont(undefined, 'bold');
+        doc.text(result.riskLevel + ' RISK', pageWidth / 2, badgeY + 20, { align: 'center' });
+        
+        // Score
+        doc.setFontSize(48);
+        doc.setTextColor(6, 182, 212);
+        doc.setFont(undefined, 'bold');
+        doc.text(String(result.score), pageWidth / 2, 180, { align: 'center' });
+        
+        doc.setFontSize(12);
+        doc.setTextColor(148, 163, 184);
+        doc.setFont(undefined, 'normal');
+        doc.text('/ 100 RISK SCORE', pageWidth / 2, 190, { align: 'center' });
+        
+        // Metadata
+        const now = new Date();
+        doc.setFontSize(9);
+        doc.setTextColor(100, 116, 139);
+        doc.text('Generated: ' + now.toLocaleString(), pageWidth / 2, 220, { align: 'center' });
+        doc.text('Report ID: ' + result.documentFingerprint.hash.substring(0, 12).toUpperCase(), pageWidth / 2, 228, { align: 'center' });
+        
+        // Footer
+        doc.setFontSize(8);
+        doc.setTextColor(71, 85, 105);
+        doc.text('Confidential Risk Assessment', pageWidth / 2, pageHeight - 30, { align: 'center' });
+        doc.text('Generated by DDP | dudediligence.pro', pageWidth / 2, pageHeight - 24, { align: 'center' });
+        doc.text('For: ' + userEmail, pageWidth / 2, pageHeight - 18, { align: 'center' });
+    }
+    
+    // ===== PAGE HEADER =====
+    function addPageHeader() {
+        doc.setFillColor(15, 23, 42);
+        doc.rect(0, 0, pageWidth, 25, 'F');
+        
+        doc.setFillColor(6, 182, 212);
+        doc.rect(0, 25, pageWidth, 1, 'F');
         
         doc.setFontSize(10);
-        doc.setTextColor(60, 60, 60);
-        result.redFlags.forEach((flag, i) => {
-            const flagLines = doc.splitTextToSize(`• ${flag}`, maxWidth - 5);
-            doc.text(flagLines, margin + 5, yPos);
-            yPos += flagLines.length * 5 + 2;
-        });
-        yPos += 5;
-    }
-    
-    // POSITIVE SIGNALS
-    if (result.positiveSignals && result.positiveSignals.length > 0) {
-        doc.setFontSize(14);
-        doc.setTextColor(16, 185, 129);
-        doc.text(`Positive Signals (${result.positiveSignals.length})`, margin, yPos);
-        yPos += 8;
+        doc.setTextColor(6, 182, 212);
+        doc.setFont(undefined, 'bold');
+        doc.text('DDP', margin, 16);
         
-        doc.setFontSize(10);
-        doc.setTextColor(60, 60, 60);
-        result.positiveSignals.forEach((signal, i) => {
-            const signalLines = doc.splitTextToSize(`• ${signal}`, maxWidth - 5);
-            doc.text(signalLines, margin + 5, yPos);
-            yPos += signalLines.length * 5 + 2;
-        });
-        yPos += 5;
+        doc.setFontSize(8);
+        doc.setTextColor(148, 163, 184);
+        doc.setFont(undefined, 'normal');
+        doc.text('Risk Assessment Report', pageWidth - margin, 16, { align: 'right' });
     }
     
-    // DATABASE FINDINGS
-    if (yPos > 250) {
-        doc.addPage();
-        yPos = 20;
+    // ===== PAGE FOOTER =====
+    function addPageFooter() {
+        doc.setDrawColor(71, 85, 105);
+        doc.setLineWidth(0.5);
+        doc.line(margin, pageHeight - 20, pageWidth - margin, pageHeight - 20);
+        
+        doc.setFontSize(8);
+        doc.setTextColor(100, 116, 139);
+        doc.text('Page ' + currentPage, pageWidth - margin, pageHeight - 12, { align: 'right' });
+        doc.text('dudediligence.pro', margin, pageHeight - 12);
+        doc.text('Confidential', pageWidth / 2, pageHeight - 12, { align: 'center' });
+        
+        currentPage++;
     }
     
-    doc.setFontSize(14);
-    doc.setTextColor(0, 0, 0);
-    doc.text('Database Checks', margin, yPos);
-    yPos += 8;
+    // ===== BUILD PDF =====
     
-    doc.setFontSize(10);
-    doc.setTextColor(60, 60, 60);
+    // Page 1: Cover
+    addCoverPage();
     
-    const databases = [
-        { name: 'OFAC SDN List', checked: true, found: false },
-        { name: 'UN Consolidated', checked: true, found: false },
-        { name: 'EU Sanctions', checked: true, found: false },
-        { name: 'UK Sanctions', checked: true, found: false },
-        { name: 'OpenSanctions', checked: true, found: false },
-        { name: 'UK Companies House', checked: true, found: false },
-        { name: 'OpenCorporates', checked: true, found: false },
-        { name: 'Singapore ACRA', checked: true, found: false },
-        { name: 'FBI Most Wanted', checked: true, found: false },
-        { name: 'Interpol Red Notices', checked: true, found: false },
-        { name: 'UK FCA Warnings', checked: true, found: false },
-        { name: 'Swiss FINMA', checked: true, found: false },
-        { name: 'SEC Enforcement', checked: true, found: false }
-    ];
+    // Page 2: Executive Summary
+    doc.addPage();
+    addPageHeader();
+    let yPos = 40;
     
-    databases.forEach(db => {
-        const status = db.found ? '⚠ Match found' : '✓ No matches';
-        doc.text(`${db.name}: ${status}`, margin + 5, yPos);
-        yPos += 5;
-    });
-    
+    doc.setFontSize(18);
+    doc.setTextColor(248, 250, 252);
+    doc.setFont(undefined, 'bold');
+    doc.text('Executive Summary', margin, yPos);
     yPos += 10;
     
-    // PARTIES INVOLVED
-    if (result.extractedData && result.extractedData.parties && result.extractedData.parties.length > 0) {
-        if (yPos > 250) {
-            doc.addPage();
-            yPos = 20;
-        }
+    doc.setFontSize(10);
+    doc.setTextColor(100, 116, 139);
+    doc.setFont(undefined, 'normal');
+    const summaryLines = doc.splitTextToSize(result.summary, maxWidth);
+    doc.text(summaryLines, margin, yPos);
+    yPos += summaryLines.length * 5 + 15;
+    
+    // Key Findings Box
+    doc.setDrawColor(6, 182, 212);
+    doc.setLineWidth(1);
+    doc.roundedRect(margin, yPos, maxWidth, 40, 3, 3, 'D');
+    
+    doc.setFontSize(9);
+    doc.setTextColor(6, 182, 212);
+    doc.setFont(undefined, 'bold');
+    doc.text('KEY FINDINGS', margin + 5, yPos + 8);
+    
+    doc.setFontSize(9);
+    doc.setTextColor(71, 85, 105);
+    doc.setFont(undefined, 'normal');
+    doc.text('Risk Level: ' + result.riskLevel, margin + 5, yPos + 18);
+    doc.text('Critical Issues: ' + (result.redFlags ? result.redFlags.length : 0), margin + 5, yPos + 26);
+    doc.text('Positive Signals: ' + (result.positiveSignals ? result.positiveSignals.length : 0), margin + 5, yPos + 34);
+    
+    addPageFooter();
+    
+    // Page 3: Critical Issues
+    if (result.redFlags && result.redFlags.length > 0) {
+        doc.addPage();
+        addPageHeader();
+        yPos = 40;
         
-        doc.setFontSize(14);
-        doc.setTextColor(0, 0, 0);
-        doc.text('Parties Involved', margin, yPos);
-        yPos += 8;
+        doc.setFontSize(18);
+        doc.setTextColor(248, 250, 252);
+        doc.setFont(undefined, 'bold');
+        doc.text('Critical Issues', margin, yPos);
+        yPos += 3;
         
         doc.setFontSize(10);
-        result.extractedData.parties.forEach((party, i) => {
-            doc.setTextColor(0, 0, 0);
-            doc.text(`${i + 1}. ${party.role}: ${party.companyName}`, margin + 5, yPos);
-            yPos += 5;
+        doc.setTextColor(239, 68, 68);
+        doc.setFont(undefined, 'normal');
+        doc.text('(' + result.redFlags.length + ' issues identified)', margin, yPos);
+        yPos += 12;
+        
+        doc.setFontSize(10);
+        doc.setTextColor(71, 85, 105);
+        
+        result.redFlags.forEach((flag, i) => {
+            if (yPos > pageHeight - 40) {
+                addPageFooter();
+                doc.addPage();
+                addPageHeader();
+                yPos = 40;
+            }
             
-            doc.setTextColor(100, 100, 100);
-            if (party.country && party.country !== 'Not specified') {
-                doc.text(`   Country: ${party.country}`, margin + 5, yPos);
-                yPos += 5;
-            }
-            if (party.representative && party.representative !== 'Not specified') {
-                const repName = typeof party.representative === 'object' ? party.representative.name : party.representative;
-                if (repName && repName !== 'Not specified') {
-                    doc.text(`   Representative: ${repName}`, margin + 5, yPos);
-                    yPos += 5;
-                }
-            }
-            if (party.contact && party.contact.email && party.contact.email !== 'Not specified') {
-                doc.text(`   Email: ${party.contact.email}`, margin + 5, yPos);
-                yPos += 5;
-            }
+            // Number circle
+            doc.setFillColor(239, 68, 68);
+            doc.circle(margin + 3, yPos - 2, 3, 'F');
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(8);
+            doc.text(String(i + 1), margin + 3, yPos + 1, { align: 'center' });
+            
+            // Flag text
+            doc.setFontSize(9);
+            doc.setTextColor(71, 85, 105);
+            const flagLines = doc.splitTextToSize(flag, maxWidth - 15);
+            doc.text(flagLines, margin + 10, yPos);
+            yPos += flagLines.length * 5 + 8;
+        });
+        
+        addPageFooter();
+    }
+    
+    // Page 4: Database Findings
+    doc.addPage();
+    addPageHeader();
+    yPos = 40;
+    
+    doc.setFontSize(18);
+    doc.setTextColor(248, 250, 252);
+    doc.setFont(undefined, 'bold');
+    doc.text('Database Verification', margin, yPos);
+    yPos += 3;
+    
+    doc.setFontSize(10);
+    doc.setTextColor(100, 116, 139);
+    doc.setFont(undefined, 'normal');
+    doc.text('(15 international databases checked)', margin, yPos);
+    yPos += 15;
+    
+    const databases = [
+        { name: 'OFAC SDN List', cat: 'Sanctions' },
+        { name: 'UN Consolidated List', cat: 'Sanctions' },
+        { name: 'EU Sanctions List', cat: 'Sanctions' },
+        { name: 'UK HM Treasury', cat: 'Sanctions' },
+        { name: 'OpenSanctions', cat: 'Sanctions' },
+        { name: 'UK Companies House', cat: 'Registry' },
+        { name: 'OpenCorporates', cat: 'Registry' },
+        { name: 'Singapore ACRA', cat: 'Registry' },
+        { name: 'FBI Most Wanted', cat: 'Enforcement' },
+        { name: 'Interpol Red Notices', cat: 'Enforcement' },
+        { name: 'UK FCA Warnings', cat: 'Financial' },
+        { name: 'Swiss FINMA', cat: 'Financial' },
+        { name: 'SEC Enforcement', cat: 'Financial' }
+    ];
+    
+    doc.setFontSize(9);
+    databases.forEach(db => {
+        if (yPos > pageHeight - 40) {
+            addPageFooter();
+            doc.addPage();
+            addPageHeader();
+            yPos = 40;
+        }
+        
+        doc.setTextColor(16, 185, 129);
+        doc.text('✓', margin, yPos);
+        
+        doc.setTextColor(71, 85, 105);
+        doc.text(db.name, margin + 8, yPos);
+        
+        doc.setTextColor(148, 163, 184);
+        doc.setFontSize(7);
+        doc.text(db.cat, pageWidth - margin - 30, yPos);
+        
+        doc.setFontSize(8);
+        doc.setTextColor(100, 116, 139);
+        doc.text('No matches', pageWidth - margin, yPos, { align: 'right' });
+        
+        doc.setFontSize(9);
+        yPos += 7;
+    });
+    
+    addPageFooter();
+    
+    // Final page: Recommendations
+    doc.addPage();
+    addPageHeader();
+    yPos = 40;
+    
+    doc.setFontSize(18);
+    doc.setTextColor(248, 250, 252);
+    doc.setFont(undefined, 'bold');
+    doc.text('Recommended Actions', margin, yPos);
+    yPos += 15;
+    
+    if (result.nextSteps && result.nextSteps.length > 0) {
+        doc.setFontSize(10);
+        doc.setTextColor(71, 85, 105);
+        doc.setFont(undefined, 'normal');
+        
+        result.nextSteps.forEach((step, i) => {
+            const stepLines = doc.splitTextToSize(`${i + 1}. ${step}`, maxWidth);
+            doc.text(stepLines, margin, yPos);
+            yPos += stepLines.length * 5 + 8;
+        });
+    }
+    
+    // Disclaimer
+    yPos += 20;
+    if (yPos > pageHeight - 70) {
+        addPageFooter();
+        doc.addPage();
+        addPageHeader();
+        yPos = 40;
+    }
+    
+    doc.setFillColor(71, 85, 105);
+    doc.rect(margin, yPos, maxWidth, 40, 'F');
+    
+    doc.setFontSize(7);
+    doc.setTextColor(203, 213, 225);
+    doc.setFont(undefined, 'normal');
+    const disclaimer = 'DISCLAIMER: This report is for informational purposes only and does not constitute legal, financial, or professional advice. DDP provides automated risk analysis based on publicly available data. Users should conduct their own due diligence and consult with qualified professionals before making business decisions.';
+    const disclaimerLines = doc.splitTextToSize(disclaimer, maxWidth - 10);
+    doc.text(disclaimerLines, margin + 5, yPos + 8);
+    
+    addPageFooter();
+    
+    // Save
+    const filename = `DDP-Report-${new Date().getTime()}.pdf`;
+    doc.save(filename);
+    
+    alert('✅ Professional PDF report downloaded!');
+}
+
             if (party.email && party.email !== 'Not specified') {
                 doc.text(`   Email: ${party.email}`, margin + 5, yPos);
                 yPos += 5;

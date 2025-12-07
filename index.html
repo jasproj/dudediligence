@@ -2498,7 +2498,7 @@ function generatePdfReport(result, userEmail) {
         doc.text('Dude Diligence Pro', margin + 12, 10);
         doc.setFontSize(6);
         doc.setTextColor(...colors.gray);
-        doc.text('AI-Powered Risk Intelligence', margin + 12, 14);
+        doc.text('A Claduta Corp Product', margin + 12, 14);
         
         // Right side info
         doc.setFontSize(7);
@@ -2516,16 +2516,20 @@ function generatePdfReport(result, userEmail) {
     
     // ===== FOOTER =====
     function addFooter() {
-        const footerY = pageHeight - 10;
+        const footerY = pageHeight - 12;
         doc.setDrawColor(...colors.lightGray);
         doc.setLineWidth(0.3);
-        doc.line(margin, footerY - 3, pageWidth - margin, footerY - 3);
+        doc.line(margin, footerY - 5, pageWidth - margin, footerY - 5);
         
         doc.setFontSize(6);
+        doc.setTextColor(...colors.cyan);
+        doc.setFont(undefined, 'bold');
+        doc.text('Claduta Corp', margin, footerY - 1);
+        doc.setFont(undefined, 'normal');
         doc.setTextColor(...colors.gray);
-        doc.text('dudediligence.pro', margin, footerY);
-        doc.text('Confidential - Generated ' + new Date().toLocaleString(), pageWidth / 2, footerY, { align: 'center' });
-        doc.text('For: ' + userEmail, pageWidth - margin, footerY, { align: 'right' });
+        doc.text('dudediligence.pro | info@cladutacorp.com | WhatsApp: +1 (727) 623-2652', margin, footerY + 3);
+        
+        doc.text('Page ' + currentPage, pageWidth - margin, footerY + 1, { align: 'right' });
         
         currentPage++;
     }
@@ -2845,6 +2849,20 @@ function generatePdfReport(result, userEmail) {
         doc.text(line, margin, yPos);
         yPos += 4;
     });
+    yPos += 5;
+    
+    // =========================================================
+    // CONTACT INFORMATION
+    // =========================================================
+    
+    checkSpace(25);
+    sectionHeader('Questions? Contact Us');
+    doc.setFontSize(8);
+    doc.setTextColor(...colors.darkGray);
+    addField('Company', 'Claduta Corp');
+    addField('Email', 'info@cladutacorp.com');
+    addField('WhatsApp', '+1 (727) 623-2652');
+    addField('Website', 'dudediligence.pro');
     yPos += 5;
     
     // =========================================================

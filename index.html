@@ -428,6 +428,37 @@ Continue with AI Analysis
 <!-- RESULTS PANEL - ENHANCED VISUAL REPORT -->
 <div class="rounded-2xl border border-slate-800 bg-slate-950/80 backdrop-blur shadow-lg shadow-cyan-500/5">
 
+<!-- CRITICAL ALERTS BANNER (appears at top when sanctions/critical issues detected) -->
+<div id="criticalAlertBanner" class="hidden">
+<div class="px-5 py-6 border-b-4 border-rose-500 bg-gradient-to-br from-rose-500/20 via-rose-500/10 to-transparent">
+<div class="flex items-start gap-4">
+<div class="flex-shrink-0">
+<div class="w-16 h-16 rounded-full bg-rose-500 flex items-center justify-center animate-pulse">
+<span class="text-3xl">🚨</span>
+</div>
+</div>
+<div class="flex-1">
+<h3 class="text-lg font-bold text-rose-400 mb-2">CRITICAL ALERT - IMMEDIATE ACTION REQUIRED</h3>
+<p id="criticalAlertText" class="text-sm text-slate-200 mb-4"></p>
+<div class="grid md:grid-cols-2 gap-4">
+<div class="bg-slate-900/80 border border-rose-500/30 rounded-lg p-4">
+<div class="text-xs font-semibold text-rose-400 mb-2">⚠️ IMMEDIATE ACTIONS</div>
+<ul id="criticalImmediateActions" class="text-xs text-slate-300 space-y-1">
+<!-- Populated by JS -->
+</ul>
+</div>
+<div class="bg-slate-900/80 border border-rose-500/30 rounded-lg p-4">
+<div class="text-xs font-semibold text-rose-400 mb-2">⚖️ LEGAL CONSIDERATIONS</div>
+<ul id="criticalLegalWarnings" class="text-xs text-slate-300 space-y-1">
+<!-- Populated by JS -->
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
 <!-- Header with Risk Badge -->
 <div class="px-5 py-4 border-b border-slate-800">
 <div class="flex items-center justify-between mb-3">
@@ -504,11 +535,18 @@ Waiting...
 </ul>
 </div>
 
-<!-- Database Findings -->
+<!-- Database Findings - ENHANCED -->
 <div id="databaseFindings" class="hidden px-5 py-4 border-b border-slate-800">
-<div class="text-[11px] font-semibold text-slate-400 mb-3">🔍 DATABASE CHECKS</div>
-<div class="space-y-2" id="databaseFindingsList">
-<!-- Dynamically populated -->
+<div class="text-[11px] font-semibold text-slate-400 mb-3">🔍 DATABASE VERIFICATION RESULTS</div>
+<div class="space-y-3" id="databaseFindingsList">
+<!-- Dynamically populated with enhanced cards -->
+</div>
+</div>
+
+<!-- Enhanced Findings Details (expandable cards) -->
+<div id="enhancedFindings" class="hidden px-5 py-4 border-b border-slate-800">
+<div class="space-y-4" id="enhancedFindingsList">
+<!-- Populated by JS with detailed cards -->
 </div>
 </div>
 
@@ -1902,7 +1940,7 @@ async function processData(extracted) {
     };
     
     // Update UI
-    updateResultsUI(currentResult);
+    updateResultsUIwithEnhancements(currentResult);
     document.getElementById('statusMessage').textContent = extracted.userVerified ? '✓ Analysis complete (user-verified)' : '✓ Analysis complete.';
 }
 
@@ -2611,6 +2649,272 @@ function updateResultsUI(result) {
     document.getElementById('exportPdfBtn').classList.remove('hidden');
 }
 
+// ═══════════════════════════════════════════════════════════════════════
+// ENHANCED REPORT DISPLAY FUNCTIONS - $1000 PROFESSIONAL REPORT SYSTEM
+// ═══════════════════════════════════════════════════════════════════════
+
+function displayCriticalAlert(dbResults) {
+    const banner = document.getElementById('criticalAlertBanner');
+    
+    // Check for sanctions hits
+    if (dbResults.sanctions && dbResults.sanctions.hits > 0) {
+        banner.classList.remove('hidden');
+        
+        const alertText = document.getElementById('criticalAlertText');
+        const immediateActions = document.getElementById('criticalImmediateActions');
+        const legalWarnings = document.getElementById('criticalLegalWarnings');
+        
+        // Set alert text
+        alertText.textContent = `${dbResults.sanctions.hits} POTENTIAL SANCTIONS MATCH(ES) DETECTED. This entity or related parties appear on international watchlists. Immediate review and compliance action required.`;
+        
+        // Immediate actions
+        immediateActions.innerHTML = `
+            <li>❌ <strong>STOP</strong> all negotiations and transactions immediately</li>
+            <li>✓ Notify compliance officer within 24 hours</li>
+            <li>✓ Document all prior communications with this party</li>
+            <li>✓ Preserve all records and evidence</li>
+            <li>✓ Do NOT inform the counterparty of this alert</li>
+        `;
+        
+        // Legal warnings
+        legalWarnings.innerHTML = `
+            <li>⚖️ U.S. persons are <strong>PROHIBITED</strong> from transacting</li>
+            <li>💰 Penalties: Up to $20,000,000 per violation</li>
+            <li>⚠️ Criminal prosecution possible (up to 30 years)</li>
+            <li>🔒 Asset freezing requirements may apply</li>
+            <li>📋 Suspicious Activity Report (SAR) may be required</li>
+        `;
+        
+        return true;
+    }
+    
+    return false;
+}
+
+function createEnhancedFindingCard(finding) {
+    const severityColors = {
+        critical: { bg: 'bg-rose-500/10', border: 'border-rose-500/30', text: 'text-rose-400', icon: '🚨' },
+        high: { bg: 'bg-orange-500/10', border: 'border-orange-500/30', text: 'text-orange-400', icon: '⚠️' },
+        medium: { bg: 'bg-yellow-500/10', border: 'border-yellow-500/30', text: 'text-yellow-400', icon: '⚡' },
+        low: { bg: 'bg-green-500/10', border: 'border-green-500/30', text: 'text-green-400', icon: '✓' }
+    };
+    
+    const severity = finding.severity || 'low';
+    const colors = severityColors[severity];
+    
+    return `
+        <div class="border ${colors.border} ${colors.bg} rounded-lg p-4">
+            <!-- Finding Header -->
+            <div class="flex items-start justify-between mb-3">
+                <div class="flex items-center gap-3">
+                    <span class="text-2xl">${colors.icon}</span>
+                    <div>
+                        <div class="font-semibold ${colors.text} text-sm">${finding.title}</div>
+                        <div class="text-[10px] text-slate-400 mt-0.5">${finding.source}</div>
+                    </div>
+                </div>
+                <span class="text-[9px] px-2 py-1 rounded-full ${colors.bg} ${colors.text} border ${colors.border} uppercase font-bold">
+                    ${severity}
+                </span>
+            </div>
+            
+            <!-- Finding Details -->
+            <div class="text-xs text-slate-300 mb-3">
+                ${finding.details}
+            </div>
+            
+            <!-- Why This Matters -->
+            ${finding.whyMatters ? `
+            <div class="bg-slate-900/60 border border-slate-700 rounded-lg p-3 mb-3">
+                <div class="text-[10px] font-semibold text-cyan-400 mb-2">💡 WHY THIS MATTERS</div>
+                <div class="text-[11px] text-slate-300 leading-relaxed">${finding.whyMatters}</div>
+            </div>
+            ` : ''}
+            
+            <!-- Recommended Actions -->
+            ${finding.actions ? `
+            <div class="bg-slate-900/60 border border-slate-700 rounded-lg p-3">
+                <div class="text-[10px] font-semibold text-cyan-400 mb-2">📋 RECOMMENDED ACTIONS</div>
+                <ul class="text-[11px] text-slate-300 space-y-1">
+                    ${finding.actions.map(action => `<li>• ${action}</li>`).join('')}
+                </ul>
+            </div>
+            ` : ''}
+        </div>
+    `;
+}
+
+function generateEnhancedFindings(dbResults) {
+    const findings = [];
+    
+    // SANCTIONS CHECKS
+    if (dbResults.sanctions) {
+        if (dbResults.sanctions.hits > 0) {
+            // CRITICAL - Sanctions match
+            dbResults.sanctions.results?.forEach(check => {
+                if (check?.hit && check.matches) {
+                    check.matches.forEach(match => {
+                        findings.push({
+                            severity: 'critical',
+                            title: `Sanctions Match: ${match.name}`,
+                            source: `OpenSanctions (${match.datasets?.join(', ') || 'Multiple lists'})`,
+                            details: `Match confidence: ${(match.score * 100).toFixed(0)}%. This entity appears on international sanctions watchlists including OFAC, UN, and EU lists.`,
+                            whyMatters: `Transacting with sanctioned entities is <strong>illegal</strong> and carries severe penalties. U.S. persons (including companies) can face up to $20 million in civil penalties and 30 years imprisonment. Even indirect transactions or "facilitation" can trigger liability. This is not a false positive to ignore - it requires immediate compliance review.`,
+                            actions: [
+                                'Immediately cease all communication and negotiation',
+                                'Escalate to compliance/legal team within 24 hours',
+                                'File Suspicious Activity Report (SAR) if required by jurisdiction',
+                                'Review all connected parties and entities',
+                                'Consult sanctions counsel before any further action'
+                            ]
+                        });
+                    });
+                }
+            });
+        }
+    }
+    
+    // COMPANY REGISTRY CHECKS
+    if (dbResults.companyRegistries) {
+        const regs = dbResults.companyRegistries;
+        
+        // UK Companies House
+        if (regs.ukCompaniesHouse?.checked && !regs.ukCompaniesHouse.found) {
+            findings.push({
+                severity: 'medium',
+                title: 'UK Company Not Found',
+                source: 'UK Companies House (Official Registry)',
+                details: 'The company claims UK registration but was not found in the official Companies House database.',
+                whyMatters: `Every legitimate UK company <strong>must</strong> be registered with Companies House. If they claim UK operations but aren't registered, this indicates: (1) They're lying about their location, (2) They're operating illegally, or (3) The company name is incorrect. All are red flags.`,
+                actions: [
+                    'Request official company registration number',
+                    'Ask for Certificate of Incorporation',
+                    'Verify registered address matches claimed address',
+                    'Check if they recently changed company name',
+                    'Consider enhanced due diligence'
+                ]
+            });
+        }
+        
+        // OpenCorporates - Not Found
+        const ocBuyer = regs.openCorporates?.buyer;
+        const ocSeller = regs.openCorporates?.seller;
+        if ((ocBuyer?.checked && !ocBuyer.found) || (ocSeller?.checked && !ocSeller.found)) {
+            findings.push({
+                severity: 'medium',
+                title: 'Company Not Found in Global Registries',
+                source: 'OpenCorporates (200M+ companies, 140+ jurisdictions)',
+                details: 'Company not found in global company database covering 140+ countries.',
+                whyMatters: `OpenCorporates covers 200M+ companies worldwide. If they're not found, it means: (1) Very new company (< 6 months), (2) Operating informally/illegally, (3) Incorrect company name provided, or (4) Shell company with minimal public presence. Legitimate established businesses should appear here.`,
+                actions: [
+                    'Request official company registration documents',
+                    'Verify company age - if new, extra scrutiny needed',
+                    'Ask for audited financial statements',
+                    'Request trade references from established partners',
+                    'Consider requiring payment guarantees or escrow'
+                ]
+            });
+        }
+    }
+    
+    // EMAIL VALIDATION
+    if (dbResults.financial) {
+        const buyerEmail = dbResults.financial.buyerEmail;
+        const sellerEmail = dbResults.financial.sellerEmail;
+        
+        if (buyerEmail?.risk === 'CRITICAL' || sellerEmail?.risk === 'CRITICAL') {
+            findings.push({
+                severity: 'high',
+                title: 'Disposable/Temporary Email Detected',
+                source: 'Email Validation Service',
+                details: `Using temporary email service (${buyerEmail?.domain || sellerEmail?.domain}). These emails self-destruct after a short period.`,
+                whyMatters: `Legitimate businesses use corporate email addresses tied to their domain. Disposable emails indicate: (1) They don't want to be contacted later, (2) Planning to disappear after transaction, (3) Hiding their real identity, or (4) Operating a scam. This is a <strong>major fraud indicator</strong>.`,
+                actions: [
+                    'Request corporate email address (e.g., name@company.com)',
+                    'Verify email domain matches company website',
+                    'Ask for multiple points of contact',
+                    'Require video call or in-person meeting',
+                    'Consider this a critical red flag if they refuse'
+                ]
+            });
+        }
+        
+        if (buyerEmail?.risk === 'ELEVATED' || sellerEmail?.risk === 'ELEVATED') {
+            findings.push({
+                severity: 'low',
+                title: 'Free Email Provider Used',
+                source: 'Email Validation Service',
+                details: `Using free email service (Gmail, Yahoo, Hotmail, etc.) instead of corporate email.`,
+                whyMatters: `While not automatically suspicious, established businesses typically use corporate email addresses. Free emails may indicate: (1) Very small/informal operation, (2) Individual trader rather than company, (3) Lack of professional infrastructure. Context matters - for a large deal, this is concerning.`,
+                actions: [
+                    'Verify they have a proper company website',
+                    'Ask why they use personal email for business',
+                    'Request additional verification documents',
+                    'Consider the deal size - higher value = higher risk with free email'
+                ]
+            });
+        }
+    }
+    
+    // GLEIF / SEC EDGAR - Positive findings
+    if (dbResults.companyRegistries?.gleif?.buyer?.found || dbResults.companyRegistries?.gleif?.seller?.found) {
+        findings.push({
+            severity: 'low',
+            title: '✅ LEI Registration Verified',
+            source: 'GLEIF (Global Legal Entity Identifier)',
+            details: 'Company has a valid Legal Entity Identifier (LEI), indicating regulated financial activity.',
+            whyMatters: `LEI registration is <strong>required</strong> for entities participating in financial markets. This means: (1) They're engaged in legitimate regulated activity, (2) They've passed regulatory vetting, (3) Their details are publicly verified. This is a <strong>positive signal</strong> of legitimacy.`,
+            actions: [
+                'Verify the LEI details match the company information provided',
+                'Check LEI status is "ISSUED" not "LAPSED"',
+                'This is a good sign - reduces risk'
+            ]
+        });
+    }
+    
+    if (dbResults.companyRegistries?.secEdgar?.buyer?.found || dbResults.companyRegistries?.secEdgar?.seller?.found) {
+        const cik = dbResults.companyRegistries?.secEdgar?.buyer?.cik || dbResults.companyRegistries?.secEdgar?.seller?.cik;
+        findings.push({
+            severity: 'low',
+            title: '✅ SEC-Registered Public Company',
+            source: 'SEC EDGAR (U.S. Securities and Exchange Commission)',
+            details: `Company is registered with the SEC (CIK: ${cik}). Public filings available.`,
+            whyMatters: `SEC registration means this is a <strong>legitimate U.S. public company</strong> subject to strict reporting requirements. They must file audited financials quarterly and are monitored by federal regulators. This significantly <strong>reduces risk</strong>. You can review their financial health directly.`,
+            actions: [
+                `Review their SEC filings at sec.gov/cgi-bin/browse-edgar?CIK=${cik}`,
+                'Check recent 10-K (annual) and 10-Q (quarterly) reports',
+                'Verify financial stability before proceeding',
+                'This is a strong positive signal'
+            ]
+        });
+    }
+    
+    return findings;
+}
+
+// Update the existing database display to include enhanced findings
+function updateResultsUIwithEnhancements(result) {
+    // First run the standard display
+    updateResultsUI(result);
+    
+    // Then add enhancements
+    if (result.databaseResults) {
+        // Check for critical alerts
+        const hasCriticalAlert = displayCriticalAlert(result.databaseResults);
+        
+        // Generate enhanced findings
+        const findings = generateEnhancedFindings(result.databaseResults);
+        
+        if (findings.length > 0) {
+            const enhancedSection = document.getElementById('enhancedFindings');
+            const enhancedList = document.getElementById('enhancedFindingsList');
+            
+            enhancedSection.classList.remove('hidden');
+            enhancedList.innerHTML = findings.map(finding => createEnhancedFindingCard(finding)).join('');
+        }
+    }
+}
+
 // Toggle extracted data visibility
 function toggleExtractedData() {
     const content = document.getElementById('extractedDataContent');
@@ -3099,6 +3403,144 @@ function generatePdfReport(result, userEmail) {
     }
     
     // =========================================================
+    // CRITICAL ALERT PAGE (if sanctions detected)
+    // =========================================================
+    
+    if (dbResults && dbResults.sanctions && dbResults.sanctions.hits > 0) {
+        yPos = newPage();
+        
+        // RED BORDER ALERT BOX
+        doc.setDrawColor(...colors.red);
+        doc.setLineWidth(3);
+        doc.roundedRect(margin, yPos, maxWidth, 25, 3, 3, 'D');
+        
+        // WARNING ICON AND TITLE
+        doc.setFontSize(20);
+        doc.setTextColor(...colors.red);
+        doc.setFont(undefined, 'bold');
+        doc.text('⚠', pageWidth / 2 - 15, yPos + 12, { align: 'center' });
+        doc.text('CRITICAL SANCTIONS ALERT', pageWidth / 2, yPos + 12, { align: 'center' });
+        doc.setFontSize(10);
+        doc.text('IMMEDIATE ACTION REQUIRED', pageWidth / 2, yPos + 20, { align: 'center' });
+        doc.setFont(undefined, 'normal');
+        yPos += 30;
+        
+        // Alert Message
+        doc.setFontSize(9);
+        doc.setTextColor(...colors.darkGray);
+        const alertMsg = `${dbResults.sanctions.hits} POTENTIAL SANCTIONS MATCH(ES) DETECTED. Entity or related parties appear on international watchlists. Transactions may be PROHIBITED by law.`;
+        const alertLines = doc.splitTextToSize(alertMsg, maxWidth);
+        doc.text(alertLines, margin, yPos);
+        yPos += alertLines.length * 4 + 10;
+        
+        // MATCHED ENTITIES SECTION
+        sectionHeader('Matched Entities');
+        doc.setFontSize(7);
+        doc.setTextColor(...colors.darkGray);
+        
+        if (dbResults.sanctions.results) {
+            dbResults.sanctions.results.forEach(check => {
+                if (check?.hit && check.matches) {
+                    check.matches.forEach(match => {
+                        checkSpace(30);
+                        
+                        // Entity box
+                        doc.setDrawColor(...colors.red);
+                        doc.setFillColor(255, 245, 245);
+                        doc.roundedRect(margin, yPos - 2, maxWidth, 28, 2, 2, 'FD');
+                        
+                        doc.setFontSize(9);
+                        doc.setTextColor(...colors.red);
+                        doc.setFont(undefined, 'bold');
+                        doc.text(match.name, margin + 3, yPos + 3);
+                        doc.setFont(undefined, 'normal');
+                        
+                        doc.setFontSize(7);
+                        doc.setTextColor(...colors.darkGray);
+                        doc.text('Match Confidence: ' + (match.score * 100).toFixed(0) + '%', margin + 3, yPos + 8);
+                        doc.text('Lists: ' + (match.datasets?.join(', ') || 'Multiple watchlists'), margin + 3, yPos + 12);
+                        
+                        // Reason if available
+                        if (match.reason) {
+                            const reasonLines = doc.splitTextToSize('Reason: ' + match.reason, maxWidth - 6);
+                            doc.text(reasonLines, margin + 3, yPos + 16);
+                        }
+                        
+                        yPos += 32;
+                    });
+                }
+            });
+        }
+        
+        yPos += 5;
+        
+        // IMMEDIATE ACTIONS BOX
+        sectionHeader('⚠ Immediate Actions Required');
+        doc.setFillColor(255, 245, 245);
+        doc.rect(margin, yPos, maxWidth, 35, 'F');
+        doc.setFontSize(7);
+        doc.setTextColor(...colors.darkGray);
+        
+        const actions = [
+            '❌ CEASE all negotiations and transactions immediately',
+            '✓ Notify compliance officer within 24 hours',
+            '✓ Document all prior communications',
+            '✓ Preserve all records and evidence',
+            '✓ Do NOT inform counterparty of this alert',
+            '✓ Consult legal counsel before any further action'
+        ];
+        
+        actions.forEach((action, i) => {
+            doc.text(action, margin + 3, yPos + 5 + (i * 5));
+        });
+        yPos += 40;
+        
+        // LEGAL WARNINGS BOX
+        sectionHeader('⚖ Legal Implications & Penalties');
+        doc.setFillColor(255, 245, 245);
+        doc.rect(margin, yPos, maxWidth, 40, 'F');
+        doc.setFontSize(7);
+        doc.setTextColor(...colors.darkGray);
+        
+        const legalWarnings = [
+            '• U.S. persons are PROHIBITED from transacting with sanctioned entities',
+            '• Civil penalties: Up to $20,000,000 per violation',
+            '• Criminal penalties: Up to 30 years imprisonment',
+            '• Asset freezing and blocking requirements apply',
+            '• Facilitation or indirect transactions also prohibited',
+            '• Suspicious Activity Report (SAR) may be required',
+            '• OFAC maintains a 50% Rule for ownership determination',
+            '• Even unknowing violations can result in strict liability'
+        ];
+        
+        legalWarnings.forEach((warning, i) => {
+            doc.text(warning, margin + 3, yPos + 5 + (i * 4.5));
+        });
+        yPos += 45;
+        
+        // DISCLAIMER
+        doc.setFontSize(6);
+        doc.setTextColor(...colors.gray);
+        doc.setFont(undefined, 'italic');
+        const disclaimer = 'IMPORTANT: This alert identifies potential matches based on name similarity. Independent verification and legal counsel consultation is required. This report does not constitute legal advice.';
+        const disclaimerLines = doc.splitTextToSize(disclaimer, maxWidth);
+        doc.text(disclaimerLines, margin, yPos);
+        yPos += disclaimerLines.length * 3 + 10;
+        doc.setFont(undefined, 'normal');
+        
+        // Contact info
+        doc.setFontSize(7);
+        doc.setTextColor(...colors.cyan);
+        doc.setFont(undefined, 'bold');
+        doc.text('For urgent compliance questions:', margin, yPos);
+        doc.setFont(undefined, 'normal');
+        doc.setTextColor(...colors.darkGray);
+        doc.text('Email: compliance@dudediligence.pro | WhatsApp: +1 (727) 623-2652', margin, yPos + 5);
+        
+        yPos = newPage();
+    }
+    
+    // =========================================================
     // DATABASE VERIFICATION RESULTS (REAL DATA)
     // =========================================================
     
@@ -3544,6 +3986,113 @@ function generatePdfReport(result, userEmail) {
     addField('WhatsApp', '+1 (727) 623-2652');
     addField('Website', 'dudediligence.pro');
     yPos += 5;
+    
+    // =========================================================
+    // ENHANCED FINDINGS & RECOMMENDATIONS
+    // =========================================================
+    
+    const findings = generateEnhancedFindings(dbResults);
+    
+    if (findings.length > 0) {
+        yPos = newPage();
+        
+        doc.setFontSize(14);
+        doc.setTextColor(...colors.cyan);
+        doc.setFont(undefined, 'bold');
+        doc.text('Detailed Findings & Recommendations', pageWidth / 2, yPos, { align: 'center' });
+        yPos += 10;
+        doc.setFont(undefined, 'normal');
+        
+        findings.forEach((finding, idx) => {
+            checkSpace(50);
+            
+            // Severity indicator
+            const severityColors = {
+                critical: colors.red,
+                high: [255, 127, 0],
+                medium: colors.yellow,
+                low: colors.green
+            };
+            const severityColor = severityColors[finding.severity] || colors.gray;
+            
+            // Finding header with colored bar
+            doc.setDrawColor(...severityColor);
+            doc.setLineWidth(2);
+            doc.line(margin, yPos, margin + 15, yPos);
+            
+            doc.setFontSize(10);
+            doc.setTextColor(...severityColor);
+            doc.setFont(undefined, 'bold');
+            doc.text(finding.title, margin + 18, yPos + 1);
+            doc.setFont(undefined, 'normal');
+            
+            // Severity badge
+            doc.setFillColor(...severityColor);
+            doc.roundedRect(pageWidth - margin - 22, yPos - 3, 22, 6, 1, 1, 'F');
+            doc.setFontSize(6);
+            doc.setTextColor(255, 255, 255);
+            doc.text(finding.severity.toUpperCase(), pageWidth - margin - 11, yPos + 1, { align: 'center' });
+            
+            yPos += 6;
+            
+            // Source
+            doc.setFontSize(6);
+            doc.setTextColor(...colors.gray);
+            doc.text('Source: ' + finding.source, margin + 18, yPos);
+            yPos += 5;
+            
+            // Details
+            doc.setFontSize(7);
+            doc.setTextColor(...colors.darkGray);
+            const detailLines = doc.splitTextToSize(finding.details, maxWidth - 5);
+            doc.text(detailLines, margin + 3, yPos);
+            yPos += detailLines.length * 3.5 + 5;
+            
+            // Why This Matters box
+            if (finding.whyMatters) {
+                checkSpace(20);
+                doc.setFillColor(240, 248, 255);
+                doc.setDrawColor(...colors.cyan);
+                doc.roundedRect(margin + 3, yPos, maxWidth - 6, 'auto', 2, 2, 'FD');
+                
+                doc.setFontSize(7);
+                doc.setTextColor(...colors.cyan);
+                doc.setFont(undefined, 'bold');
+                doc.text('💡 WHY THIS MATTERS', margin + 6, yPos + 4);
+                doc.setFont(undefined, 'normal');
+                
+                doc.setTextColor(...colors.darkGray);
+                // Remove HTML tags for PDF
+                const cleanText = finding.whyMatters.replace(/<\/?strong>/g, '');
+                const whyLines = doc.splitTextToSize(cleanText, maxWidth - 15);
+                doc.text(whyLines, margin + 6, yPos + 9);
+                yPos += 9 + whyLines.length * 3.5 + 5;
+            }
+            
+            // Recommended Actions box
+            if (finding.actions && finding.actions.length > 0) {
+                checkSpace(25);
+                doc.setFillColor(255, 250, 240);
+                doc.setDrawColor(...colors.yellow);
+                doc.roundedRect(margin + 3, yPos, maxWidth - 6, 'auto', 2, 2, 'FD');
+                
+                doc.setFontSize(7);
+                doc.setTextColor(...colors.yellow);
+                doc.setFont(undefined, 'bold');
+                doc.text('📋 RECOMMENDED ACTIONS', margin + 6, yPos + 4);
+                doc.setFont(undefined, 'normal');
+                
+                doc.setTextColor(...colors.darkGray);
+                finding.actions.forEach((action, i) => {
+                    const actionLines = doc.splitTextToSize('• ' + action, maxWidth - 18);
+                    doc.text(actionLines, margin + 6, yPos + 9 + (i * 3.5));
+                });
+                yPos += 9 + finding.actions.length * 3.5 + 5;
+            }
+            
+            yPos += 8;
+        });
+    }
     
     // =========================================================
     // DISCLAIMER

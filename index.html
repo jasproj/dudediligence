@@ -2936,8 +2936,13 @@ function exportPdfReport() {
         return;
     }
     
-    currentReportData = currentResult;
-    openEmailGate();
+    // TEMPORARY BYPASS - Generate PDF directly without email gate
+    console.log('Generating PDF directly...');
+    generatePdfReport(currentResult, 'test@user.com');
+    
+    // Original code (re-enable after testing):
+    // currentReportData = currentResult;
+    // openEmailGate();
 }
 
 // Export JSON report

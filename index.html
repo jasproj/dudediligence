@@ -2656,6 +2656,11 @@ function updateResultsUI(result) {
 function displayCriticalAlert(dbResults) {
     const banner = document.getElementById('criticalAlertBanner');
     
+    // Check if dbResults exists
+    if (!dbResults) {
+        return false;
+    }
+    
     // Check for sanctions hits
     if (dbResults.sanctions && dbResults.sanctions.hits > 0) {
         banner.classList.remove('hidden');
@@ -2746,6 +2751,12 @@ function createEnhancedFindingCard(finding) {
 
 function generateEnhancedFindings(dbResults) {
     const findings = [];
+    
+    // Check if dbResults exists at all
+    if (!dbResults) {
+        console.log('No database results available for enhanced findings');
+        return findings; // Return empty array
+    }
     
     // SANCTIONS CHECKS
     if (dbResults.sanctions) {

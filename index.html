@@ -2938,7 +2938,15 @@ function exportPdfReport() {
     
     // TEMPORARY BYPASS - Generate PDF directly without email gate
     console.log('Generating PDF directly...');
-    generatePdfReport(currentResult, 'test@user.com');
+    console.log('Current result:', currentResult);
+    
+    try {
+        generatePdfReport(currentResult, 'test@user.com');
+        console.log('✅ PDF generation completed successfully!');
+    } catch (error) {
+        console.error('❌ PDF generation failed:', error);
+        alert('PDF generation failed. Error: ' + error.message + '\n\nCheck browser console (F12) for details.');
+    }
     
     // Original code (re-enable after testing):
     // currentReportData = currentResult;
@@ -3166,6 +3174,9 @@ function generatePdfReport(result, userEmail) {
         red: [220, 38, 38],
         white: [255, 255, 255]
     };
+    
+    // Get database results (used throughout the PDF)
+    const dbResults = result.databaseResults;
     
     // ===== HEADER =====
     function addHeader() {
@@ -3551,8 +3562,7 @@ function generatePdfReport(result, userEmail) {
     
     sectionHeader('Database Verification Results');
     
-    // Check if we have real database results (NEW FORMAT)
-    const dbResults = result.databaseResults;
+    // Database results already defined at top of function
     
     if (dbResults) {
         // SANCTIONS CHECKS (OpenSanctions)

@@ -1513,9 +1513,9 @@ function determineRiskLevel(score, blacklistHits, sanctionsHits, documentReuse) 
     if (documentReuse.isReused && documentReuse.timesUsed > 3) {
         return 'RED';
     }
-    if (score >= 80) return 'GREEN';
+    if (score >= 86) return 'GREEN';
     if (score >= 60) return 'YELLOW';
-    if (score >= 40) return 'RED';
+    if (score >= 31) return 'RED';
     return 'BLACK';
 }
 
@@ -3519,10 +3519,10 @@ function generatePdfReport(result, userEmail) {
     doc.setFontSize(7);
     doc.setTextColor(...colors.gray);
     const methodology = [
-        'Score 0-30 (GREEN): Low risk - No significant issues identified. Standard verification recommended.',
-        'Score 31-60 (YELLOW): Medium risk - Some concerns identified. Enhanced due diligence recommended.',
-        'Score 61-85 (RED): High risk - Significant issues found. Proceed with extreme caution.',
-        'Score 86-100 (BLACK): Critical risk - Major red flags. Transaction not recommended.'
+        'Score 86-100 (GREEN): Low risk - No significant issues identified. Standard verification recommended.',
+        'Score 60-85 (YELLOW): Medium risk - Some concerns identified. Enhanced due diligence recommended.',
+        'Score 31-59 (RED): High risk - Significant issues found. Proceed with extreme caution.',
+        'Score 0-30 (BLACK): Critical risk - Major red flags. Transaction not recommended.'
     ];
     methodology.forEach(line => {
         checkSpace(6);

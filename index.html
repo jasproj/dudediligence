@@ -2947,21 +2947,9 @@ function exportPdfReport() {
         return;
     }
     
-    // TEMPORARY BYPASS - Generate PDF directly without email gate
-    console.log('Generating PDF directly...');
-    console.log('Current result:', currentResult);
-    
-    try {
-        generatePdfReport(currentResult, 'test@user.com');
-        console.log('✅ PDF generation completed successfully!');
-    } catch (error) {
-        console.error('❌ PDF generation failed:', error);
-        alert('PDF generation failed. Error: ' + error.message + '\n\nCheck browser console (F12) for details.');
-    }
-    
-    // Original code (re-enable after testing):
-    // currentReportData = currentResult;
-    // openEmailGate();
+    // Email gate enabled - collect leads
+    currentReportData = currentResult;
+    openEmailGate();
 }
 
 // Export JSON report
@@ -3113,11 +3101,9 @@ async function submitEmailGate() {
         return;
     }
     
-    // ✅ FIXED: Send to Formspree (leads get emailed to you!)
-    // SETUP REQUIRED: Replace YOUR_FORM_ID with your actual Formspree form ID
-    // Get yours at: https://formspree.io (free account, takes 5 mins)
+    // ✅ Send to Formspree (leads get emailed to you!)
     try {
-        await fetch('https://formspree.io/f/YOUR_FORM_ID', {
+        await fetch('https://formspree.io/f/mgvglvrd', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

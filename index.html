@@ -3315,20 +3315,20 @@ function generatePdfReport(result, userEmail) {
     function cleanForPDF(text) {
         if (!text) return text;
         return text
-            .replace(/⚠️/g, '[WARNING]')
-            .replace(/⚠/g, '[WARNING]')
-            .replace(/🚨/g, '[CRITICAL]')
-            .replace(/❌/g, '[FAIL]')
-            .replace(/✅/g, '[OK]')
-            .replace(/✓/g, '[OK]')
-            .replace(/💡/g, '[TIP]')
-            .replace(/📋/g, '[ACTION]')
-            .replace(/📊/g, '[INFO]')
-            .replace(/🛑/g, '[STOP]')
-            .replace(/📞/g, '[CALL]')
-            .replace(/⚖️/g, '[LEGAL]')
-            .replace(/🚫/g, '[NO]')
-            .replace(/⛔/g, '[STOP]')
+            .replace(/⚠️ ?/g, '[WARNING] ')
+            .replace(/⚠ ?/g, '[WARNING] ')
+            .replace(/🚨 ?/g, '[CRITICAL] ')
+            .replace(/❌ ?/g, '[FAIL] ')
+            .replace(/✅ ?/g, '[OK] ')
+            .replace(/✓ ?/g, '[OK] ')
+            .replace(/💡 ?/g, '[TIP] ')
+            .replace(/📋 ?/g, '[ACTION] ')
+            .replace(/📊 ?/g, '[INFO] ')
+            .replace(/🛑 ?/g, '[STOP] ')
+            .replace(/📞 ?/g, '[CALL] ')
+            .replace(/⚖️ ?/g, '[LEGAL] ')
+            .replace(/🚫 ?/g, '[NO] ')
+            .replace(/⛔ ?/g, '[STOP] ')
             .replace(/[\u{1F600}-\u{1F64F}]/gu, '')  // emoticons
             .replace(/[\u{1F300}-\u{1F5FF}]/gu, '')  // misc symbols
             .replace(/[\u{1F680}-\u{1F6FF}]/gu, '')  // transport
@@ -3834,7 +3834,7 @@ function generatePdfReport(result, userEmail) {
                 doc.text('[WARNING]', margin + 3, yPos);
                 doc.setTextColor(...colors.darkGray);
                 doc.setFontSize(7);
-                doc.text('Sanctions Screening', margin + 8, yPos);
+                doc.text('Sanctions Screening', margin + 28, yPos);
                 doc.setTextColor(...colors.red);
                 doc.text(dbResults.sanctions.hits + ' POTENTIAL MATCH(ES) - REVIEW REQUIRED', pageWidth - margin - 65, yPos);
             } else {
@@ -3842,7 +3842,7 @@ function generatePdfReport(result, userEmail) {
                 doc.text('[OK]', margin + 3, yPos);
                 doc.setTextColor(...colors.darkGray);
                 doc.setFontSize(7);
-                doc.text('Sanctions Screening (450K+ entities)', margin + 8, yPos);
+                doc.text('Sanctions Screening (450K+ entities)', margin + 18, yPos);
                 doc.setTextColor(...colors.gray);
                 doc.text('No matches found', pageWidth - margin - 30, yPos);
             }
@@ -4213,7 +4213,8 @@ function generatePdfReport(result, userEmail) {
             doc.text((i + 1) + '.', margin, yPos);
             doc.setFont(undefined, 'normal');
             doc.setTextColor(...colors.darkGray);
-            const stepLines = doc.splitTextToSize(step, maxWidth - 8);
+            const cleanStep = cleanForPDF(step);
+            const stepLines = doc.splitTextToSize(cleanStep, maxWidth - 8);
             doc.text(stepLines, margin + 6, yPos);
             yPos += stepLines.length * 4 + 3;
         });

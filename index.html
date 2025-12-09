@@ -4591,35 +4591,39 @@ function generatePdfReport(result, userEmail) {
             // Why This Matters box
             if (finding.whyMatters) {
                 checkSpace(20);
+                // Remove HTML tags for PDF
+                const cleanText = finding.whyMatters.replace(/<\/?strong>/g, '');
+                const whyLines = doc.splitTextToSize(cleanText, maxWidth - 15);
+                const boxHeight = 14 + whyLines.length * 3.5;
+                
                 doc.setFillColor(240, 248, 255);
                 doc.setDrawColor(...colors.cyan);
-                doc.roundedRect(margin + 3, yPos, maxWidth - 6, 'auto', 2, 2, 'FD');
+                doc.roundedRect(margin + 3, yPos, maxWidth - 6, boxHeight, 2, 2, 'FD');
                 
                 doc.setFontSize(7);
                 doc.setTextColor(...colors.cyan);
                 doc.setFont(undefined, 'bold');
-                doc.text('💡 WHY THIS MATTERS', margin + 6, yPos + 4);
+                doc.text('[TIP] WHY THIS MATTERS', margin + 6, yPos + 4);
                 doc.setFont(undefined, 'normal');
                 
                 doc.setTextColor(...colors.darkGray);
-                // Remove HTML tags for PDF
-                const cleanText = finding.whyMatters.replace(/<\/?strong>/g, '');
-                const whyLines = doc.splitTextToSize(cleanText, maxWidth - 15);
                 doc.text(whyLines, margin + 6, yPos + 9);
-                yPos += 9 + whyLines.length * 3.5 + 5;
+                yPos += boxHeight + 5;
             }
             
             // Recommended Actions box
             if (finding.actions && finding.actions.length > 0) {
                 checkSpace(25);
+                const actionsBoxHeight = 10 + finding.actions.length * 4;
+                
                 doc.setFillColor(255, 250, 240);
                 doc.setDrawColor(...colors.yellow);
-                doc.roundedRect(margin + 3, yPos, maxWidth - 6, 'auto', 2, 2, 'FD');
+                doc.roundedRect(margin + 3, yPos, maxWidth - 6, actionsBoxHeight, 2, 2, 'FD');
                 
                 doc.setFontSize(7);
                 doc.setTextColor(...colors.yellow);
                 doc.setFont(undefined, 'bold');
-                doc.text('📋 RECOMMENDED ACTIONS', margin + 6, yPos + 4);
+                doc.text('[ACTION] RECOMMENDED ACTIONS', margin + 6, yPos + 4);
                 doc.setFont(undefined, 'normal');
                 
                 doc.setTextColor(...colors.darkGray);

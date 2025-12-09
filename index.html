@@ -4618,7 +4618,7 @@ function generatePdfReport(result, userEmail) {
             doc.setFontSize(10);
             doc.setTextColor(...severityColor);
             doc.setFont(undefined, 'bold');
-            doc.text(finding.title, margin + 18, yPos + 1);
+            doc.text(cleanForPDF(finding.title), margin + 18, yPos + 1);
             doc.setFont(undefined, 'normal');
             
             // Severity badge
@@ -4633,21 +4633,21 @@ function generatePdfReport(result, userEmail) {
             // Source
             doc.setFontSize(6);
             doc.setTextColor(...colors.gray);
-            doc.text('Source: ' + finding.source, margin + 18, yPos);
+            doc.text('Source: ' + cleanForPDF(finding.source), margin + 18, yPos);
             yPos += 5;
             
             // Details
             doc.setFontSize(7);
             doc.setTextColor(...colors.darkGray);
-            const detailLines = doc.splitTextToSize(finding.details, maxWidth - 5);
+            const detailLines = doc.splitTextToSize(cleanForPDF(finding.details), maxWidth - 5);
             doc.text(detailLines, margin + 3, yPos);
             yPos += detailLines.length * 3.5 + 5;
             
             // Why This Matters box
             if (finding.whyMatters) {
                 checkSpace(20);
-                // Remove HTML tags for PDF
-                const cleanText = finding.whyMatters.replace(/<\/?strong>/g, '');
+                // Remove HTML tags for PDF and clean emojis
+                const cleanText = cleanForPDF(finding.whyMatters.replace(/<\/?strong>/g, ''));
                 const whyLines = doc.splitTextToSize(cleanText, maxWidth - 15);
                 const boxHeight = 14 + whyLines.length * 3.5;
                 
@@ -4683,7 +4683,7 @@ function generatePdfReport(result, userEmail) {
                 
                 doc.setTextColor(...colors.darkGray);
                 finding.actions.forEach((action, i) => {
-                    const actionLines = doc.splitTextToSize('• ' + action, maxWidth - 18);
+                    const actionLines = doc.splitTextToSize('• ' + cleanForPDF(action), maxWidth - 18);
                     doc.text(actionLines, margin + 6, yPos + 9 + (i * 3.5));
                 });
                 yPos += 9 + finding.actions.length * 3.5 + 5;

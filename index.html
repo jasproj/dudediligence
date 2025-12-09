@@ -1258,7 +1258,7 @@ function calculateRuleBasedScore(data) {
             const paymentLower = paymentText.toLowerCase();
             if (paymentLower.includes('upfront') || paymentLower.includes('advance') || paymentLower.includes('100%')) {
                 score -= 15;
-                redFlags.push("⚠️ 100% upfront payment - HIGH FRAUD RISK");
+                redFlags.push("[WARNING] 100% upfront payment - HIGH FRAUD RISK");
             } else {
                 positiveSignals.push("Payment terms specified");
             }
@@ -1697,7 +1697,7 @@ async function runDiligence() {
     } catch (error) {
         console.error(error);
         stopAnalysisAnimation();
-        document.getElementById('statusMessage').textContent = `❌ Error: ${error.message}`;
+        document.getElementById('statusMessage').textContent = `[FAIL] Error: ${error.message}`;
         document.getElementById('riskBadge').textContent = 'Error';
     }
 }
@@ -2023,7 +2023,7 @@ function generateNextSteps(riskLevel, scoring, databaseResults) {
         nextSteps.push("Obtain bank reference letter on bank letterhead");
         nextSteps.push("Verify signatory authority with notarized documents");
         if (databaseResults?.checks?.sanctions?.entities?.some(e => e.totalResults > 0)) {
-            nextSteps.push("⚠️ Review potential sanctions matches with legal counsel");
+            nextSteps.push("[WARNING] Review potential sanctions matches with legal counsel");
         }
     } else if (riskLevel === 'YELLOW') {
         nextSteps.push("Request valid business license and registration certificate");
@@ -2041,7 +2041,7 @@ function generateNextSteps(riskLevel, scoring, databaseResults) {
         nextSteps.push("Company not found in global registry - request certified registration documents");
     }
     if (databaseResults?.checks?.iban?.highRisk) {
-        nextSteps.push("⚠️ Bank in offshore jurisdiction - require explanation of banking relationship");
+        nextSteps.push("[WARNING] Bank in offshore jurisdiction - require explanation of banking relationship");
     }
     if (databaseResults?.checks?.emails?.some(e => e.isFreeEmail)) {
         nextSteps.push("Request official corporate email address for all communications");
@@ -2349,7 +2349,7 @@ function updateResultsUI(result) {
             if (db.sanctions) {
                 const hasHits = db.sanctions.hits > 0;
                 const statusColor = hasHits ? 'text-rose-400' : 'text-emerald-400';
-                const statusIcon = hasHits ? '🚨' : '✓';
+                const statusIcon = hasHits ? '[CRITICAL]' : '[OK]';
                 const statusText = hasHits ? `${db.sanctions.hits} MATCH(ES) FOUND` : 'Clear';
                 
                 databasesHtml += `<div class="flex items-center justify-between bg-slate-900/40 rounded-lg px-3 py-2 border ${hasHits ? 'border-rose-500/50 bg-rose-500/10' : 'border-slate-800'}">
@@ -2392,7 +2392,7 @@ function updateResultsUI(result) {
                     const uk = regs.ukCompaniesHouse;
                     const verified = uk.verified || uk.found;
                     const statusColor = verified ? 'text-emerald-400' : (uk.status === 'unconfigured' ? 'text-slate-400' : 'text-amber-400');
-                    const statusIcon = verified ? '✓' : (uk.status === 'unconfigured' ? '○' : '⚠️');
+                    const statusIcon = verified ? '[OK]' : (uk.status === 'unconfigured' ? '○' : '[WARNING]');
                     let statusText = verified ? 'Verified' : (uk.status === 'unconfigured' ? 'Not configured' : 'Not found');
                     if (uk.company?.status) statusText = uk.company.status.toUpperCase();
                     
@@ -2413,7 +2413,7 @@ function updateResultsUI(result) {
                     const oc = regs.openCorporates.buyer;
                     const found = oc.found;
                     const statusColor = found ? 'text-emerald-400' : (oc.rateLimited ? 'text-amber-400' : 'text-amber-400');
-                    const statusIcon = found ? '✓' : '⚠️';
+                    const statusIcon = found ? '[OK]' : '[WARNING]';
                     const statusText = found ? `Found (${oc.company?.status || 'Unknown'})` : (oc.rateLimited ? 'Rate limited' : 'Not found');
                     
                     databasesHtml += `<div class="flex items-center justify-between bg-slate-900/40 rounded-lg px-3 py-2 border border-slate-800">
@@ -2433,7 +2433,7 @@ function updateResultsUI(result) {
                     const oc = regs.openCorporates.seller;
                     const found = oc.found;
                     const statusColor = found ? 'text-emerald-400' : 'text-amber-400';
-                    const statusIcon = found ? '✓' : '⚠️';
+                    const statusIcon = found ? '[OK]' : '[WARNING]';
                     const statusText = found ? `Found (${oc.company?.status || 'Unknown'})` : 'Not found';
                     
                     databasesHtml += `<div class="flex items-center justify-between bg-slate-900/40 rounded-lg px-3 py-2 border border-slate-800">
@@ -2454,7 +2454,7 @@ function updateResultsUI(result) {
                     const gleifSeller = regs.gleif?.seller;
                     const hasLEI = gleifBuyer?.found || gleifSeller?.found;
                     const statusColor = hasLEI ? 'text-emerald-400' : 'text-slate-400';
-                    const statusIcon = hasLEI ? '✓' : '○';
+                    const statusIcon = hasLEI ? '[OK]' : '○';
                     const statusText = hasLEI ? 'LEI Found' : 'No LEI registered';
                     
                     databasesHtml += `<div class="flex items-center justify-between bg-slate-900/40 rounded-lg px-3 py-2 border border-slate-800">
@@ -2475,7 +2475,7 @@ function updateResultsUI(result) {
                     const secSeller = regs.secEdgar?.seller;
                     const hasSEC = secBuyer?.found || secSeller?.found;
                     const statusColor = hasSEC ? 'text-emerald-400' : 'text-slate-400';
-                    const statusIcon = hasSEC ? '✓' : '○';
+                    const statusIcon = hasSEC ? '[OK]' : '○';
                     const statusText = hasSEC ? 'SEC Registered' : 'Not SEC registered';
                     const cik = secBuyer?.cik || secSeller?.cik;
                     
@@ -2501,7 +2501,7 @@ function updateResultsUI(result) {
                     const iban = fin.iban;
                     const valid = iban.valid;
                     const statusColor = valid ? 'text-emerald-400' : 'text-rose-400';
-                    const statusIcon = valid ? '✓' : '✗';
+                    const statusIcon = valid ? '[OK]' : '✗';
                     const statusText = valid ? `Valid (${iban.country})` : 'Invalid format';
                     
                     databasesHtml += `<div class="flex items-center justify-between bg-slate-900/40 rounded-lg px-3 py-2 border ${!valid ? 'border-rose-500/30' : 'border-slate-800'}">
@@ -2518,7 +2518,7 @@ function updateResultsUI(result) {
                     const swift = fin.swift;
                     const valid = swift.valid;
                     const statusColor = valid ? 'text-emerald-400' : 'text-rose-400';
-                    const statusIcon = valid ? '✓' : '✗';
+                    const statusIcon = valid ? '[OK]' : '✗';
                     const statusText = valid ? `Valid (${swift.countryCode})` : 'Invalid format';
                     
                     databasesHtml += `<div class="flex items-center justify-between bg-slate-900/40 rounded-lg px-3 py-2 border border-slate-800">
@@ -2534,7 +2534,7 @@ function updateResultsUI(result) {
                 if (fin.buyerEmail?.checked) {
                     const email = fin.buyerEmail;
                     const riskColor = email.risk === 'CRITICAL' ? 'text-rose-400' : (email.risk === 'ELEVATED' ? 'text-amber-400' : 'text-emerald-400');
-                    const riskIcon = email.risk === 'CRITICAL' ? '🚨' : (email.risk === 'ELEVATED' ? '⚠️' : '✓');
+                    const riskIcon = email.risk === 'CRITICAL' ? '[CRITICAL]' : (email.risk === 'ELEVATED' ? '[WARNING]' : '[OK]');
                     const riskText = email.risk === 'CRITICAL' ? 'Disposable!' : (email.risk === 'ELEVATED' ? 'Free email' : 'Corporate');
                     
                     databasesHtml += `<div class="flex items-center justify-between bg-slate-900/40 rounded-lg px-3 py-2 border ${email.risk === 'CRITICAL' ? 'border-rose-500/30' : 'border-slate-800'}">
@@ -2553,7 +2553,7 @@ function updateResultsUI(result) {
                 if (fin.sellerEmail?.checked) {
                     const email = fin.sellerEmail;
                     const riskColor = email.risk === 'CRITICAL' ? 'text-rose-400' : (email.risk === 'ELEVATED' ? 'text-amber-400' : 'text-emerald-400');
-                    const riskIcon = email.risk === 'CRITICAL' ? '🚨' : (email.risk === 'ELEVATED' ? '⚠️' : '✓');
+                    const riskIcon = email.risk === 'CRITICAL' ? '[CRITICAL]' : (email.risk === 'ELEVATED' ? '[WARNING]' : '[OK]');
                     const riskText = email.risk === 'CRITICAL' ? 'Disposable!' : (email.risk === 'ELEVATED' ? 'Free email' : 'Corporate');
                     
                     databasesHtml += `<div class="flex items-center justify-between bg-slate-900/40 rounded-lg px-3 py-2 border ${email.risk === 'CRITICAL' ? 'border-rose-500/30' : 'border-slate-800'}">
@@ -2574,7 +2574,7 @@ function updateResultsUI(result) {
                 db.jurisdictions.forEach(jur => {
                     if (!jur?.checked) return;
                     const riskColor = jur.risk === 'CRITICAL' ? 'text-rose-400' : (jur.risk === 'HIGH' ? 'text-amber-400' : (jur.risk === 'ELEVATED' ? 'text-amber-400' : 'text-emerald-400'));
-                    const riskIcon = jur.risk === 'CRITICAL' ? '🚨' : (jur.risk === 'HIGH' ? '⚠️' : (jur.risk === 'ELEVATED' ? '⚠️' : '✓'));
+                    const riskIcon = jur.risk === 'CRITICAL' ? '[CRITICAL]' : (jur.risk === 'HIGH' ? '[WARNING]' : (jur.risk === 'ELEVATED' ? '[WARNING]' : '[OK]'));
                     const riskText = jur.risk === 'CRITICAL' ? 'FATF Blacklist' : (jur.risk === 'HIGH' ? 'FATF Grey List' : (jur.risk === 'ELEVATED' ? 'Secrecy jurisdiction' : 'Standard'));
                     
                     databasesHtml += `<div class="flex items-center justify-between bg-slate-900/40 rounded-lg px-3 py-2 border ${jur.risk === 'CRITICAL' ? 'border-rose-500/50 bg-rose-500/10' : (jur.risk === 'HIGH' ? 'border-amber-500/30' : 'border-slate-800')}">
@@ -2763,10 +2763,10 @@ function displayCriticalAlert(dbResults) {
 
 function createEnhancedFindingCard(finding) {
     const severityColors = {
-        critical: { bg: 'bg-rose-500/10', border: 'border-rose-500/30', text: 'text-rose-400', icon: '🚨' },
-        high: { bg: 'bg-orange-500/10', border: 'border-orange-500/30', text: 'text-orange-400', icon: '⚠️' },
+        critical: { bg: 'bg-rose-500/10', border: 'border-rose-500/30', text: 'text-rose-400', icon: '[CRITICAL]' },
+        high: { bg: 'bg-orange-500/10', border: 'border-orange-500/30', text: 'text-orange-400', icon: '[WARNING]' },
         medium: { bg: 'bg-yellow-500/10', border: 'border-yellow-500/30', text: 'text-yellow-400', icon: '⚡' },
-        low: { bg: 'bg-green-500/10', border: 'border-green-500/30', text: 'text-green-400', icon: '✓' }
+        low: { bg: 'bg-green-500/10', border: 'border-green-500/30', text: 'text-green-400', icon: '[OK]' }
     };
     
     const severity = finding.severity || 'low';
@@ -3127,7 +3127,7 @@ async function submitContactForm() {
                 message: message,
                 source: 'Contact Form',
                 timestamp: new Date().toISOString(),
-                _subject: `🚨 NEW DDP CONTACT: ${name} - ${email}`
+                _subject: `[CRITICAL] NEW DDP CONTACT: ${name} - ${email}`
             })
         });
         
@@ -3179,7 +3179,7 @@ async function submitEmailGate() {
                 timestamp: new Date().toISOString(),
                 reportScore: currentReportData ? currentReportData.score : 'N/A',
                 riskLevel: currentReportData ? currentReportData.riskLevel : 'N/A',
-                _subject: `🚨 NEW DDP LEAD: ${email}`
+                _subject: `[CRITICAL] NEW DDP LEAD: ${email}`
             })
         });
         
@@ -3305,6 +3305,30 @@ function generatePdfReport(result, userEmail) {
     }
     
     // ===== SECTION HEADER =====
+    // Clean emojis for PDF compatibility
+    function cleanForPDF(text) {
+        if (!text) return text;
+        return text
+            .replace(/⚠️/g, '[WARNING]')
+            .replace(/⚠/g, '[WARNING]')
+            .replace(/🚨/g, '[CRITICAL]')
+            .replace(/❌/g, '[FAIL]')
+            .replace(/✅/g, '[OK]')
+            .replace(/✓/g, '[OK]')
+            .replace(/💡/g, '[TIP]')
+            .replace(/📋/g, '[ACTION]')
+            .replace(/📊/g, '[INFO]')
+            .replace(/🛑/g, '[STOP]')
+            .replace(/📞/g, '[CALL]')
+            .replace(/⚖️/g, '[LEGAL]')
+            .replace(/🚫/g, '[NO]')
+            .replace(/[\u{1F600}-\u{1F64F}]/gu, '')  // emoticons
+            .replace(/[\u{1F300}-\u{1F5FF}]/gu, '')  // misc symbols
+            .replace(/[\u{1F680}-\u{1F6FF}]/gu, '')  // transport
+            .replace(/[\u{2600}-\u{26FF}]/gu, '')    // misc symbols
+            .replace(/[\u{2700}-\u{27BF}]/gu, '');   // dingbats
+    }
+
     function sectionHeader(title) {
         checkSpace(15);
         doc.setFillColor(...colors.veryLightGray);
@@ -3338,7 +3362,8 @@ function generatePdfReport(result, userEmail) {
         doc.circle(margin + 2, yPos - 1, 1, 'F');
         doc.setFontSize(8);
         doc.setTextColor(...color);
-        const lines = doc.splitTextToSize(text, maxWidth - 8);
+        const cleanText = cleanForPDF(text);
+        const lines = doc.splitTextToSize(cleanText, maxWidth - 8);
         doc.text(lines, margin + 6, yPos);
         yPos += lines.length * 3.5 + 2;
     }
@@ -3496,7 +3521,7 @@ function generatePdfReport(result, userEmail) {
         doc.setFontSize(20);
         doc.setTextColor(...colors.red);
         doc.setFont(undefined, 'bold');
-        doc.text('⚠', pageWidth / 2 - 15, yPos + 12, { align: 'center' });
+        doc.text('[WARNING]', pageWidth / 2 - 15, yPos + 12, { align: 'center' });
         doc.text('CRITICAL SANCTIONS ALERT', pageWidth / 2, yPos + 12, { align: 'center' });
         doc.setFontSize(10);
         doc.text('IMMEDIATE ACTION REQUIRED', pageWidth / 2, yPos + 20, { align: 'center' });
@@ -3799,7 +3824,7 @@ function generatePdfReport(result, userEmail) {
             checkSpace(6);
             if (hasHits) {
                 doc.setTextColor(...colors.red);
-                doc.text('⚠', margin + 3, yPos);
+                doc.text('[WARNING]', margin + 3, yPos);
                 doc.setTextColor(...colors.darkGray);
                 doc.setFontSize(7);
                 doc.text('Sanctions Screening', margin + 8, yPos);
@@ -3807,7 +3832,7 @@ function generatePdfReport(result, userEmail) {
                 doc.text(dbResults.sanctions.hits + ' POTENTIAL MATCH(ES) - REVIEW REQUIRED', pageWidth - margin - 65, yPos);
             } else {
                 doc.setTextColor(...colors.green);
-                doc.text('✓', margin + 3, yPos);
+                doc.text('[OK]', margin + 3, yPos);
                 doc.setTextColor(...colors.darkGray);
                 doc.setFontSize(7);
                 doc.text('Sanctions Screening (450K+ entities)', margin + 8, yPos);
@@ -3849,7 +3874,7 @@ function generatePdfReport(result, userEmail) {
                 const uk = dbResults.companyRegistries.ukCompaniesHouse;
                 if (uk.verified || uk.found) {
                     doc.setTextColor(...colors.green);
-                    doc.text('✓', margin + 3, yPos);
+                    doc.text('[OK]', margin + 3, yPos);
                     doc.setTextColor(...colors.darkGray);
                     doc.setFontSize(7);
                     doc.text('UK Companies House', margin + 8, yPos);
@@ -3882,7 +3907,7 @@ function generatePdfReport(result, userEmail) {
                 const oc = dbResults.companyRegistries.openCorporates.buyer;
                 if (oc.found) {
                     doc.setTextColor(...colors.green);
-                    doc.text('✓', margin + 3, yPos);
+                    doc.text('[OK]', margin + 3, yPos);
                     doc.setTextColor(...colors.darkGray);
                     doc.setFontSize(7);
                     doc.text('OpenCorporates (Buyer)', margin + 8, yPos);
@@ -3907,7 +3932,7 @@ function generatePdfReport(result, userEmail) {
                 const oc = dbResults.companyRegistries.openCorporates.seller;
                 if (oc.found) {
                     doc.setTextColor(...colors.green);
-                    doc.text('✓', margin + 3, yPos);
+                    doc.text('[OK]', margin + 3, yPos);
                     doc.setTextColor(...colors.darkGray);
                     doc.setFontSize(7);
                     doc.text('OpenCorporates (Seller)', margin + 8, yPos);
@@ -3932,7 +3957,7 @@ function generatePdfReport(result, userEmail) {
                 const gleif = dbResults.companyRegistries.gleif.buyer;
                 if (gleif.found) {
                     doc.setTextColor(...colors.green);
-                    doc.text('✓', margin + 3, yPos);
+                    doc.text('[OK]', margin + 3, yPos);
                     doc.setTextColor(...colors.darkGray);
                     doc.setFontSize(7);
                     doc.text('GLEIF LEI (Buyer): ' + (gleif.lei || ''), margin + 8, yPos);
@@ -3956,7 +3981,7 @@ function generatePdfReport(result, userEmail) {
                 const gleif = dbResults.companyRegistries.gleif.seller;
                 if (gleif.found) {
                     doc.setTextColor(...colors.green);
-                    doc.text('✓', margin + 3, yPos);
+                    doc.text('[OK]', margin + 3, yPos);
                     doc.setTextColor(...colors.darkGray);
                     doc.setFontSize(7);
                     doc.text('GLEIF LEI (Seller): ' + (gleif.lei || ''), margin + 8, yPos);
@@ -3992,7 +4017,7 @@ function generatePdfReport(result, userEmail) {
                 const iban = dbResults.financial.iban;
                 if (iban.valid) {
                     doc.setTextColor(...colors.green);
-                    doc.text('✓', margin + 3, yPos);
+                    doc.text('[OK]', margin + 3, yPos);
                     doc.setTextColor(...colors.darkGray);
                     doc.setFontSize(7);
                     doc.text('IBAN Validation', margin + 8, yPos);
@@ -4016,7 +4041,7 @@ function generatePdfReport(result, userEmail) {
                 const swift = dbResults.financial.swift;
                 if (swift.valid) {
                     doc.setTextColor(...colors.green);
-                    doc.text('✓', margin + 3, yPos);
+                    doc.text('[OK]', margin + 3, yPos);
                     doc.setTextColor(...colors.darkGray);
                     doc.setFontSize(7);
                     doc.text('SWIFT/BIC Validation', margin + 8, yPos);
@@ -4039,7 +4064,7 @@ function generatePdfReport(result, userEmail) {
                 checkSpace(6);
                 const email = dbResults.financial.buyerEmail;
                 const riskColor = email.risk === 'CRITICAL' ? colors.red : (email.risk === 'ELEVATED' ? colors.yellow : colors.green);
-                const riskIcon = email.risk === 'CRITICAL' ? '⚠' : (email.risk === 'ELEVATED' ? '⚠' : '✓');
+                const riskIcon = email.risk === 'CRITICAL' ? '[WARNING]' : (email.risk === 'ELEVATED' ? '[WARNING]' : '[OK]');
                 const riskText = email.risk === 'CRITICAL' ? 'DISPOSABLE - HIGH RISK' : (email.risk === 'ELEVATED' ? 'FREE EMAIL' : 'CORPORATE');
                 
                 doc.setTextColor(...riskColor);
@@ -4057,7 +4082,7 @@ function generatePdfReport(result, userEmail) {
                 checkSpace(6);
                 const email = dbResults.financial.sellerEmail;
                 const riskColor = email.risk === 'CRITICAL' ? colors.red : (email.risk === 'ELEVATED' ? colors.yellow : colors.green);
-                const riskIcon = email.risk === 'CRITICAL' ? '⚠' : (email.risk === 'ELEVATED' ? '⚠' : '✓');
+                const riskIcon = email.risk === 'CRITICAL' ? '[WARNING]' : (email.risk === 'ELEVATED' ? '[WARNING]' : '[OK]');
                 const riskText = email.risk === 'CRITICAL' ? 'DISPOSABLE - HIGH RISK' : (email.risk === 'ELEVATED' ? 'FREE EMAIL' : 'CORPORATE');
                 
                 doc.setTextColor(...riskColor);
@@ -4086,7 +4111,7 @@ function generatePdfReport(result, userEmail) {
                 if (!jur?.checked) return;
                 checkSpace(6);
                 const riskColor = jur.risk === 'CRITICAL' ? colors.red : (jur.risk === 'HIGH' ? colors.yellow : (jur.risk === 'ELEVATED' ? colors.yellow : colors.green));
-                const riskIcon = jur.risk === 'CRITICAL' ? '⚠' : (jur.risk === 'HIGH' ? '⚠' : (jur.risk === 'ELEVATED' ? '⚠' : '✓'));
+                const riskIcon = jur.risk === 'CRITICAL' ? '[WARNING]' : (jur.risk === 'HIGH' ? '[WARNING]' : (jur.risk === 'ELEVATED' ? '[WARNING]' : '[OK]'));
                 const riskText = jur.risk === 'CRITICAL' ? 'FATF BLACKLIST' : (jur.risk === 'HIGH' ? 'FATF GREY LIST' : (jur.risk === 'ELEVATED' ? 'SECRECY JURISDICTION' : 'STANDARD'));
                 
                 doc.setTextColor(...riskColor);
@@ -4136,7 +4161,7 @@ function generatePdfReport(result, userEmail) {
             category.databases.forEach(db => {
                 checkSpace(5);
                 doc.setTextColor(...colors.green);
-                doc.text('✓', margin + 3, yPos);
+                doc.text('[OK]', margin + 3, yPos);
                 doc.setTextColor(...colors.darkGray);
                 doc.setFontSize(7);
                 doc.text(db.name, margin + 8, yPos);

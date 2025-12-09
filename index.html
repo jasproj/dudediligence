@@ -1885,9 +1885,19 @@ async function processData(extracted) {
         
         if (diligenceResponse.ok) {
             const diligenceData = await diligenceResponse.json();
-            if (diligenceData.success) {
+            console.log('✅ Raw backend response:', diligenceData);
+            
+            // Handle both wrapped {success, data} and direct response formats
+            if (diligenceData.success && diligenceData.data) {
+                // Wrapped format
                 databaseResults = diligenceData.data;
-                console.log('✅ Raw backend results:', databaseResults);
+            } else if (diligenceData.sanctions !== undefined || diligenceData.riskScore !== undefined) {
+                // Direct format - backend returns data directly
+                databaseResults = diligenceData;
+            }
+            
+            if (databaseResults) {
+                console.log('✅ Backend data received:', databaseResults);
                 
                 // Normalize backend results for frontend compatibility
                 if (databaseResults) {

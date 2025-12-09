@@ -5,9 +5,12 @@
 
 <title>DDP - Dude Diligence Pro | Verify Companies in 140+ Countries | Global Due Diligence</title>
 
-<!-- Favicon -->
+<!-- Favicon - Gold Badge -->
 <link rel="icon" type="image/x-icon" href="favicon.ico" />
-<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+<link rel="icon" type="image/png" sizes="32x32" href="favicon.png" />
+<link rel="icon" type="image/svg+xml" href="favicon.svg" />
+<link rel="shortcut icon" href="favicon.ico" />
+<link rel="apple-touch-icon" href="favicon.png" />
 
 <!-- Social Preview Metadata -->
 <meta property="og:title" content="DDP - Dude Diligence Pro" />
@@ -1884,7 +1887,36 @@ async function processData(extracted) {
             const diligenceData = await diligenceResponse.json();
             if (diligenceData.success) {
                 databaseResults = diligenceData.data;
-                console.log('✅ Real database results:', databaseResults);
+                console.log('✅ Raw backend results:', databaseResults);
+                
+                // Normalize backend results for frontend compatibility
+                if (databaseResults) {
+                    // Add hits count from matches array
+                    if (databaseResults.sanctions) {
+                        databaseResults.sanctions.hits = databaseResults.sanctions.matches?.length || 0;
+                        // Convert matches to results format expected by frontend
+                        if (databaseResults.sanctions.matches && databaseResults.sanctions.matches.length > 0) {
+                            databaseResults.sanctions.results = databaseResults.sanctions.matches.map(m => ({
+                                hit: true,
+                                matches: [m]
+                            }));
+                        }
+                    }
+                    
+                    // Copy jurisdiction to fatfJurisdictions for frontend
+                    if (databaseResults.jurisdiction) {
+                        databaseResults.fatfJurisdictions = databaseResults.jurisdiction;
+                    }
+                    
+                    // Add summary object with backend's risk assessment
+                    databaseResults.summary = {
+                        riskScore: databaseResults.riskScore,
+                        riskLevel: databaseResults.riskLevel,
+                        redFlags: databaseResults.redFlags || []
+                    };
+                }
+                
+                console.log('✅ Normalized database results:', databaseResults);
             }
         }
     } catch (error) {
@@ -1908,15 +1940,22 @@ async function processData(extracted) {
         if (databaseResults.positiveSignals) {
             scoring.positiveSignals = [...scoring.positiveSignals, ...databaseResults.positiveSignals];
         }
-        // Adjust score based on real database results
-        if (databaseResults.summary) {
-            scoring.score = Math.max(0, Math.min(100, 
-                scoring.score + (databaseResults.summary.riskScore || 0)
-            ));
-        }
+        // Backend score will be used in the risk assessment below
+        // Don't add scores - backend score replaces frontend score
     }
     
-    const riskLevel = determineRiskLevel(scoring.score, blacklistHits, sanctionsHits, reuseCheck);
+    // Use backend risk assessment if available (more accurate - includes sanctions checks)
+    let riskLevel, finalScore;
+    if (databaseResults?.riskLevel && databaseResults?.riskScore !== undefined) {
+        riskLevel = databaseResults.riskLevel.toUpperCase();
+        finalScore = databaseResults.riskScore;
+        scoring.score = finalScore;
+        console.log('📊 Using backend risk:', riskLevel, finalScore);
+    } else {
+        riskLevel = determineRiskLevel(scoring.score, blacklistHits, sanctionsHits, reuseCheck);
+        finalScore = scoring.score;
+        console.log('📊 Using frontend risk calculation:', riskLevel, finalScore);
+    }
     
     // Generate next steps based on findings
     const nextSteps = generateNextSteps(riskLevel, scoring, databaseResults);

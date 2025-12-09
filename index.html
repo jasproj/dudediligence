@@ -1886,10 +1886,22 @@ async function processData(extracted) {
         diligenceRequest.allParties = extracted.parties;
     }
     if (extracted.buyer) {
-        diligenceRequest.allParties.push({ ...extracted.buyer, role: 'Buyer' });
+        diligenceRequest.allParties.push({ 
+            company: extracted.buyer.name,  // Map 'name' to 'company' for backend
+            name: extracted.buyer.representative,  // Map 'representative' to 'name' (person)
+            country: extracted.buyer.country,
+            email: extracted.buyer.email,
+            role: 'Buyer' 
+        });
     }
     if (extracted.seller) {
-        diligenceRequest.allParties.push({ ...extracted.seller, role: 'Seller' });
+        diligenceRequest.allParties.push({ 
+            company: extracted.seller.name,  // Map 'name' to 'company' for backend
+            name: extracted.seller.representative,  // Map 'representative' to 'name' (person)
+            country: extracted.seller.country,
+            email: extracted.seller.email,
+            role: 'Seller' 
+        });
     }
     
     // Extract bank details for validation
@@ -1958,6 +1970,32 @@ async function processData(extracted) {
                         riskLevel: databaseResults.riskLevel,
                         redFlags: databaseResults.redFlags || []
                     };
+                    
+                    // Normalize company registry data for frontend
+                    if (databaseResults.companyRegistry || databaseResults.leiRegistry) {
+                        databaseResults.companyRegistries = {
+                            ukCompaniesHouse: databaseResults.companyRegistry?.buyer?.source === 'UK Companies House' 
+                                ? { checked: true, found: true, data: databaseResults.companyRegistry.buyer }
+                                : { checked: false },
+                            openCorporates: {
+                                buyer: databaseResults.companyRegistry?.buyer 
+                                    ? { checked: true, found: true, ...databaseResults.companyRegistry.buyer }
+                                    : { checked: true, found: false },
+                                seller: databaseResults.companyRegistry?.seller
+                                    ? { checked: true, found: true, ...databaseResults.companyRegistry.seller }
+                                    : { checked: true, found: false }
+                            },
+                            gleif: {
+                                buyer: databaseResults.leiRegistry?.buyer
+                                    ? { checked: true, found: true, ...databaseResults.leiRegistry.buyer }
+                                    : { checked: false },
+                                seller: databaseResults.leiRegistry?.seller
+                                    ? { checked: true, found: true, ...databaseResults.leiRegistry.seller }
+                                    : { checked: false }
+                            }
+                        };
+                        console.log('✅ Normalized company registries:', databaseResults.companyRegistries);
+                    }
                 }
                 
                 console.log('✅ Normalized database results:', databaseResults);

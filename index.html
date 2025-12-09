@@ -1996,6 +1996,21 @@ async function processData(extracted) {
                         };
                         console.log('✅ Normalized company registries:', databaseResults.companyRegistries);
                     }
+                    
+                    // Normalize ICIJ Offshore Leaks data
+                    if (databaseResults.offshoreLeaks) {
+                        console.log('✅ ICIJ Offshore Leaks data:', databaseResults.offshoreLeaks);
+                    }
+                    
+                    // Normalize World Bank Debarred data
+                    if (databaseResults.worldBankDebarred) {
+                        console.log('✅ World Bank Debarred data:', databaseResults.worldBankDebarred);
+                    }
+                    
+                    // Log databases checked
+                    if (databaseResults.databasesChecked) {
+                        console.log('✅ Databases checked:', databaseResults.databasesChecked);
+                    }
                 }
                 
                 console.log('✅ Normalized database results:', databaseResults);
@@ -2677,10 +2692,13 @@ function updateResultsUI(result) {
             // Fallback to static display if no real results
             const databases = [
                 { name: 'OpenSanctions (OFAC, UN, EU, UK)', icon: '🛡️' },
+                { name: 'ICIJ Offshore Leaks (Panama Papers)', icon: '📄' },
+                { name: 'World Bank Debarred Firms', icon: '🏦' },
+                { name: 'Interpol Red Notices', icon: '👮' },
                 { name: 'OpenCorporates (Global)', icon: '🌍' },
                 { name: 'GLEIF (LEI Registry)', icon: '📋' },
-                { name: 'IBAN Validation', icon: '🏦' },
-                { name: 'SWIFT/BIC Validation', icon: '🏛️' },
+                { name: 'UK Companies House', icon: '🇬🇧' },
+                { name: 'SEC EDGAR (US)', icon: '🇺🇸' },
                 { name: 'Email Domain Analysis', icon: '📧' }
             ];
             
@@ -3002,6 +3020,43 @@ function generateEnhancedFindings(dbResults) {
                 ]
             });
         }
+    }
+    
+    // ICIJ OFFSHORE LEAKS CHECK
+    if (dbResults.offshoreLeaks?.found) {
+        findings.push({
+            severity: 'critical',
+            title: '🚨 ICIJ Offshore Leaks Match',
+            source: 'ICIJ Offshore Leaks (Panama Papers, Paradise Papers, Pandora Papers)',
+            details: `Entity found in ICIJ Offshore Leaks database. ${dbResults.offshoreLeaks.totalResults || ''} records found. This database contains leaked documents from offshore financial service providers.`,
+            whyMatters: `The ICIJ Offshore Leaks database contains <strong>2.94 terabytes</strong> of leaked documents from Panama Papers, Paradise Papers, and Pandora Papers investigations. Presence in this database indicates involvement with offshore shell companies, potentially for <strong>tax evasion or money laundering</strong>. While legal offshore structures exist, this requires immediate scrutiny.`,
+            actions: [
+                'Investigate the specific entities found in the leak',
+                'Request explanation for offshore structure',
+                'Engage forensic accountant if proceeding',
+                'Consider whether legitimate business reason exists',
+                'Document your due diligence thoroughly'
+            ]
+        });
+    }
+    
+    // WORLD BANK DEBARRED CHECK
+    if (dbResults.worldBankDebarred?.found) {
+        const matches = dbResults.worldBankDebarred.matches || [];
+        findings.push({
+            severity: 'critical',
+            title: '🚨 World Bank Debarred Firm',
+            source: 'World Bank Debarred Firms List',
+            details: `This entity has been <strong>banned from World Bank projects</strong>. ${matches[0]?.grounds || 'Grounds not specified'}. Ban period: ${matches[0]?.fromDate || 'N/A'} to ${matches[0]?.toDate || 'Indefinite'}.`,
+            whyMatters: `World Bank debarment is imposed for <strong>fraud, corruption, collusion, or coercion</strong> in Bank-financed projects. These are serious findings from official investigations. A debarred firm has been found guilty of fraudulent or corrupt practices by an international development institution.`,
+            actions: [
+                'DO NOT proceed with this transaction',
+                'This firm is banned for fraud or corruption',
+                'Check if ban is still active',
+                'Report to your compliance department',
+                'Consider reporting to relevant authorities'
+            ]
+        });
     }
     
     // GLEIF / SEC EDGAR - Positive findings

@@ -414,17 +414,23 @@ placeholder="Not specified">
 </div>
 </div>
 
-<!-- Action Buttons -->
-<div class="flex gap-3 pt-2">
-<button onclick="skipReview()" class="flex-1 px-4 py-3 rounded-lg bg-slate-800 text-slate-300 text-sm font-semibold hover:bg-slate-700 transition border border-slate-700">
-Continue with AI Analysis
-</button>
-<button onclick="finalizeReport()" class="flex-1 px-4 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-sm font-semibold hover:from-cyan-600 hover:to-blue-600 transition shadow-lg">
+<!-- Helpful Tip -->
+<div class="bg-slate-800/50 border border-cyan-500/20 rounded-lg p-3 mb-4">
+<p class="text-xs text-slate-300 leading-relaxed">
+<span class="text-cyan-400 font-semibold">💡 Pro Tip:</span> 
+Our AI extracts data automatically, but you can <span class="text-cyan-300">edit any field above</span> to correct errors or fill in missing information. 
+More complete data = more accurate risk assessment.
+</p>
+</div>
+
+<!-- Generate Report Button -->
+<div class="pt-2">
+<button onclick="finalizeReport()" class="w-full px-4 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white text-sm font-semibold hover:from-cyan-600 hover:to-blue-600 transition shadow-lg">
 ✓ Generate Report
 </button>
 </div>
 
-<p class="text-center text-[10px] text-slate-500 mt-3">💡 Review & edit for most accurate results</p>
+<p class="text-center text-[10px] text-slate-500 mt-3">Double-check extracted data for best results</p>
 </div>
 </div>
 

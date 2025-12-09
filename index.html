@@ -3284,8 +3284,17 @@ async function submitEmailGate() {
 // =================================================================
 
 function generatePdfReport(result, userEmail) {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+    try {
+        console.log('📄 Starting PDF generation...');
+        console.log('📄 Result data:', result);
+        
+        const { jsPDF } = window.jspdf;
+        if (!jsPDF) {
+            console.error('❌ jsPDF not loaded!');
+            alert('PDF library not loaded. Please refresh the page.');
+            return;
+        }
+        const doc = new jsPDF();
     
     const pageWidth = doc.internal.pageSize.width;
     const pageHeight = doc.internal.pageSize.height;
@@ -4649,8 +4658,12 @@ function generatePdfReport(result, userEmail) {
     // Save
     const filename = `DDP-Risk-Report-${new Date().getTime()}.pdf`;
     doc.save(filename);
-    
-    alert('✅ Report downloaded! Check your downloads folder.');
+        
+        alert('✅ Report downloaded! Check your downloads folder.');
+    } catch (pdfError) {
+        console.error('❌ PDF generation error:', pdfError);
+        alert('Error generating PDF: ' + pdfError.message + '\n\nPlease try again or contact support.');
+    }
 }
 
 function openUpsell() {

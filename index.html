@@ -131,6 +131,8 @@ z-index: 1;
 </style>
 <!-- jsPDF Library for PDF Generation -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- Mammoth.js for DOCX parsing -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
 
 </head>
 
@@ -303,7 +305,7 @@ class="mt-2 flex flex-col items-center justify-center rounded-xl border border-d
 <span class="mb-2 text-slate-200 font-medium" id="dropzoneText">Click to upload</span>
 <span class="text-[11px] text-slate-500">PDF, TXT, max 10 MB.</span>
 </div>
-<input id="fileInput" type="file" accept=".pdf,.txt" class="hidden" />
+<input id="fileInput" type="file" accept=".pdf,.txt,.docx,.doc" class="hidden" />
 </div>
 
 <button onclick="runDiligence()"
@@ -1644,6 +1646,29 @@ async function runDiligence() {
             );
         }
 
+        // Handle DOCX files - extract text first
+        let docxExtractedText = null;
+        if (currentFile.name.toLowerCase().endsWith('.docx') || currentFile.name.toLowerCase().endsWith('.doc')) {
+            document.getElementById('statusMessage').innerHTML = '<span class="animate-pulse">📄 Extracting text from Word document...</span>';
+            try {
+                const arrayBuffer = await currentFile.arrayBuffer();
+                const mammothResult = await mammoth.extractRawText({ arrayBuffer: arrayBuffer });
+                docxExtractedText = mammothResult.value;
+                console.log('📄 DOCX text extracted, length:', docxExtractedText.length);
+                
+                if (!docxExtractedText || docxExtractedText.trim().length < 10) {
+                    throw new Error('No text content found in document');
+                }
+            } catch (docxError) {
+                console.error('DOCX extraction failed:', docxError);
+                stopAnalysisAnimation();
+                document.getElementById('statusMessage').textContent = '❌ Failed to read Word document. Please try converting to PDF.';
+                riskBadge.textContent = 'Error';
+                riskBadge.classList.remove('loading-dots');
+                return;
+            }
+        }
+        
         // Convert file to base64
         const fileBase64 = await new Promise((resolve, reject) => {
             const reader = new FileReader();
@@ -1665,7 +1690,8 @@ async function runDiligence() {
             body: JSON.stringify({
                 fileData: fileBase64,
                 fileName: currentFile.name,
-                fileType: currentFile.type
+                fileType: currentFile.type,
+                extractedText: docxExtractedText
             })
         });
 

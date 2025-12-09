@@ -1115,7 +1115,15 @@ window.addEventListener('scroll', function() {
 let currentFile = null;
 let currentHash = null;
 let currentResult = null;
-let documentFingerprints = [];
+// Load fingerprints from localStorage (persists across sessions)
+let documentFingerprints = JSON.parse(localStorage.getItem('ddp_fingerprints') || '[]');
+console.log('📋 Loaded', documentFingerprints.length, 'document fingerprints from storage');
+
+// Function to save fingerprints to localStorage
+function saveFingerprints() {
+    localStorage.setItem('ddp_fingerprints', JSON.stringify(documentFingerprints));
+    console.log('💾 Saved', documentFingerprints.length, 'fingerprints to storage');
+}
 
 // Simulated databases
 const BLACKLIST_DB = [
@@ -1640,10 +1648,12 @@ async function runDiligence() {
                 filename: currentFile.name,
                 count: 1
             });
+            saveFingerprints();
         } else {
             documentFingerprints = documentFingerprints.map(fp => 
                 fp.hash === currentHash ? { ...fp, count: fp.count + 1 } : fp
             );
+            saveFingerprints();
         }
 
         // Handle DOCX files - extract text first

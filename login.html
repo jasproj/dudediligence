@@ -11,6 +11,9 @@ body {
   background: linear-gradient(135deg, #0f172a 0%, #020617 100%);
   min-height: 100vh;
 }
+.copy-btn:active {
+  transform: scale(0.95);
+}
 </style>
 </head>
 <body class="bg-slate-950 text-slate-100">
@@ -62,8 +65,21 @@ body {
 <div>
 <h3 class="text-sm font-semibold text-amber-400 mb-1">Authentication Coming Soon</h3>
 <p class="text-xs text-slate-400 leading-relaxed">
-We're currently building our secure login system. In the meantime, <strong>email us at <a href="mailto:info@cladutacorp.com" class="text-cyan-400 hover:text-cyan-300 underline">info@cladutacorp.com</a></strong> to request early access.
+We're currently building our secure login system. In the meantime, request early access below or contact us at:
 </p>
+<!-- Copyable Email -->
+<div class="mt-2 flex items-center gap-2">
+<span id="emailDisplay" class="text-cyan-400 font-mono text-sm select-all">info@cladutacorp.com</span>
+<button onclick="copyEmail()" class="copy-btn p-1 rounded hover:bg-slate-700 transition" title="Copy email">
+<svg id="copyIcon" class="w-4 h-4 text-slate-400 hover:text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+</svg>
+<svg id="checkIcon" class="w-4 h-4 text-emerald-400 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+</svg>
+</button>
+<span id="copiedText" class="text-xs text-emerald-400 hidden">Copied!</span>
+</div>
 </div>
 </div>
 </div>
@@ -96,12 +112,12 @@ Login
 <!-- Request Access CTA -->
 <div class="text-center">
 <p class="text-sm text-slate-400 mb-4">Want to get started today?</p>
-<a href="mailto:info@cladutacorp.com?subject=Early Access Request - DDP" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold text-sm hover:from-cyan-600 hover:to-blue-600 transition shadow-lg shadow-cyan-500/20">
+<button onclick="openAccessModal()" class="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold text-sm hover:from-cyan-600 hover:to-blue-600 transition shadow-lg shadow-cyan-500/20">
 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
 </svg>
 Request Early Access
-</a>
+</button>
 </div>
 
 <!-- Footer Links -->
@@ -128,21 +144,171 @@ Request Early Access
 <!-- Support -->
 <div class="mt-6 text-center">
 <p class="text-xs text-slate-500">
-Need help? Email <a href="mailto:info@cladutacorp.com" class="text-cyan-400 hover:text-cyan-300 underline">info@cladutacorp.com</a>
+Need help? Contact <span class="text-cyan-400 select-all cursor-pointer" onclick="copyEmail()">info@cladutacorp.com</span>
 </p>
 </div>
 
 </div>
 </div>
 
-<!-- Footer -->
-<footer class="border-t border-slate-800 bg-black/40 py-8 mt-12">
-<div class="mx-auto max-w-6xl px-4 text-center">
-<p class="text-xs text-slate-500">
-© 2025 CLADUTA CORP • Built with ❤️ for commodity traders
-</p>
+<!-- Early Access Modal -->
+<div id="accessModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+<div class="bg-slate-900 rounded-2xl border border-slate-800 max-w-md w-full p-8 relative">
+<button onclick="closeAccessModal()" class="absolute top-4 right-4 text-slate-500 hover:text-slate-300">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+</svg>
+</button>
+
+<div class="text-center mb-6">
+<div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-cyan-500/10 border border-cyan-500/30 mb-4">
+<svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+</svg>
 </div>
-</footer>
+<h2 class="text-xl font-bold text-slate-50 mb-2">Request Early Access</h2>
+<p class="text-sm text-slate-400">Be among the first to try Dude Diligence Pro</p>
+</div>
+
+<form id="accessForm" class="space-y-4">
+<div>
+<label class="block text-xs font-semibold text-slate-400 mb-2">Full Name *</label>
+<input type="text" id="accessName" required placeholder="John Smith" class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 text-slate-100 placeholder-slate-500 focus:border-cyan-500 focus:outline-none">
+</div>
+
+<div>
+<label class="block text-xs font-semibold text-slate-400 mb-2">Work Email *</label>
+<input type="email" id="accessEmail" required placeholder="john@company.com" class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 text-slate-100 placeholder-slate-500 focus:border-cyan-500 focus:outline-none">
+</div>
+
+<div>
+<label class="block text-xs font-semibold text-slate-400 mb-2">Company Name</label>
+<input type="text" id="accessCompany" placeholder="Acme Trading Co." class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 text-slate-100 placeholder-slate-500 focus:border-cyan-500 focus:outline-none">
+</div>
+
+<div>
+<label class="block text-xs font-semibold text-slate-400 mb-2">WhatsApp Number (Optional)</label>
+<input type="tel" id="accessPhone" placeholder="+1 234 567 8900" class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 text-slate-100 placeholder-slate-500 focus:border-cyan-500 focus:outline-none">
+</div>
+
+<div>
+<label class="block text-xs font-semibold text-slate-400 mb-2">How did you hear about us?</label>
+<select id="accessSource" class="w-full px-4 py-3 rounded-lg bg-slate-800 border border-slate-700 text-slate-100 focus:border-cyan-500 focus:outline-none">
+<option value="">Select...</option>
+<option value="google">Google Search</option>
+<option value="linkedin">LinkedIn</option>
+<option value="referral">Referral</option>
+<option value="social">Social Media</option>
+<option value="other">Other</option>
+</select>
+</div>
+
+<button type="submit" class="w-full py-4 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-semibold hover:from-cyan-600 hover:to-blue-600 transition shadow-lg">
+Submit Request →
+</button>
+
+<p class="text-xs text-slate-500 text-center">
+🔒 We'll review your request and get back to you within 24 hours.
+</p>
+</form>
+
+<!-- Success Message (hidden by default) -->
+<div id="accessSuccess" class="hidden text-center py-8">
+<div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-emerald-500/20 border border-emerald-500/30 mb-4">
+<svg class="w-8 h-8 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+</svg>
+</div>
+<h3 class="text-lg font-bold text-slate-50 mb-2">Request Submitted!</h3>
+<p class="text-sm text-slate-400 mb-4">We'll review your application and contact you shortly.</p>
+<button onclick="closeAccessModal()" class="px-6 py-2 rounded-lg bg-slate-800 text-slate-300 hover:bg-slate-700 transition">
+Close
+</button>
+</div>
+
+</div>
+</div>
+
+<script>
+// Copy email to clipboard
+function copyEmail() {
+    const email = 'info@cladutacorp.com';
+    navigator.clipboard.writeText(email).then(() => {
+        // Show success feedback
+        document.getElementById('copyIcon').classList.add('hidden');
+        document.getElementById('checkIcon').classList.remove('hidden');
+        document.getElementById('copiedText').classList.remove('hidden');
+        
+        // Reset after 2 seconds
+        setTimeout(() => {
+            document.getElementById('copyIcon').classList.remove('hidden');
+            document.getElementById('checkIcon').classList.add('hidden');
+            document.getElementById('copiedText').classList.add('hidden');
+        }, 2000);
+    });
+}
+
+// Modal controls
+function openAccessModal() {
+    document.getElementById('accessModal').classList.remove('hidden');
+    document.getElementById('accessModal').classList.add('flex');
+    document.getElementById('accessForm').classList.remove('hidden');
+    document.getElementById('accessSuccess').classList.add('hidden');
+}
+
+function closeAccessModal() {
+    document.getElementById('accessModal').classList.add('hidden');
+    document.getElementById('accessModal').classList.remove('flex');
+}
+
+// Close modal on background click
+document.getElementById('accessModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeAccessModal();
+    }
+});
+
+// Handle form submission
+document.getElementById('accessForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const submitBtn = this.querySelector('button[type="submit"]');
+    const originalText = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<span class="animate-pulse">Submitting...</span>';
+    submitBtn.disabled = true;
+    
+    try {
+        // Send to Formspree
+        await fetch('https://formspree.io/f/mgvglvrd', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: document.getElementById('accessName').value,
+                email: document.getElementById('accessEmail').value,
+                company: document.getElementById('accessCompany').value || 'Not provided',
+                phone: document.getElementById('accessPhone').value || 'Not provided',
+                source: document.getElementById('accessSource').value || 'Not specified',
+                type: 'Early Access Request',
+                page: 'Login Page',
+                timestamp: new Date().toISOString(),
+                _subject: '[DDP] New Early Access Request: ' + document.getElementById('accessEmail').value
+            })
+        });
+        
+        // Show success
+        document.getElementById('accessForm').classList.add('hidden');
+        document.getElementById('accessSuccess').classList.remove('hidden');
+        
+    } catch (error) {
+        console.error('Form submission error:', error);
+        alert('There was an error. Please try again or email us directly at info@cladutacorp.com');
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+    }
+});
+</script>
 
 </body>
 </html>

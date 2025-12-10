@@ -256,7 +256,7 @@ Partners
 </div>
 
 <p class="text-sm md:text-base text-slate-300 max-w-xl leading-relaxed">
-Upload any LOI, ICPO, or KYC. Get instant risk reports. Trade confidently.
+Upload any LOI, ICPO, Bill of Lading, POF, SBLC, or BCL. Get instant risk reports. Trade confidently.
 </p>
 
 <ul id="heroBullets" class="mt-6 space-y-2 text-sm text-slate-300">
@@ -290,7 +290,7 @@ See Sample Report
 <div class="px-5 py-4 border-b border-slate-800 flex items-center justify-between">
 <div>
 <h2 class="text-sm font-semibold text-slate-100">Run Dude Diligence Pro</h2>
-<p class="text-xs text-slate-400 mb-2">Upload LOI, ICPO, or combined PDFs.</p>
+<p class="text-xs text-slate-400 mb-2">Upload LOI, ICPO, B/L, POF, SBLC, or BCL documents.</p>
 <div class="inline-flex items-center gap-1.5 px-2 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30">
 <svg class="w-3 h-3 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
@@ -441,6 +441,34 @@ placeholder="e.g., M/V ATLANTIC STAR">
 </div>
 </div>
 <p class="text-[10px] text-slate-500 mt-2">We verify vessels against Equasis (85K+ ships with safety records, PSC inspections, ownership)</p>
+</div>
+
+<!-- Bill of Lading / Shipping Details -->
+<div class="bg-slate-900/60 p-4 rounded-lg border border-slate-800">
+<h3 class="text-xs font-semibold text-slate-300 mb-3">📄 Shipping Details <span class="text-[10px] text-cyan-400 font-normal">(Bill of Lading)</span></h3>
+<div class="grid gap-3">
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="block text-[11px] text-slate-500 mb-1">Port of Loading</label>
+<input type="text" id="edit_port_loading" 
+class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-cyan-500 transition"
+placeholder="e.g., Santos, Brazil or BRSSZ">
+</div>
+<div>
+<label class="block text-[11px] text-slate-500 mb-1">Port of Discharge</label>
+<input type="text" id="edit_port_discharge" 
+class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-cyan-500 transition"
+placeholder="e.g., Shanghai, China or CNSHA">
+</div>
+</div>
+<div>
+<label class="block text-[11px] text-slate-500 mb-1">Captain Name</label>
+<input type="text" id="edit_captain" 
+class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-cyan-500 transition"
+placeholder="e.g., Captain John Smith">
+</div>
+</div>
+<p class="text-[10px] text-slate-500 mt-2">We verify ports via UN/LOCODE (100K+ locations) and cross-check captain against sanctions</p>
 </div>
 
 <!-- Helpful Tip -->
@@ -1943,6 +1971,19 @@ async function processData(extracted) {
     if (vesselIMO) diligenceRequest.vesselIMO = vesselIMO;
     if (vesselName && !vesselIMO) diligenceRequest.vesselName = vesselName;
     
+    // Extract port and captain information
+    const portOfLoading = document.getElementById('edit_port_loading')?.value?.trim();
+    const portOfDischarge = document.getElementById('edit_port_discharge')?.value?.trim();
+    const captain = document.getElementById('edit_captain')?.value?.trim();
+    if (portOfLoading) diligenceRequest.portOfLoading = portOfLoading;
+    if (portOfDischarge) diligenceRequest.portOfDischarge = portOfDischarge;
+    if (captain) diligenceRequest.captain = captain;
+    
+    // Include document text for B/L extraction and financial instrument detection
+    if (extracted.rawText) {
+      diligenceRequest.documentText = extracted.rawText.substring(0, 50000); // Limit size
+    }
+    
     // Get primary company for detailed checks
     const primaryCompany = diligenceRequest.allParties.find(p => p.company)?.company;
     const primaryCountry = diligenceRequest.allParties.find(p => p.country)?.country;
@@ -2637,11 +2678,33 @@ function updateResultsUI(result) {
                 if (fin.swift?.checked) {
                     const swift = fin.swift;
                     const valid = swift.valid;
-                    const statusColor = valid ? 'text-emerald-400' : 'text-rose-400';
-                    const statusIcon = valid ? '[OK]' : '✗';
-                    const statusText = valid ? `Valid (${swift.countryCode})` : 'Invalid format';
+                    const isSanctioned = swift.sanctioned;
+                    const isHighRisk = swift.highRiskCountry;
                     
-                    databasesHtml += `<div class="flex items-center justify-between bg-slate-900/40 rounded-lg px-3 py-2 border border-slate-800">
+                    let statusColor, statusIcon, statusText, borderClass;
+                    if (isSanctioned) {
+                        statusColor = 'text-rose-400';
+                        statusIcon = '[SANCTIONED]';
+                        statusText = `${swift.sanctionInfo?.name || 'BLOCKED BANK'}`;
+                        borderClass = 'border-rose-500/50 bg-rose-500/10';
+                    } else if (!valid) {
+                        statusColor = 'text-rose-400';
+                        statusIcon = '✗';
+                        statusText = 'Invalid format';
+                        borderClass = 'border-slate-800';
+                    } else if (isHighRisk) {
+                        statusColor = 'text-amber-400';
+                        statusIcon = '[WARNING]';
+                        statusText = `High-risk (${swift.countryCode})`;
+                        borderClass = 'border-amber-500/30';
+                    } else {
+                        statusColor = 'text-emerald-400';
+                        statusIcon = '[OK]';
+                        statusText = `Valid (${swift.countryCode})`;
+                        borderClass = 'border-slate-800';
+                    }
+                    
+                    databasesHtml += `<div class="flex items-center justify-between bg-slate-900/40 rounded-lg px-3 py-2 border ${borderClass}">
                         <div class="flex items-center gap-2">
                             <span class="text-lg">🏛️</span>
                             <span class="text-[11px] text-slate-300">SWIFT/BIC Validation</span>
@@ -2711,6 +2774,99 @@ function updateResultsUI(result) {
                     </div>
                     <span class="text-[10px] ${statusColor} font-semibold">${statusIcon} ${statusText}</span>
                 </div>`;
+            }
+            
+            // Port of Loading Verification
+            if (db.portVerification?.loading) {
+                const port = db.portVerification.loading;
+                const valid = port.valid;
+                const statusColor = valid ? 'text-emerald-400' : 'text-amber-400';
+                const statusIcon = valid ? '[OK]' : '[?]';
+                const statusText = valid ? `${port.name || port.locode} (${port.country})` : 'Not found';
+                
+                databasesHtml += `<div class="flex items-center justify-between bg-slate-900/40 rounded-lg px-3 py-2 border border-slate-800">
+                    <div class="flex items-center gap-2">
+                        <span class="text-lg">🚢</span>
+                        <div>
+                            <span class="text-[11px] text-slate-300">Port of Loading</span>
+                            ${port.locode ? `<span class="text-[9px] text-slate-500 block">UN/LOCODE: ${port.locode}</span>` : ''}
+                        </div>
+                    </div>
+                    <span class="text-[10px] ${statusColor} font-semibold">${statusIcon} ${statusText}</span>
+                </div>`;
+            }
+            
+            // Port of Discharge Verification
+            if (db.portVerification?.discharge) {
+                const port = db.portVerification.discharge;
+                const valid = port.valid;
+                const statusColor = valid ? 'text-emerald-400' : 'text-amber-400';
+                const statusIcon = valid ? '[OK]' : '[?]';
+                const statusText = valid ? `${port.name || port.locode} (${port.country})` : 'Not found';
+                
+                databasesHtml += `<div class="flex items-center justify-between bg-slate-900/40 rounded-lg px-3 py-2 border border-slate-800">
+                    <div class="flex items-center gap-2">
+                        <span class="text-lg">⚓</span>
+                        <div>
+                            <span class="text-[11px] text-slate-300">Port of Discharge</span>
+                            ${port.locode ? `<span class="text-[9px] text-slate-500 block">UN/LOCODE: ${port.locode}</span>` : ''}
+                        </div>
+                    </div>
+                    <span class="text-[10px] ${statusColor} font-semibold">${statusIcon} ${statusText}</span>
+                </div>`;
+            }
+            
+            // Captain Verification
+            if (db.captain?.found) {
+                const captain = db.captain;
+                const riskColor = captain.sanctionsMatch ? 'text-rose-400' : 'text-emerald-400';
+                const riskIcon = captain.sanctionsMatch ? '[ALERT]' : '[OK]';
+                const riskText = captain.sanctionsMatch ? 'SANCTIONS MATCH!' : 'No sanctions match';
+                
+                databasesHtml += `<div class="flex items-center justify-between bg-slate-900/40 rounded-lg px-3 py-2 border ${captain.sanctionsMatch ? 'border-rose-500/30' : 'border-slate-800'}">
+                    <div class="flex items-center gap-2">
+                        <span class="text-lg">👨‍✈️</span>
+                        <div>
+                            <span class="text-[11px] text-slate-300">Captain Verification</span>
+                            <span class="text-[9px] text-slate-500 block">${captain.name}</span>
+                        </div>
+                    </div>
+                    <span class="text-[10px] ${riskColor} font-semibold">${riskIcon} ${riskText}</span>
+                </div>`;
+            }
+            
+            // Bill of Lading Detection
+            if (db.billOfLading?.found) {
+                const bl = db.billOfLading;
+                databasesHtml += `<div class="flex items-center justify-between bg-slate-900/40 rounded-lg px-3 py-2 border border-cyan-500/30">
+                    <div class="flex items-center gap-2">
+                        <span class="text-lg">📄</span>
+                        <div>
+                            <span class="text-[11px] text-slate-300">Bill of Lading</span>
+                            ${bl.blNumber ? `<span class="text-[9px] text-slate-500 block">B/L: ${bl.blNumber}</span>` : ''}
+                        </div>
+                    </div>
+                    <span class="text-[10px] text-cyan-400 font-semibold">[OK] Parsed</span>
+                </div>`;
+            }
+            
+            // Financial Instruments Detection
+            if (db.financialInstruments && db.financialInstruments.length > 0) {
+                db.financialInstruments.forEach(inst => {
+                    const riskColor = inst.risk === 'HIGH' ? 'text-amber-400' : 'text-cyan-400';
+                    const riskIcon = inst.risk === 'HIGH' ? '[VERIFY]' : '[INFO]';
+                    
+                    databasesHtml += `<div class="flex items-center justify-between bg-slate-900/40 rounded-lg px-3 py-2 border ${inst.risk === 'HIGH' ? 'border-amber-500/30' : 'border-slate-800'}">
+                        <div class="flex items-center gap-2">
+                            <span class="text-lg">💳</span>
+                            <div>
+                                <span class="text-[11px] text-slate-300">${inst.name}</span>
+                                <span class="text-[9px] text-slate-500 block">${inst.type}</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] ${riskColor} font-semibold">${riskIcon} ${inst.risk}</span>
+                    </div>`;
+                });
             }
             
             // Jurisdiction Risk
@@ -5638,7 +5794,7 @@ Yes. We use bank-level AES-256 encryption and delete documents within 24 hours. 
 Which commodities is this best for?
 </h3>
 <p class="text-xs text-slate-400 leading-relaxed">
-We're optimized for <strong class="text-slate-300">physical commodity trading</strong>: crude oil, refined fuel products, sugar, grains, coal, metals, and other bulk goods. We understand FCOs (Full Corporate Offers), ICPOs (Irrevocable Corporate Purchase Orders), vessel charters, POF (Proof of Funds), BCL (Bank Comfort Letters), and mandate structures common in these industries. Not ideal for: forex, crypto, real estate, or generic B2B contracts.
+We're optimized for <strong class="text-slate-300">physical commodity trading</strong>: crude oil, refined fuel products, sugar, grains, coal, metals, and other bulk goods. We understand FCOs (Full Corporate Offers), ICPOs (Irrevocable Corporate Purchase Orders), Bills of Lading (B/L), vessel charters, POF (Proof of Funds), SBLC (Standby Letters of Credit), BCL (Bank Comfort Letters), MT760/MT799, and mandate structures common in these industries. Not ideal for: forex, crypto, real estate, or generic B2B contracts.
 </p>
 </div>
 
@@ -5690,7 +5846,7 @@ Cancel anytime with one click from your dashboard. No contracts, no questions as
 How accurate is the AI? Can I trust it?
 </h3>
 <p class="text-xs text-slate-400 leading-relaxed">
-Our AI has <strong class="text-slate-300">92% extraction accuracy</strong> on structured documents (LOIs, ICPOs) and catches ~87% of known fraud patterns. But we're not perfect—that's why we include a <strong class="text-cyan-400">manual review step</strong> where you can verify and correct AI extractions before finalizing. Documents with the "User-Verified" badge have been human-reviewed, which boosts accuracy to 99%+. Always use your judgment—AI is a tool, not a replacement for your expertise.
+Our AI has <strong class="text-slate-300">92% extraction accuracy</strong> on structured documents (LOIs, ICPOs, Bills of Lading) and catches ~87% of known fraud patterns. But we're not perfect—that's why we include a <strong class="text-cyan-400">manual review step</strong> where you can verify and correct AI extractions before finalizing. Documents with the "User-Verified" badge have been human-reviewed, which boosts accuracy to 99%+. Always use your judgment—AI is a tool, not a replacement for your expertise.
 </p>
 </div>
 

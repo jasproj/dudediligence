@@ -6038,7 +6038,7 @@ function renderTestimonialsScroll() {
 }
 
 // Auto-scroll testimonials with smooth back-and-forth animation
-(function initTestimonialsScroll() {
+document.addEventListener('DOMContentLoaded', function() {
   renderTestimonialsScroll();
   
   const testimonialsScroll = document.getElementById('testimonialsScroll');
@@ -6074,7 +6074,7 @@ function renderTestimonialsScroll() {
   testimonialsScroll.addEventListener('mouseleave', function() {
     scrollDirection = scrollAmount >= (testimonialsScroll.scrollWidth - testimonialsScroll.clientWidth) / 2 ? -1 : 1;
   });
-})();
+});
 </script>
 
 <!-- Hero Variation Rotation Script -->
@@ -6230,23 +6230,23 @@ Schedule a Demo
 <div class="prose prose-invert prose-slate mx-auto">
 <div class="bg-slate-900/40 border border-slate-800 rounded-xl p-8">
 <p class="text-base text-slate-300 leading-relaxed mb-4">
-DDP (Dude Diligence Pro) was built by a commodity trader who got burned by document fraud. After experiencing firsthand how easy it is to miss red flags in complex international deals, we created a tool to help other traders protect themselves.
+DDP was built by commodity traders who got burned by document fraud. After experiencing firsthand how easy it is to miss red flags in complex international deals, we created a tool to help other traders protect themselves.
 </p>
 <p class="text-base text-slate-300 leading-relaxed mb-4">
-We've developed an AI-powered platform that combines document analysis, database checks, and fraud pattern detection to give traders a clearer picture of who they're dealing with—before money changes hands.
+Our AI-powered platform combines document analysis with real-time checks against global sanctions lists, company registries, offshore leak databases, and fraud pattern detection—giving you a clearer picture of who you're dealing with before money changes hands.
 </p>
 <p class="text-base text-slate-300 leading-relaxed mb-6">
-Our goal is simple: make due diligence faster, more thorough, and accessible to traders of all sizes. Whether you're checking a new counterparty or verifying documents on a major deal, DDP helps you make more informed decisions.
+We query aggregator services like OpenSanctions (314 sources), OpenCorporates (140+ country registries), and ICIJ Offshore Leaks (810K+ entities)—plus direct integrations with OFAC, Interpol, World Bank, and more. That's how we cross-reference 850+ data sources in under a minute.
 </p>
 
 <div class="grid md:grid-cols-3 gap-6 pt-6 border-t border-slate-800">
 <div class="text-center">
-<div class="text-3xl font-bold text-cyan-400 mb-1">10 sec</div>
+<div class="text-3xl font-bold text-cyan-400 mb-1">< 60s</div>
 <div class="text-sm text-slate-400">Analysis Time</div>
 </div>
 <div class="text-center">
-<div class="text-3xl font-bold text-emerald-400 mb-1">15+</div>
-<div class="text-sm text-slate-400">Database Sources</div>
+<div class="text-3xl font-bold text-emerald-400 mb-1">850+</div>
+<div class="text-sm text-slate-400">Data Sources</div>
 </div>
 <div class="text-center">
 <div class="text-3xl font-bold text-amber-400 mb-1">24/7</div>

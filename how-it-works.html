@@ -45,7 +45,7 @@ z-index: 1;
 
 <!-- HEADER -->
 <header class="border-b border-slate-800/80 bg-black/60 backdrop-blur">
-<div class="mx-auto max-w-6xl px-4 py-4 flex items-center justify-between">
+<div class="mx-auto max-w-6xl px-4 py-4 flex items-center justify-between relative">
 <a href="/" class="flex items-center gap-2">
 <div class="h-9 w-9 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center">
 <span class="text-slate-900 font-bold text-sm">DDP</span>
@@ -60,13 +60,37 @@ Beta
 <p class="text-[10px] text-slate-500">AI-Powered Risk Assessment</p>
 </div>
 </a>
-<div class="flex items-center gap-4">
-<a href="/databases.html" class="text-sm text-slate-400 hover:text-cyan-400 transition flex items-center gap-1.5">
-<span class="text-[10px] bg-cyan-500/20 text-cyan-400 px-1.5 py-0.5 rounded font-semibold">850+</span>
+<!-- Hamburger Button -->
+<button id="menuBtn" class="p-2 text-slate-400 hover:text-cyan-400 transition">
+<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+</svg>
+</button>
+
+<!-- Mobile Menu -->
+<div id="mobileMenu" class="hidden absolute top-full right-4 mt-2 w-56 bg-slate-900 border border-slate-700 rounded-lg shadow-xl z-50">
+<div class="py-2">
+<a href="/" class="block px-4 py-2 text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition">Home</a>
+<a href="/#pricing" class="block px-4 py-2 text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition">Pricing</a>
+<a href="/how-it-works.html" class="block px-4 py-2 text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition">How It Works</a>
+<a href="/databases.html" class="flex items-center gap-2 px-4 py-2 text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition">
 Data Sources
+<span class="text-[10px] bg-cyan-500/20 text-cyan-400 px-1.5 py-0.5 rounded font-semibold">850+</span>
 </a>
-<a href="/" class="text-sm text-cyan-400 hover:text-cyan-300 transition font-semibold">← Back to Home</a>
+<a href="/sample-report.html" class="block px-4 py-2 text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition">Sample Report</a>
 </div>
+</div>
+
+<script>
+const menuBtn = document.getElementById('menuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+document.addEventListener('click', (e) => {
+  if (!menuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+    mobileMenu.classList.add('hidden');
+  }
+});
+</script>
 </div>
 </header>
 

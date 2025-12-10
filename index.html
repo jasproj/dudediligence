@@ -1415,6 +1415,10 @@ function calculateRuleBasedScore(data) {
     } else {
         // LOI/ICPO Document Scoring (original rules)
         
+        // FIX v5.3: For MANUAL_ENTRY mode, don't penalize missing deal details
+        // Users just want to check names, not submit a full LOI
+        const isManualEntry = data.documentType === 'MANUAL_ENTRY';
+        
         // Company Reality Checks
         if (!data.buyer?.name || data.buyer.name === "Not specified") {
             score -= 15;
@@ -1431,23 +1435,30 @@ function calculateRuleBasedScore(data) {
         }
 
         // Deal Reality Checks (only for LOI/ICPO)
+        // FIX v5.3: Skip penalties for manual entry mode - users just checking names
         if (!data.quantity || data.quantity === "Not specified") {
-            score -= 10;
-            redFlags.push("Quantity not specified");
+            if (!isManualEntry) {
+                score -= 10;
+                redFlags.push("Quantity not specified");
+            }
         } else {
             positiveSignals.push("Quantity specified");
         }
 
         if (!data.price || data.price === "Not specified") {
-            score -= 10;
-            redFlags.push("Price not specified");
+            if (!isManualEntry) {
+                score -= 10;
+                redFlags.push("Price not specified");
+            }
         } else {
             positiveSignals.push("Price specified");
         }
 
         if (!data.paymentTerms || data.paymentTerms === "Not specified") {
-            score -= 8;
-            redFlags.push("Payment terms missing");
+            if (!isManualEntry) {
+                score -= 8;
+                redFlags.push("Payment terms missing");
+            }
         } else {
             // Handle both old string format and new object format
             const paymentText = typeof data.paymentTerms === 'string' 
@@ -1467,16 +1478,20 @@ function calculateRuleBasedScore(data) {
             ? data.deliveryTerms 
             : (data.deliveryTerms?.incoterms || "Not specified");
         if (!deliveryText || deliveryText === "Not specified") {
-            score -= 7;
-            redFlags.push("Delivery terms missing");
+            if (!isManualEntry) {
+                score -= 7;
+                redFlags.push("Delivery terms missing");
+            }
         }
 
         const portText = typeof data.port === 'string'
             ? data.port
             : (data.delivery?.loadingPort || data.delivery?.dischargePort || "Not specified");
         if (!portText || portText === "Not specified") {
-            score -= 7;
-            redFlags.push("Port not specified");
+            if (!isManualEntry) {
+                score -= 7;
+                redFlags.push("Port not specified");
+            }
         }
     }
 
@@ -1492,8 +1507,10 @@ function calculateRuleBasedScore(data) {
             positiveSignals.push("Buyer using corporate email");
         }
     } else {
-        score -= 8;
-        redFlags.push("Buyer email not provided");
+        if (!isManualEntry) {
+            score -= 8;
+            redFlags.push("Buyer email not provided");
+        }
     }
 
     if (data.seller?.email && data.seller.email !== "Not specified") {
@@ -1504,8 +1521,8 @@ function calculateRuleBasedScore(data) {
         } else {
             positiveSignals.push("Seller using corporate email");
         }
-    } else if (data.documentType !== "KYC") {
-        // Only penalize missing seller email for LOI/ICPO, not KYC
+    } else if (data.documentType !== "KYC" && !isManualEntry) {
+        // Only penalize missing seller email for LOI/ICPO, not KYC or manual entry
         score -= 8;
         redFlags.push("Seller email not provided");
     }
@@ -2267,17 +2284,24 @@ async function processData(extracted) {
     };
     
     // If manual entry, add all names directly
+    // FIX v5.3: Only set company OR name, not both - prevents duplicate checks
     if (window.manualEntryNames && window.manualEntryNames.length > 0) {
+        const companyIndicators = ['llc', 'ltd', 'inc', 'corp', 'company', 'co.', 'gmbh', 'sa', 'ag', 'plc', 'limited', 'corporation', 'enterprises', 'holdings', 'group', 'partners'];
+        
         window.manualEntryNames.forEach((name, idx) => {
+            const nameLower = name.toLowerCase();
+            const looksLikeCompany = companyIndicators.some(ind => nameLower.includes(ind));
+            
             diligenceRequest.allParties.push({
-                company: name,
-                name: name,
+                // Smart detection: only populate ONE field based on name pattern
+                company: looksLikeCompany ? name : null,
+                name: looksLikeCompany ? null : name,
                 country: '',
                 email: '',
                 role: idx === 0 ? 'Primary' : 'Additional Party'
             });
         });
-        console.log('DDP: Manual entry allParties:', diligenceRequest.allParties);
+        console.log('DDP: Manual entry allParties (deduped):', diligenceRequest.allParties);
     }
     
     // Collect all parties for checking (from extracted data)
@@ -2447,13 +2471,19 @@ async function processData(extracted) {
     
     // Merge real database results into scoring
     if (databaseResults) {
-        // Add real red flags from database checks
+        // Add real red flags from database checks (deduplicated)
         if (databaseResults.redFlags) {
-            scoring.redFlags = [...scoring.redFlags, ...databaseResults.redFlags];
+            const newFlags = databaseResults.redFlags.filter(f => !scoring.redFlags.includes(f));
+            scoring.redFlags = [...scoring.redFlags, ...newFlags];
+            // Final deduplication
+            scoring.redFlags = [...new Set(scoring.redFlags)];
         }
-        // Add real positive signals
+        // Add real positive signals (deduplicated)
         if (databaseResults.positiveSignals) {
-            scoring.positiveSignals = [...scoring.positiveSignals, ...databaseResults.positiveSignals];
+            const newSignals = databaseResults.positiveSignals.filter(s => !scoring.positiveSignals.includes(s));
+            scoring.positiveSignals = [...scoring.positiveSignals, ...newSignals];
+            // Final deduplication
+            scoring.positiveSignals = [...new Set(scoring.positiveSignals)];
         }
         // Backend score will be used in the risk assessment below
         // Don't add scores - backend score replaces frontend score
@@ -4125,7 +4155,7 @@ function generatePdfReport(result, userEmail) {
     const stats = [
         ['Risk Score', result.score + ' / 100'],
         ['Risk Level', result.riskLevel],
-        ['Critical Issues', (result.redFlags?.length || 0) + ' identified'],
+        ['Issues Found', (result.redFlags?.length || 0) + ' identified'],
         ['Positive Signals', (result.positiveSignals?.length || 0) + ' found'],
         ['Countries Covered', '140+ jurisdictions worldwide'],
         ['Analysis Type', result.userVerified ? 'User-Verified Data' : 'AI-Extracted Data']
@@ -4183,11 +4213,14 @@ function generatePdfReport(result, userEmail) {
     }
     
     // =========================================================
-    // CRITICAL ISSUES (RED FLAGS)
+    // ISSUES FOUND (RED FLAGS) - Context-aware header
     // =========================================================
     
     if (result.redFlags && result.redFlags.length > 0) {
-        sectionHeader('Critical Issues (' + result.redFlags.length + ')');
+        // FIX v5.3: Use softer language - not all issues are "critical"
+        const hasSanctions = result.redFlags.some(f => f.includes('sanctions') || f.includes('OFAC') || f.includes('🚨') || f.includes('INTERPOL') || f.includes('Blacklist'));
+        const headerText = hasSanctions ? 'Critical Issues' : 'Issues to Review';
+        sectionHeader(headerText + ' (' + result.redFlags.length + ')');
         doc.setFontSize(8);
         result.redFlags.forEach((flag, i) => {
             addBullet(flag, colors.darkGray, colors.red);

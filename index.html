@@ -1814,8 +1814,8 @@ async function runDiligence() {
         return;
     }
 
-    // Start animated status
-    startAnalysisAnimation();
+    // Simple status for local processing (fast)
+    document.getElementById('statusMessage').innerHTML = '<span class="animate-pulse">📄 Reading document...</span>';
     const riskBadge = document.getElementById('riskBadge');
     riskBadge.textContent = 'Processing';
     riskBadge.classList.add('loading-dots');
@@ -1856,7 +1856,6 @@ async function runDiligence() {
                 }
             } catch (docxError) {
                 console.error('DOCX extraction failed:', docxError);
-                stopAnalysisAnimation();
                 document.getElementById('statusMessage').textContent = '❌ Failed to read Word document. Please try converting to PDF.';
                 riskBadge.textContent = 'Error';
                 riskBadge.classList.remove('loading-dots');
@@ -2059,7 +2058,8 @@ async function processData(extracted) {
     const currentHash = window.extractedFileHash;
     const reuseCheck = window.reuseCheckResult;
     
-    document.getElementById('statusMessage').innerHTML = '<span class="animate-pulse">🔍 Running database verification...</span>';
+    // Start the full loading animation for backend API calls
+    startAnalysisAnimation();
     
     // Prepare data for full diligence check
     const diligenceRequest = {
@@ -2296,6 +2296,7 @@ async function processData(extracted) {
     };
     
     // Update UI
+    stopAnalysisAnimation();
     updateResultsUIwithEnhancements(currentResult);
     document.getElementById('statusMessage').textContent = extracted.userVerified ? '✓ Analysis complete (user-verified)' : '✓ Analysis complete.';
 }

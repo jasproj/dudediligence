@@ -342,7 +342,6 @@ class="w-full mt-3 inline-flex items-center justify-center rounded-xl bg-cyan-50
 </svg>
 Run The Dude
 </button>
-</button>
 
 <p id="statusMessage" class="text-[11px] text-slate-500 h-4 mt-2"></p>
 </div>
@@ -1945,6 +1944,89 @@ function stopAnalysisAnimation() {
 }
 
 async function runDiligence() {
+    // Check if we're in manual entry mode
+    const manualModeEl = document.getElementById('manualMode');
+    const isManualMode = manualModeEl && !manualModeEl.classList.contains('hidden');
+    
+    console.log('DDP: runDiligence called');
+    console.log('DDP: manualMode element:', manualModeEl);
+    console.log('DDP: manualMode classes:', manualModeEl ? manualModeEl.className : 'not found');
+    console.log('DDP: isManualMode:', isManualMode);
+    
+    if (isManualMode) {
+        // Gather names from manual entry fields
+        const names = [];
+        for (let i = 1; i <= 5; i++) {
+            const input = document.getElementById('manualEntry' + i);
+            if (input && input.value.trim()) {
+                names.push(input.value.trim());
+            }
+        }
+        
+        if (names.length === 0) {
+            document.getElementById('statusMessage').textContent = '⚠️ Please enter at least one company or person name.';
+            return;
+        }
+        
+        // Create virtual document text from names
+        const virtualDocText = 'MANUAL ENTRY SCREENING REQUEST\n\nEntities to check:\n' + names.map(n => '- ' + n).join('\n');
+        
+        document.getElementById('statusMessage').innerHTML = '<span class="animate-pulse">🔍 Checking names...</span>';
+        const riskBadge = document.getElementById('riskBadge');
+        riskBadge.textContent = 'Processing';
+        riskBadge.classList.add('loading-dots');
+        
+        try {
+            // Call backend API with manual entry data
+            const response = await fetch('https://api.dudediligence.pro/api/analyze', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    fileData: btoa(virtualDocText),
+                    fileName: 'manual-entry.txt',
+                    fileType: 'text/plain',
+                    extractedText: virtualDocText,
+                    manualEntryNames: names
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Backend error: ${response.status}`);
+            }
+
+            const result = await response.json();
+            
+            if (!result.success) {
+                throw new Error(result.error || 'Analysis failed');
+            }
+
+            const extracted = result.data;
+
+            // Store extracted data globally for review form
+            window.aiExtractedData = extracted;
+            window.extractedFileHash = 'manual-' + Date.now();
+            window.reuseCheckResult = { isReused: false };
+
+            // Show review form
+            showReviewForm(extracted);
+            
+            stopAnalysisAnimation();
+            document.getElementById('statusMessage').textContent = '✏️ Please review the extracted data';
+            
+        } catch (error) {
+            console.error('Manual entry analysis failed:', error);
+            document.getElementById('statusMessage').textContent = '❌ Analysis failed: ' + error.message;
+            const riskBadge = document.getElementById('riskBadge');
+            riskBadge.textContent = 'Error';
+            riskBadge.classList.remove('loading-dots');
+        }
+        
+        return;
+    }
+    
+    // Original file upload flow
     if (!currentFile) {
         document.getElementById('statusMessage').textContent = '⚠️ Please upload a document first.';
         return;

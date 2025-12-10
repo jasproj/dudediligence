@@ -6394,44 +6394,50 @@ Built with ❤️ for commodity traders who've been burned before
 </footer>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// 5 HERO VARIATIONS FOR A/B TESTING
-const heroVariations = [
-  {
-    headline: "Global Due Diligence For Commodity Traders",
-    subheadline: "Upload any document. Get a risk report in under 60 seconds. Know who you're really dealing with.",
-    bullets: [
-      { text: "<strong>Catch Recycled Documents:</strong> Same LOI, different names? We flag it instantly" },
-      { text: "<strong>Unmask Shell Companies:</strong> Trace ownership through 140+ country registries" },
-      { text: "<strong>Spot Sanctioned Parties:</strong> Cross-reference 50+ public watchlists automatically" },
-      { text: "<strong>Verify Banks & SWIFT Codes:</strong> 30+ sanctioned banks flagged in real-time" },
-      { text: "<strong>Check Vessel & Port History:</strong> 85,000+ ships tracked via Equasis" },
-      { text: "<strong>Flag Offshore Red Flags:</strong> Panama Papers, Paradise Papers, Pandora Papers searched" },
-      { text: "<strong>Detect Fraud Patterns:</strong> Email domains, jurisdiction mismatches, document age" },
-      { text: "<strong>Export Compliance Reports:</strong> Professional PDFs for your records" }
-    ]
-  }
+// 6 ROTATING HEADLINES - Same subheadline and bullets for all
+const heroHeadlines = [
+  "Global Due Diligence For Commodity Traders",
+  "Preliminary Risk Screening For Commodity Traders",
+  "Quick Risk Checks For Commodity Traders",
+  "First-Pass Due Diligence For Commodity Traders",
+  "OSINT Screening For Commodity Traders",
+  "Public Records Check For Commodity Traders"
 ];
 
-function getVariationIndex() {
-  return 0; // Single variation - no A/B testing
+const heroSubheadline = "Upload a document or enter names manually. Get a risk report in under 60 seconds.";
+
+const heroBullets = [
+  { text: "<strong>Catch Recycled Documents:</strong> Same LOI, different names? We flag it instantly" },
+  { text: "<strong>Unmask Shell Companies:</strong> Trace ownership through 140+ country registries" },
+  { text: "<strong>Spot Sanctioned Parties:</strong> Cross-reference 50+ public watchlists automatically" },
+  { text: "<strong>Verify Banks & SWIFT Codes:</strong> 30+ sanctioned banks flagged in real-time" },
+  { text: "<strong>Check Vessel & Port History:</strong> 85,000+ ships tracked via Equasis" },
+  { text: "<strong>Flag Offshore Red Flags:</strong> Panama Papers, Paradise Papers, Pandora Papers searched" },
+  { text: "<strong>Detect Fraud Patterns:</strong> Email domains, jurisdiction mismatches, document age" },
+  { text: "<strong>Export Compliance Reports:</strong> Professional PDFs for your records" }
+];
+
+function getHeadlineIndex() {
+  // Random headline each page load
+  return Math.floor(Math.random() * heroHeadlines.length);
 }
 
 function renderHeroVariation() {
-  const variationIndex = getVariationIndex();
-  const variation = heroVariations[variationIndex];
+  const headlineIndex = getHeadlineIndex();
+  const headline = heroHeadlines[headlineIndex];
   
-  console.log(`📊 DDP: Showing Variation ${String.fromCharCode(65 + variationIndex)} (${variation.headline.substring(0, 30)}...)`);
+  console.log('DDP: Showing Headline ' + (headlineIndex + 1) + ' of ' + heroHeadlines.length + ': ' + headline);
   
   const heroContainer = document.getElementById('heroVariation');
   const bulletsContainer = document.getElementById('heroBullets');
   
   if (!heroContainer || !bulletsContainer) {
-    console.error('❌ DDP: Hero containers not found!');
+    console.error('DDP: Hero containers not found!');
     return;
   }
   
   // Build bullets HTML
-  const bulletsHTML = variation.bullets.map(bullet => `
+  const bulletsHTML = heroBullets.map(bullet => `
     <li class="flex items-start gap-2">
       <span class="mt-1 h-1.5 w-1.5 rounded-full bg-cyan-400"></span>
       <span>${bullet.text}</span>
@@ -6441,11 +6447,11 @@ function renderHeroVariation() {
   // Inject the headline and subheadline
   heroContainer.innerHTML = `
     <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-slate-50 mb-3 leading-tight">
-      ${variation.headline}
+      ${headline}
     </h1>
     
     <p class="text-lg md:text-xl text-cyan-400 font-semibold mb-4">
-      ${variation.subheadline}
+      ${heroSubheadline}
     </p>
   `;
   
@@ -6460,18 +6466,17 @@ if (document.readyState === 'loading') {
   renderHeroVariation();
 }
 
-// Track CTA clicks with variation
+// Track CTA clicks with headline
 document.addEventListener('DOMContentLoaded', function() {
-  const variationIndex = getVariationIndex();
-  const variationLetter = String.fromCharCode(65 + variationIndex);
+  const headlineIndex = getHeadlineIndex();
   
   document.querySelectorAll('a[href="#pricing"]').forEach(link => {
     link.addEventListener('click', function() {
       if (typeof gtag !== 'undefined') {
         gtag('event', 'cta_click', {
           'event_category': 'conversion',
-          'event_label': 'hero_variation_' + variationLetter,
-          'value': variationIndex
+          'event_label': 'headline_' + (headlineIndex + 1),
+          'value': headlineIndex
         });
       }
     });

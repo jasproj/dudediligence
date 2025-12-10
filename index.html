@@ -423,6 +423,26 @@ placeholder="Not specified">
 </div>
 </div>
 
+<!-- Vessel/Ship Information (for commodity traders) -->
+<div class="bg-slate-900/60 p-4 rounded-lg border border-slate-800">
+<h3 class="text-xs font-semibold text-slate-300 mb-3">🚢 Vessel Information <span class="text-[10px] text-cyan-400 font-normal">(Optional)</span></h3>
+<div class="grid gap-3">
+<div>
+<label class="block text-[11px] text-slate-500 mb-1">IMO Number</label>
+<input type="text" id="edit_vessel_imo" 
+class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-cyan-500 transition"
+placeholder="e.g., 9074729 (7 digits)">
+</div>
+<div>
+<label class="block text-[11px] text-slate-500 mb-1">Or Vessel Name</label>
+<input type="text" id="edit_vessel_name" 
+class="w-full bg-slate-800 border border-slate-700 rounded px-3 py-2 text-sm text-slate-100 focus:outline-none focus:border-cyan-500 transition"
+placeholder="e.g., M/V ATLANTIC STAR">
+</div>
+</div>
+<p class="text-[10px] text-slate-500 mt-2">We verify vessels against Equasis (85K+ ships with safety records, PSC inspections, ownership)</p>
+</div>
+
 <!-- Helpful Tip -->
 <div class="bg-slate-800/50 border border-cyan-500/20 rounded-lg p-3 mb-4">
 <p class="text-xs text-slate-300 leading-relaxed">
@@ -1917,6 +1937,12 @@ async function processData(extracted) {
         if (extracted.bankDetails.swift) diligenceRequest.swift = extracted.bankDetails.swift;
     }
     
+    // Extract vessel/ship information (for commodity traders)
+    const vesselIMO = document.getElementById('edit_vessel_imo')?.value?.trim();
+    const vesselName = document.getElementById('edit_vessel_name')?.value?.trim();
+    if (vesselIMO) diligenceRequest.vesselIMO = vesselIMO;
+    if (vesselName && !vesselIMO) diligenceRequest.vesselName = vesselName;
+    
     // Get primary company for detailed checks
     const primaryCompany = diligenceRequest.allParties.find(p => p.company)?.company;
     const primaryCountry = diligenceRequest.allParties.find(p => p.country)?.country;
@@ -2661,6 +2687,30 @@ function updateResultsUI(result) {
                         <span class="text-[10px] ${riskColor} font-semibold">${riskIcon} ${riskText}</span>
                     </div>`;
                 }
+            }
+            
+            // Vessel Lookup (Equasis) - accessed from main db object
+            if (db.vesselLookup && (db.vesselLookup.found || db.vesselLookup.searchedIdentifier)) {
+                const vessel = db.vesselLookup;
+                const found = vessel.found;
+                const vData = vessel.verifiedVessel || vessel.vessels?.[0] || {};
+                const statusColor = found ? 'text-emerald-400' : 'text-rose-400';
+                const statusIcon = found ? '[OK]' : '[!]';
+                let statusText = found ? `Verified: ${vData.name || 'Found'}` : 'Not found in Equasis';
+                if (vData.hasDetentions) {
+                    statusText += ' (Detentions!)';
+                }
+                
+                databasesHtml += `<div class="flex items-center justify-between bg-slate-900/40 rounded-lg px-3 py-2 border ${!found ? 'border-rose-500/30' : 'border-slate-800'}">
+                    <div class="flex items-center gap-2">
+                        <span class="text-lg">🚢</span>
+                        <div>
+                            <span class="text-[11px] text-slate-300">Vessel (Equasis)</span>
+                            ${vData.imo ? `<span class="text-[9px] text-slate-500 block">IMO: ${vData.imo}</span>` : `<span class="text-[9px] text-slate-500 block">Searched: ${vessel.searchedIdentifier || ''}</span>`}
+                        </div>
+                    </div>
+                    <span class="text-[10px] ${statusColor} font-semibold">${statusIcon} ${statusText}</span>
+                </div>`;
             }
             
             // Jurisdiction Risk

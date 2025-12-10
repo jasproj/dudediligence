@@ -1641,40 +1641,173 @@ function determineRiskLevel(score, blacklistHits, sanctionsHits, documentReuse) 
 
 // Main analysis function - PRODUCTION MODE with Claude API Backend
 let analysisInterval = null;
+let factInterval = null;
 
 function startAnalysisAnimation() {
     const statusEl = document.getElementById('statusMessage');
+    
+    // Enhanced phases showing all the databases we check
     const phases = [
-        '🔍 Reading document...',
-        '📄 Extracting parties & terms...',
-        '🌐 Checking OFAC sanctions...',
-        '🔎 Scanning company registries...',
-        '⚖️ Analyzing risk patterns...',
-        '📊 Calculating risk score...'
+        { icon: '📄', text: 'Reading your document' },
+        { icon: '🔍', text: 'Extracting parties & terms' },
+        { icon: '🛡️', text: 'Checking OpenSanctions (OFAC, UN, EU, UK)' },
+        { icon: '📋', text: 'Scanning Trade.gov Consolidated List' },
+        { icon: '🏦', text: 'Checking World Bank Debarred' },
+        { icon: '👮', text: 'Searching Interpol Red & Yellow Notices' },
+        { icon: '📰', text: 'Scanning ICIJ Offshore Leaks' },
+        { icon: '🏛️', text: 'Verifying SWIFT/BIC sanctions status' },
+        { icon: '🌐', text: 'Checking company registries worldwide' },
+        { icon: '📧', text: 'Analyzing email domains' },
+        { icon: '🕐', text: 'Checking domain registration age' },
+        { icon: '🚢', text: 'Verifying vessel in Equasis (85K ships)' },
+        { icon: '⚓', text: 'Validating ports via UN/LOCODE' },
+        { icon: '👨‍✈️', text: 'Cross-referencing captain against sanctions' },
+        { icon: '💳', text: 'Detecting financial instruments' },
+        { icon: '🌍', text: 'Assessing jurisdiction risks (FATF)' },
+        { icon: '⚖️', text: 'Analyzing fraud patterns' },
+        { icon: '📊', text: 'Calculating final risk score' }
     ];
+    
     let phaseIndex = 0;
     let dotCount = 0;
     
     // Clear any existing interval
     if (analysisInterval) clearInterval(analysisInterval);
     
+    // Show the loading overlay
+    showLoadingOverlay();
+    
     analysisInterval = setInterval(() => {
         dotCount = (dotCount + 1) % 4;
         const dots = '.'.repeat(dotCount);
         const phase = phases[phaseIndex % phases.length];
-        statusEl.innerHTML = `<span class="animate-pulse">${phase}${dots}</span>`;
         
-        // Move to next phase every 3 cycles
+        // Update both the status message and the overlay
+        statusEl.innerHTML = `<span class="animate-pulse">${phase.icon} ${phase.text}${dots}</span>`;
+        updateLoadingOverlay(phase, phaseIndex, phases.length);
+        
+        // Move to next phase every 3 cycles (1.2 seconds per phase)
         if (dotCount === 0) {
             phaseIndex++;
         }
     }, 400);
 }
 
+function showLoadingOverlay() {
+    // Remove existing overlay if any
+    const existing = document.getElementById('loadingOverlay');
+    if (existing) existing.remove();
+    
+    const overlay = document.createElement('div');
+    overlay.id = 'loadingOverlay';
+    overlay.className = 'fixed inset-0 bg-slate-950/95 backdrop-blur-sm z-50 flex items-center justify-center';
+    overlay.innerHTML = `
+        <div class="text-center max-w-md mx-4">
+            <div class="relative mb-8">
+                <div class="w-24 h-24 mx-auto rounded-full border-4 border-cyan-500/30 border-t-cyan-400 animate-spin"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <span class="text-3xl" id="loadingIcon">🔍</span>
+                </div>
+            </div>
+            <h3 class="text-xl font-semibold text-slate-100 mb-2">Generating Your Report</h3>
+            <p class="text-slate-400 text-sm mb-6">Cross-referencing 850+ databases worldwide</p>
+            <div class="bg-slate-900/80 rounded-xl border border-slate-700 p-4 mb-4">
+                <p class="text-cyan-400 text-sm font-medium" id="loadingPhase">Reading your document...</p>
+                <p class="text-slate-500 text-xs mt-1" id="loadingSubtext">This typically takes 15-30 seconds</p>
+            </div>
+            <div class="w-full bg-slate-800 rounded-full h-2 mb-4 overflow-hidden">
+                <div id="loadingProgress" class="h-full bg-gradient-to-r from-cyan-500 to-blue-500 rounded-full transition-all duration-500 ease-out" style="width: 5%"></div>
+            </div>
+            <div class="flex justify-center gap-6 text-xs text-slate-500">
+                <span><span class="text-cyan-400 font-semibold" id="dbChecked">0</span> / 18 checks</span>
+                <span class="text-slate-600">|</span>
+                <span><span class="text-emerald-400 font-semibold">850+</span> databases</span>
+            </div>
+            <div class="mt-6 p-3 rounded-lg bg-slate-800/50 border border-slate-700/50">
+                <p class="text-xs text-slate-400 transition-opacity duration-200" id="loadingFact">
+                    💡 <span class="text-slate-300">Did you know?</span> We check sanctions lists from 200+ countries.
+                </p>
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(overlay);
+    startFactCycling();
+}
+
+function startFactCycling() {
+    const facts = [
+        '💡 <span class="text-slate-300">Did you know?</span> We check sanctions lists from 200+ countries.',
+        '🔍 <span class="text-slate-300">Fun fact:</span> OpenSanctions aggregates 314 different data sources.',
+        '📰 <span class="text-slate-300">Panama Papers:</span> We scan 810,000+ offshore entities from ICIJ leaks.',
+        '🚢 <span class="text-slate-300">Maritime:</span> Equasis tracks 85,000+ vessels with safety records.',
+        '⚓ <span class="text-slate-300">Ports:</span> UN/LOCODE covers 103,000+ trade locations globally.',
+        '🏛️ <span class="text-slate-300">Banking:</span> We flag 30+ sanctioned banks from Russia, Iran, DPRK.',
+        '🕐 <span class="text-slate-300">Scam detection:</span> Domains under 30 days old are flagged as critical.',
+        '👮 <span class="text-slate-300">Interpol:</span> We check both Red Notices and Yellow Notices.',
+        '📊 <span class="text-slate-300">Trade.gov:</span> The CSL includes BIS Entity List, Denied Persons & more.',
+        '🌍 <span class="text-slate-300">FATF:</span> We track both blacklisted and grey-listed jurisdictions.'
+    ];
+    
+    let factIndex = 0;
+    if (factInterval) clearInterval(factInterval);
+    
+    factInterval = setInterval(() => {
+        factIndex = (factIndex + 1) % facts.length;
+        const factEl = document.getElementById('loadingFact');
+        if (factEl) {
+            factEl.style.opacity = '0';
+            setTimeout(() => {
+                factEl.innerHTML = facts[factIndex];
+                factEl.style.opacity = '1';
+            }, 200);
+        }
+    }, 4000);
+}
+
+function updateLoadingOverlay(phase, index, total) {
+    const iconEl = document.getElementById('loadingIcon');
+    const phaseEl = document.getElementById('loadingPhase');
+    const progressEl = document.getElementById('loadingProgress');
+    const checkedEl = document.getElementById('dbChecked');
+    const subtextEl = document.getElementById('loadingSubtext');
+    
+    if (iconEl) iconEl.textContent = phase.icon;
+    if (phaseEl) phaseEl.textContent = phase.text + '...';
+    if (checkedEl) checkedEl.textContent = Math.min(index + 1, total);
+    
+    const progress = 5 + (index / total) * 90;
+    if (progressEl) progressEl.style.width = progress + '%';
+    
+    if (subtextEl) {
+        if (index < 3) subtextEl.textContent = 'Parsing document content...';
+        else if (index < 8) subtextEl.textContent = 'Running sanctions & watchlist checks...';
+        else if (index < 14) subtextEl.textContent = 'Verifying maritime & financial data...';
+        else subtextEl.textContent = 'Finalizing risk assessment...';
+    }
+}
+
+function hideLoadingOverlay() {
+    const overlay = document.getElementById('loadingOverlay');
+    if (overlay) {
+        overlay.style.opacity = '0';
+        overlay.style.transition = 'opacity 0.3s ease-out';
+        setTimeout(() => overlay.remove(), 300);
+    }
+    if (factInterval) {
+        clearInterval(factInterval);
+        factInterval = null;
+    }
+}
+
 function stopAnalysisAnimation() {
     if (analysisInterval) {
         clearInterval(analysisInterval);
         analysisInterval = null;
+    }
+    hideLoadingOverlay();
+}
+
     }
 }
 

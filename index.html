@@ -1370,6 +1370,9 @@ function calculateRuleBasedScore(data) {
     let score = 100;
     const redFlags = [];
     const positiveSignals = [];
+    
+    // FIX v5.3: Detect manual entry mode at function scope (used in multiple places)
+    const isManualEntry = data.documentType === 'MANUAL_ENTRY';
 
     // KYC Document Scoring (different rules)
     if (data.documentType === "KYC") {
@@ -1414,10 +1417,7 @@ function calculateRuleBasedScore(data) {
         
     } else {
         // LOI/ICPO Document Scoring (original rules)
-        
-        // FIX v5.3: For MANUAL_ENTRY mode, don't penalize missing deal details
-        // Users just want to check names, not submit a full LOI
-        const isManualEntry = data.documentType === 'MANUAL_ENTRY';
+        // Note: isManualEntry is declared at function scope above
         
         // Company Reality Checks
         if (!data.buyer?.name || data.buyer.name === "Not specified") {

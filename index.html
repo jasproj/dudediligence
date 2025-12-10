@@ -220,7 +220,7 @@ Pricing
 How It Works
 </a>
 <a href="/databases.html" onclick="toggleMobileMenu()" class="px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition flex items-center gap-2">
-<span class="text-xs bg-cyan-500/20 text-cyan-400 px-1.5 py-0.5 rounded">850+</span>
+<span class="text-xs bg-cyan-500/20 text-cyan-400 px-1.5 py-0.5 rounded">50+</span>
 Data Sources
 </a>
 <a href="/sample-report.html" onclick="toggleMobileMenu()" class="px-4 py-3 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-cyan-400 transition">
@@ -294,7 +294,18 @@ Buy →
 
 <div class="px-5 pt-4 pb-5 space-y-4">
 
-<div class="block">
+<!-- Toggle: Upload vs Manual Entry -->
+<div class="flex rounded-lg bg-slate-900/80 p-1 border border-slate-700">
+<button id="tabUpload" onclick="showUploadMode()" class="flex-1 px-3 py-2 text-xs font-semibold rounded-md bg-cyan-500/20 text-cyan-400 border border-cyan-500/30 transition">
+Upload Document
+</button>
+<button id="tabManual" onclick="showManualMode()" class="flex-1 px-3 py-2 text-xs font-semibold rounded-md text-slate-400 hover:text-slate-300 transition">
+Enter Names Manually
+</button>
+</div>
+
+<!-- Upload Mode -->
+<div id="uploadMode" class="block">
 <span class="text-xs font-medium text-slate-300">Document</span>
 <div id="dropzone" onclick="document.getElementById('fileInput').click()"
 class="mt-2 flex flex-col items-center justify-center rounded-xl border border-dashed border-slate-700 bg-slate-900/60 px-4 py-6 text-center text-xs text-slate-400 cursor-pointer hover:border-cyan-400/70 hover:bg-slate-900 transition">
@@ -302,6 +313,24 @@ class="mt-2 flex flex-col items-center justify-center rounded-xl border border-d
 <span class="text-[11px] text-slate-500">PDF, TXT, max 10 MB.</span>
 </div>
 <input id="fileInput" type="file" accept=".pdf,.txt,.docx,.doc" class="hidden" />
+<!-- Trust Language -->
+<p class="text-[10px] text-slate-500 mt-2 flex items-center gap-1">
+<svg class="w-3 h-3 text-emerald-500" fill="currentColor" viewBox="0 0 20 20">
+<path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+</svg>
+Processed in-memory. Never stored. Never used for training.
+</p>
+</div>
+
+<!-- Manual Entry Mode -->
+<div id="manualMode" class="hidden">
+<span class="text-xs font-medium text-slate-300">Enter company or person names to check</span>
+<div class="mt-2 space-y-2">
+<input type="text" id="manualEntry1" placeholder="Company or person name" class="w-full bg-slate-900/60 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition">
+<input type="text" id="manualEntry2" placeholder="Add another (optional)" class="w-full bg-slate-900/60 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition">
+<input type="text" id="manualEntry3" placeholder="Add another (optional)" class="w-full bg-slate-900/60 border border-slate-700 rounded-lg px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-cyan-500 transition">
+</div>
+<p class="text-[10px] text-slate-500 mt-2">Enter names exactly as they appear on documents</p>
 </div>
 
 <button onclick="runDiligence()"
@@ -309,7 +338,8 @@ class="w-full mt-3 inline-flex items-center justify-center rounded-xl bg-cyan-50
 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
 </svg>
-Run The Dude
+Run Risk Check
+</button>
 </button>
 
 <p id="statusMessage" class="text-[11px] text-slate-500 h-4 mt-2"></p>
@@ -1143,6 +1173,25 @@ Unlimited verifications, blacklist checks, passport validation, fraud scanning, 
 
 <!-- SCRIPT -->
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+// Toggle between Upload and Manual Entry modes
+function showUploadMode() {
+    document.getElementById('uploadMode').classList.remove('hidden');
+    document.getElementById('manualMode').classList.add('hidden');
+    document.getElementById('tabUpload').classList.add('bg-cyan-500/20', 'text-cyan-400', 'border', 'border-cyan-500/30');
+    document.getElementById('tabUpload').classList.remove('text-slate-400');
+    document.getElementById('tabManual').classList.remove('bg-cyan-500/20', 'text-cyan-400', 'border', 'border-cyan-500/30');
+    document.getElementById('tabManual').classList.add('text-slate-400');
+}
+
+function showManualMode() {
+    document.getElementById('uploadMode').classList.add('hidden');
+    document.getElementById('manualMode').classList.remove('hidden');
+    document.getElementById('tabManual').classList.add('bg-cyan-500/20', 'text-cyan-400', 'border', 'border-cyan-500/30');
+    document.getElementById('tabManual').classList.remove('text-slate-400');
+    document.getElementById('tabUpload').classList.remove('bg-cyan-500/20', 'text-cyan-400', 'border', 'border-cyan-500/30');
+    document.getElementById('tabUpload').classList.add('text-slate-400');
+}
+
 // Floating Pricing Badge - Show after scrolling past hero
 window.addEventListener('scroll', function() {
     const floatingBadge = document.getElementById('floatingPricingBadge');
@@ -1795,7 +1844,7 @@ function showLoadingOverlay() {
                 </div>
             </div>
             <h3 class="text-xl font-semibold text-slate-100 mb-2">Generating Your Report</h3>
-            <p class="text-slate-400 text-sm mb-6">Cross-referencing 850+ databases worldwide</p>
+            <p class="text-slate-400 text-sm mb-6">Cross-referencing 50+ public data sources worldwide</p>
             <div class="bg-slate-900/80 rounded-xl border border-slate-700 p-4 mb-4">
                 <p class="text-cyan-400 text-sm font-medium" id="loadingPhase">Reading your document...</p>
                 <p class="text-slate-500 text-xs mt-1" id="loadingSubtext">This typically takes 15-30 seconds</p>
@@ -1806,7 +1855,7 @@ function showLoadingOverlay() {
             <div class="flex justify-center gap-6 text-xs text-slate-500">
                 <span><span class="text-cyan-400 font-semibold" id="dbChecked">0</span> / 18 checks</span>
                 <span class="text-slate-600">|</span>
-                <span><span class="text-emerald-400 font-semibold">850+</span> databases</span>
+                <span><span class="text-emerald-400 font-semibold">50+</span> public sources</span>
             </div>
             <div class="mt-6 p-3 rounded-lg bg-slate-800/50 border border-slate-700/50">
                 <p class="text-xs text-slate-400 transition-opacity duration-200" id="loadingFact">
@@ -5366,7 +5415,7 @@ window.addEventListener('scroll', () => {
 <span class="text-sm font-semibold text-cyan-400 uppercase tracking-wider">Global Queries</span>
 </div>
 <h2 class="text-2xl md:text-3xl font-bold text-slate-100 mb-3">
-850+ Global Data Sources
+50+ Public Data Sources
 </h2>
 <p class="text-slate-400 text-sm md:text-base max-w-2xl mx-auto">
 Every report cross-references sanctions lists, company registries, offshore leaks, maritime databases, and more—in real-time.
@@ -5401,7 +5450,7 @@ Every report cross-references sanctions lists, company registries, offshore leak
 <!-- Central Stats Badge -->
 <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
 <div class="text-center bg-slate-950/95 backdrop-blur-sm px-6 py-4 rounded-xl border border-cyan-500/30 shadow-lg shadow-cyan-500/10">
-<div class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">850+</div>
+<div class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">50+</div>
 <div class="text-slate-400 text-xs font-medium mt-1">Data Sources</div>
 </div>
 </div>
@@ -6225,7 +6274,7 @@ DDP was built by commodity traders who got burned by document fraud. After exper
 Our AI-powered platform combines document analysis with real-time checks against global sanctions lists, company registries, offshore leak databases, and fraud pattern detection—giving you a clearer picture of who you're dealing with before money changes hands.
 </p>
 <p class="text-base text-slate-300 leading-relaxed mb-6">
-We query aggregator services like OpenSanctions (314 sources), OpenCorporates (140+ country registries), and ICIJ Offshore Leaks (810K+ entities)—plus direct integrations with OFAC, Interpol, World Bank, and more. That's how we cross-reference 850+ data sources in under a minute.
+We query public aggregator services like OpenSanctions, OpenCorporates, and ICIJ Offshore Leaks—plus direct integrations with OFAC, Interpol, World Bank, and more. These services consolidate hundreds of underlying sources, giving you broad coverage from a single search.
 </p>
 
 <div class="grid md:grid-cols-3 gap-6 pt-6 border-t border-slate-800">
@@ -6234,8 +6283,8 @@ We query aggregator services like OpenSanctions (314 sources), OpenCorporates (1
 <div class="text-sm text-slate-400">Analysis Time</div>
 </div>
 <div class="text-center">
-<div class="text-3xl font-bold text-emerald-400 mb-1">850+</div>
-<div class="text-sm text-slate-400">Data Sources</div>
+<div class="text-3xl font-bold text-emerald-400 mb-1">50+</div>
+<div class="text-sm text-slate-400">Public Sources</div>
 </div>
 <div class="text-center">
 <div class="text-3xl font-bold text-amber-400 mb-1">24/7</div>
@@ -6353,7 +6402,7 @@ const heroVariations = [
     bullets: [
       { text: "<strong>Catch Recycled Documents:</strong> Same LOI, different names? We flag it instantly" },
       { text: "<strong>Unmask Shell Companies:</strong> Trace ownership through 140+ country registries" },
-      { text: "<strong>Spot Sanctioned Parties:</strong> Cross-reference 850+ global watchlists automatically" },
+      { text: "<strong>Spot Sanctioned Parties:</strong> Cross-reference 50+ public watchlists automatically" },
       { text: "<strong>Verify Banks & SWIFT Codes:</strong> 30+ sanctioned banks flagged in real-time" },
       { text: "<strong>Check Vessel & Port History:</strong> 85,000+ ships tracked via Equasis" },
       { text: "<strong>Flag Offshore Red Flags:</strong> Panama Papers, Paradise Papers, Pandora Papers searched" },

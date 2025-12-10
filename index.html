@@ -245,21 +245,10 @@ Partners
 <!-- Variation will be injected by JavaScript -->
 </div>
 
-<!-- Target Audience Badges -->
-<div class="flex items-center gap-3 mb-6">
-<span class="text-xs text-slate-500 font-medium">TRUSTED BY:</span>
-<div class="flex flex-wrap gap-2">
-<span class="px-3 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-semibold">Commodity Brokers</span>
-<span class="px-3 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-semibold">Trading Firms</span>
-<span class="px-3 py-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 text-xs font-semibold">Mandate Holders</span>
-</div>
-</div>
+<!-- Target Audience Context -->
+<p class="text-xs text-slate-500 mb-4">For commodity brokers, trading firms, and mandate holders worldwide</p>
 
-<p class="text-sm md:text-base text-slate-300 max-w-xl leading-relaxed">
-Upload any LOI, ICPO, Bill of Lading, POF, SBLC, or BCL. Get instant risk reports. Trade confidently.
-</p>
-
-<ul id="heroBullets" class="mt-6 space-y-2 text-sm text-slate-300">
+<ul id="heroBullets" class="mt-2 space-y-2 text-sm text-slate-300">
 <!-- Bullets will be injected by JavaScript -->
 </ul>
 
@@ -6359,91 +6348,23 @@ Built with ❤️ for commodity traders who've been burned before
 // 5 HERO VARIATIONS FOR A/B TESTING
 const heroVariations = [
   {
-    // VARIATION A
     headline: "Global Due Diligence For Commodity Traders",
-    subheadline: "Verify any counterparty, anywhere. 140+ countries. 300+ watchlists. Instant reports.",
+    subheadline: "Upload any document. Get a risk report in under 60 seconds. Know who you're really dealing with.",
     bullets: [
-      { text: "<strong>Global Registry Access:</strong> Verify counterparties in 140+ countries worldwide" },
-      { text: "<strong>Sanctions Screening:</strong> 300+ international watchlists checked automatically" },
-      { text: "<strong>Frontier Market Coverage:</strong> Emerging economies and developed markets verified" },
-      { text: "<strong>Document Analysis:</strong> Extract parties, flag risks, verify instantly" },
-      { text: "<strong>Professional Reports:</strong> Export compliance-ready PDFs" }
-    ]
-  },
-  {
-    // VARIATION B
-    headline: "Due Diligence For Commodity Traders. 140+ Countries.",
-    subheadline: "From frontier markets to developed economies - verify counterparties anywhere in the world.",
-    bullets: [
-      { text: "<strong>Global Registry Access:</strong> Verify counterparties in 140+ countries worldwide" },
-      { text: "<strong>Sanctions Screening:</strong> 300+ international watchlists checked automatically" },
-      { text: "<strong>Frontier Market Coverage:</strong> Emerging economies and developed markets verified" },
-      { text: "<strong>Document Analysis:</strong> Extract parties, flag risks, verify instantly" },
-      { text: "<strong>Professional Reports:</strong> Export compliance-ready PDFs" }
-    ]
-  },
-  {
-    // VARIATION C
-    headline: "The Commodity Trader's Due Diligence Platform",
-    subheadline: "140+ countries. 300+ watchlists. One platform. Instant reports.",
-    bullets: [
-      { text: "<strong>Global Registry Access:</strong> Verify counterparties in 140+ countries worldwide" },
-      { text: "<strong>Sanctions Screening:</strong> 300+ international watchlists checked automatically" },
-      { text: "<strong>Frontier Market Coverage:</strong> Emerging economies and developed markets verified" },
-      { text: "<strong>Document Analysis:</strong> Extract parties, flag risks, verify instantly" },
-      { text: "<strong>Professional Reports:</strong> Export compliance-ready PDFs" }
-    ]
-  },
-  {
-    // VARIATION D
-    headline: "Verify Any Deal, Anywhere. 140+ Countries.",
-    subheadline: "Complete global coverage. Instant risk reports. Built for commodity professionals.",
-    bullets: [
-      { text: "<strong>Global Registry Access:</strong> Verify counterparties in 140+ countries worldwide" },
-      { text: "<strong>Sanctions Screening:</strong> 300+ international watchlists checked automatically" },
-      { text: "<strong>Frontier Market Coverage:</strong> Emerging economies and developed markets verified" },
-      { text: "<strong>Document Analysis:</strong> Extract parties, flag risks, verify instantly" },
-      { text: "<strong>Professional Reports:</strong> Export compliance-ready PDFs" }
-    ]
-  },
-  {
-    // VARIATION E
-    headline: "Commodity Trading Risk Reports. Global Coverage.",
-    subheadline: "Upload any LOI, ICPO, or KYC. Get instant risk reports. Trade confidently.",
-    bullets: [
-      { text: "<strong>Global Registry Access:</strong> Verify counterparties in 140+ countries worldwide" },
-      { text: "<strong>Sanctions Screening:</strong> 300+ international watchlists checked automatically" },
-      { text: "<strong>Frontier Market Coverage:</strong> Emerging economies and developed markets verified" },
-      { text: "<strong>Document Analysis:</strong> Extract parties, flag risks, verify instantly" },
-      { text: "<strong>Professional Reports:</strong> Export compliance-ready PDFs" }
+      { text: "<strong>Catch Recycled Documents:</strong> Same LOI, different names? We flag it instantly" },
+      { text: "<strong>Unmask Shell Companies:</strong> Trace ownership through 140+ country registries" },
+      { text: "<strong>Spot Sanctioned Parties:</strong> Cross-reference 850+ global watchlists automatically" },
+      { text: "<strong>Verify Banks & SWIFT Codes:</strong> 30+ sanctioned banks flagged in real-time" },
+      { text: "<strong>Check Vessel & Port History:</strong> 85,000+ ships tracked via Equasis" },
+      { text: "<strong>Flag Offshore Red Flags:</strong> Panama Papers, Paradise Papers, Pandora Papers searched" },
+      { text: "<strong>Detect Fraud Patterns:</strong> Email domains, jurisdiction mismatches, document age" },
+      { text: "<strong>Export Compliance Reports:</strong> Professional PDFs for your records" }
     ]
   }
 ];
 
 function getVariationIndex() {
-  // Check if already assigned this session
-  let sessionVariation = sessionStorage.getItem('ddp_hero_variation');
-  
-  if (sessionVariation !== null) {
-    return parseInt(sessionVariation);
-  }
-  
-  // New visitor - assign random variation (0-4)
-  const variationIndex = Math.floor(Math.random() * 5);
-  
-  // Store so it stays consistent during this session
-  sessionStorage.setItem('ddp_hero_variation', variationIndex.toString());
-  
-  // Track in GA which variation this visitor sees
-  if (typeof gtag !== 'undefined') {
-    gtag('event', 'hero_variation_assigned', {
-      'event_category': 'ab_test',
-      'event_label': 'variation_' + String.fromCharCode(65 + variationIndex),
-      'value': variationIndex
-    });
-  }
-  
-  return variationIndex;
+  return 0; // Single variation - no A/B testing
 }
 
 function renderHeroVariation() {

@@ -1055,6 +1055,70 @@ Volume discounts available
 </div>
 </section>
 
+<!-- DATABASE WATERFALL SHOWCASE -->
+<section id="databases-showcase" class="border-t border-slate-800 bg-gradient-to-b from-slate-950 to-black overflow-hidden">
+<div class="mx-auto max-w-6xl px-4 py-16">
+
+<!-- Section Header -->
+<div class="text-center mb-10">
+<h2 class="text-2xl md:text-3xl font-bold text-slate-100 mb-3">
+850+ Global Data Sources
+</h2>
+<p class="text-slate-400 text-sm md:text-base max-w-2xl mx-auto">
+Every report cross-references sanctions lists, company registries, offshore leaks, maritime databases, and more—in real-time.
+</p>
+</div>
+
+<!-- Matrix Waterfall Container -->
+<div class="relative h-[400px] md:h-[500px] rounded-2xl border border-slate-800 bg-slate-950/50 overflow-hidden">
+
+<!-- Fade overlays for top and bottom -->
+<div class="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-slate-950 to-transparent z-10 pointer-events-none"></div>
+<div class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-slate-950 to-transparent z-10 pointer-events-none"></div>
+
+<!-- Central Stats Overlay -->
+<div class="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
+<div class="text-center bg-slate-950/90 backdrop-blur-sm px-8 py-6 rounded-2xl border border-cyan-500/30 shadow-lg shadow-cyan-500/10">
+<div class="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 mb-2">850+</div>
+<div class="text-slate-300 text-sm font-medium">Verified Data Sources</div>
+<div class="flex items-center justify-center gap-4 mt-4 text-xs text-slate-500">
+<span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-cyan-500 animate-pulse"></span> Live</span>
+<span>200+ Countries</span>
+<span>Updated Daily</span>
+</div>
+</div>
+</div>
+
+<!-- Waterfall Columns Container -->
+<div id="waterfallContainer" class="absolute inset-0 flex justify-between px-2 md:px-4">
+<!-- Columns will be injected by JavaScript -->
+</div>
+
+</div>
+
+<!-- Category Pills -->
+<div class="flex flex-wrap justify-center gap-2 mt-8">
+<span class="px-3 py-1 rounded-full bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-medium">Sanctions Lists</span>
+<span class="px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-medium">Company Registries</span>
+<span class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-xs font-medium">Offshore Leaks</span>
+<span class="px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs font-medium">Maritime Data</span>
+<span class="px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/30 text-purple-400 text-xs font-medium">PEP Lists</span>
+<span class="px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 text-xs font-medium">Court Records</span>
+</div>
+
+<!-- View All Link -->
+<div class="text-center mt-6">
+<a href="databases.html" class="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 text-sm font-medium transition">
+View Complete Database List
+<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+</svg>
+</a>
+</div>
+
+</div>
+</section>
+
 </main>
 </div>
 
@@ -1165,6 +1229,169 @@ window.addEventListener('scroll', function() {
         floatingBadge.classList.add('hidden');
     }
 });
+
+// ============================================
+// MATRIX WATERFALL - Database Showcase
+// ============================================
+const DATABASE_SOURCES = [
+    // Sanctions Lists
+    "OFAC SDN List", "OFAC Consolidated", "UN Security Council", "EU Sanctions", "UK HMT Sanctions",
+    "Australia DFAT", "Canada SEMA", "Switzerland SECO", "Japan MOF", "Singapore MAS",
+    "Hong Kong SFC", "New Zealand Police", "France Tresor", "Germany BAFA", "Netherlands Sanctions",
+    "Belgium Financial Sanctions", "Austria BMF", "Norway MFA", "Sweden Riksbank", "Denmark Business Authority",
+    "Finland Sanctions", "Ireland Sanctions", "Poland MF", "Czech NBU", "Hungary NBH",
+    // US Government
+    "BIS Entity List", "BIS Denied Persons", "BIS Unverified List", "ITAR Debarred", "FDA Debarment",
+    "DEA Controlled Substances", "ATF Federal Firearms", "Secret Service Financial", "US Marshals Fugitives",
+    "FBI Most Wanted", "ICE Most Wanted", "DOJ FCPA Cases", "FinCEN 311 Actions", "OCC Enforcement",
+    "FDIC Enforcement", "SEC Enforcement", "CFTC Enforcement", "CFPB Actions", "FTC Actions",
+    // Interpol & Law Enforcement
+    "Interpol Red Notices", "Interpol Yellow Notices", "Interpol Blue Notices", "Interpol Orange Notices",
+    "Europol Most Wanted", "FATF Blacklist", "FATF Grey List", "Egmont Group", "APG Members",
+    "CFATF Members", "EAG Members", "ESAAMLG Members", "GABAC Members", "GIABA Members",
+    // Company Registries
+    "UK Companies House", "OpenCorporates Global", "GLEIF LEI Database", "SEC EDGAR",
+    "Singapore ACRA", "Hong Kong CR", "Australia ASIC", "New Zealand Companies",
+    "Ireland CRO", "Germany Handelsregister", "France RCS", "Netherlands KVK",
+    "Belgium KBO", "Luxembourg RCS", "Switzerland Zefix", "Austria Firmenbuch",
+    "Denmark CVR", "Sweden Bolagsverket", "Norway Brønnøysund", "Finland PRH",
+    "Poland KRS", "Czech ARES", "Slovakia ORSR", "Hungary e-Cégjegyzék",
+    "Romania ONRC", "Bulgaria BRRA", "Croatia SRCE", "Slovenia AJPES",
+    "Estonia e-Business", "Latvia UR", "Lithuania JAR", "Cyprus Companies",
+    "Malta MBR", "Greece GEMI", "Portugal IRN", "Spain BORME",
+    "Italy Registro Imprese", "India MCA21", "Japan EDINET", "South Korea FSS",
+    "Taiwan MOEA", "Thailand DBD", "Malaysia SSM", "Indonesia OSS",
+    "Philippines SEC", "Vietnam NBRS", "UAE ADGM", "UAE DIFC",
+    "Bahrain MOIC", "Qatar QFC", "Oman MOCI", "Kuwait MoCI",
+    "Saudi Arabia MCI", "Egypt GAFI", "South Africa CIPC", "Nigeria CAC",
+    "Kenya BRS", "Ghana RGD", "Mauritius CBRD", "Seychelles FSA",
+    // Offshore & Leaks
+    "ICIJ Offshore Leaks", "Panama Papers", "Paradise Papers", "Pandora Papers",
+    "Bahamas Leaks", "Swiss Leaks", "Lux Leaks", "Football Leaks",
+    "FinCEN Files", "Dubai Papers", "Cyprus Confidential", "Suisse Secrets",
+    // Maritime
+    "Equasis Vessels", "IMO Ship Registry", "ITF Seafarers", "Paris MOU PSC",
+    "Tokyo MOU PSC", "USCG PSC Detentions", "Lloyd's List Intelligence", "MarineTraffic",
+    "VesselFinder", "FleetMon", "Pole Star Sanctions", "Windward Maritime AI",
+    "UN/LOCODE Ports", "World Port Source", "Sea-Web Ships", "ClassNK Database",
+    "DNV Vessel Register", "Bureau Veritas Fleet", "Lloyd's Register Ships",
+    // Banking & Financial
+    "SWIFT BIC Directory", "IBAN Registry", "Wolfsberg Group", "Basel AML Index",
+    "Transparency Intl CPI", "World Bank Debarred", "IFC Exclusion List", "AfDB Sanctions",
+    "ADB Integrity", "EBRD Ineligible", "IDB Sanctions", "AIIB Project List",
+    "MIGA Debarred", "Green Climate Fund", "Global Fund Sanctions",
+    // PEP & Adverse Media
+    "World Leaders Database", "CIA World Leaders", "IFES Election Guide",
+    "C-SPAN Congress", "GovTrack Officials", "EU Whoiswho", "Council of Europe",
+    "African Union Officials", "ASEAN Officials", "OAS Officials",
+    "UN Officials Directory", "NATO Officials", "OECD Officials", "WTO Officials",
+    "IMF Officials", "World Bank Officials", "BIS Officials", "FSB Members",
+    "BCBS Members", "IOSCO Members", "IAIS Members", "IADI Members",
+    // Court Records & Legal
+    "PACER US Courts", "UK Courts Service", "EU Court of Justice", "ICC Cases",
+    "ICJ Judgments", "WTO Disputes", "ICSID Cases", "PCA Arbitration",
+    "UNCITRAL Cases", "AAA Commercial", "JAMS Arbitration", "LCIA Cases",
+    "ICC Arbitration", "SIAC Cases", "HKIAC Cases", "CIETAC Cases",
+    // Tax & Revenue
+    "IRS FATCA", "US Tax Court", "OECD CRS", "EU DAC6",
+    "UK HMRC", "Australia ATO", "Canada CRA", "Germany BZSt",
+    "France DGFiP", "Netherlands Belastingdienst", "Switzerland ESTV",
+    // Terrorism & Crime
+    "US State Dept FTO", "UK Home Office Proscribed", "Australia Listed Orgs",
+    "Canada Listed Entities", "EU Terrorist List", "UN Al-Qaida List",
+    "UN ISIL/Daesh List", "UN Taliban List", "FATF High Risk Jurisdictions",
+    // Trade & Export
+    "WCO HS Codes", "UN Comtrade", "EU TARIC", "US HTS",
+    "BIS Commerce Control", "Wassenaar Arrangement", "MTCR Partners",
+    "Nuclear Suppliers Group", "Australia Group", "Zangger Committee",
+    // Real Estate & Property  
+    "UK Land Registry", "US County Records", "Dubai Land Dept", "Singapore URA",
+    "Hong Kong Land Registry", "Australia Titles", "Cayman Registry",
+    // Insurance & Risk
+    "Lloyd's Syndicates", "AM Best Ratings", "S&P Insurer Ratings", "Moody's Insurance",
+    "Fitch Insurance", "NAIC Database", "EIOPA Register",
+    // Crypto & Digital Assets
+    "Chainalysis KYT", "Elliptic Compliance", "Crystal Blockchain",
+    "CipherTrace", "Merkle Science", "Scorechain", "Coinfirm",
+    // Media & News
+    "Factiva", "LexisNexis", "Dow Jones Risk", "Refinitiv World-Check",
+    "Accuity Firco", "RDC Watchlist", "Comply Advantage", "Kharon",
+    // Regional Lists
+    "MENAFATF", "ESAAMLG List", "CFATF List", "APG Watch",
+    "EAG Watchlist", "GIABA Alert", "GABAC Notice",
+    // Industry Specific
+    "IATA Airline Codes", "ICAO Airport Codes", "IMO Dangerous Goods",
+    "EPA Enforcement", "OSHA Violations", "FDA Warning Letters",
+    "DEA Registrants", "NRC Licensees", "FERC Regulated",
+    // Professional Registers
+    "CFA Charterholders", "ACCA Members", "Bar Association Registers",
+    "Medical Councils", "Engineering Boards", "Architect Registers"
+];
+
+function initWaterfall() {
+    const container = document.getElementById('waterfallContainer');
+    if (!container) return;
+    
+    const columnCount = window.innerWidth < 768 ? 6 : 10;
+    const itemsPerColumn = 25;
+    
+    // Shuffle databases for randomness each visit
+    const shuffled = [...DATABASE_SOURCES].sort(() => Math.random() - 0.5);
+    
+    // Create columns
+    for (let i = 0; i < columnCount; i++) {
+        const column = document.createElement('div');
+        column.className = 'waterfall-column flex-1 flex flex-col gap-3 overflow-hidden';
+        
+        // Animation settings - vary speed and direction
+        const duration = 20 + Math.random() * 25; // 20-45 seconds
+        const direction = i % 2 === 0 ? 'normal' : 'reverse';
+        const startOffset = Math.random() * -50; // Random start position
+        
+        column.style.cssText = `
+            animation: waterfallScroll ${duration}s linear infinite ${direction};
+            animation-delay: ${startOffset}s;
+        `;
+        
+        // Fill column with database names (doubled for seamless loop)
+        const columnItems = [];
+        for (let j = 0; j < itemsPerColumn * 2; j++) {
+            const idx = (i * itemsPerColumn + j) % shuffled.length;
+            const item = document.createElement('div');
+            item.className = 'waterfall-item px-2 py-1.5 text-[10px] md:text-xs text-slate-500 text-center whitespace-nowrap truncate rounded bg-slate-900/50 border border-slate-800/50 hover:text-cyan-400 hover:border-cyan-500/30 transition-colors';
+            item.textContent = shuffled[idx];
+            columnItems.push(item);
+        }
+        
+        columnItems.forEach(item => column.appendChild(item));
+        container.appendChild(column);
+    }
+}
+
+// Add waterfall CSS animation
+const waterfallStyle = document.createElement('style');
+waterfallStyle.textContent = `
+    @keyframes waterfallScroll {
+        0% { transform: translateY(0); }
+        100% { transform: translateY(-50%); }
+    }
+    
+    .waterfall-column:hover {
+        animation-play-state: paused;
+    }
+    
+    .waterfall-item {
+        flex-shrink: 0;
+    }
+`;
+document.head.appendChild(waterfallStyle);
+
+// Initialize on DOM ready
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initWaterfall);
+} else {
+    initWaterfall();
+}
 
 // Global state
 let currentFile = null;
